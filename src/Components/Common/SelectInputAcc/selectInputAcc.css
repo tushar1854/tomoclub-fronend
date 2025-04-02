@@ -1,0 +1,104 @@
+.selected-option-acc span {
+  font-size: 0.8rem;
+  color: #000;
+}
+
+.select-acc {
+  color: #000;
+  padding: 0 0 0 0;
+  border-radius: 6px;
+  background: #fff;
+  cursor: pointer;
+  text-align: left;
+  height: 100%;
+  position: relative;
+  margin-bottom: 8px;
+}
+
+.selected-option-acc {
+  height: 27px;
+  display: flex;
+  align-items: center;
+  width: 90%;
+}
+
+.selected-option-acc div {
+  font-size: 0.7rem;
+  color: #000;
+  margin-top: 5%;
+}
+
+.TableHeader-cohort-comp #sharp {
+  font-size: 0.8rem;
+}
+
+.selected-option-acc i {
+  transform: translateX(43%);
+}
+
+.options {
+  position: absolute;
+  top: 50px;
+  left: 0;
+  width: 100%;
+  z-index: 2;
+  background-color: white;
+  max-height: 249px;
+  overflow-y: scroll;
+  padding: 0 8px 8px 8px;
+  border-radius: 6px;
+  border: 1px solid #f3dcdc;
+}
+
+.options ul {
+  margin-top: 4px;
+}
+
+.options li {
+  font-size: 14px;
+  list-style: none;
+  line-height: 36px;
+  cursor: pointer;
+  border-radius: 6px;
+  color: black;
+  transition: 0.3s linear;
+}
+
+.options li:hover {
+  color: #000;
+  background: #e1e1e1;
+}
+
+.options li.active-option {
+  color: #000;
+  background: #e1e1e1;
+}
+
+input {
+  width: calc(240px - 32px);
+  font-size: 14px;
+  padding: 0 10px;
+  margin-bottom: 8px;
+  border-radius: 6px;
+  position: fixed;
+  border: 1px solid #efefef;
+}
+
+.material-icons-acc {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  /* visibility: hidden; */
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+  margin-top: 4%;
+  margin-left: -2%;
+}

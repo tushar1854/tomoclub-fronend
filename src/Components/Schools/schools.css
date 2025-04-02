@@ -1,0 +1,96 @@
+.students-container {
+  margin-top: 2cqh;
+  margin-left: 250px;
+
+  /* 
+     display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+  margin-left: 12.3%;
+  margin-top: 1%; */
+}
+
+.TableData-comp-school {
+  display: flex;
+  list-style: none;
+  justify-content: space-between;
+  font-size: 12px;
+  background: #fff;
+  padding: 15px 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  border-radius: 1px;
+}
+
+.TableData-comp-school li {
+  text-align: left;
+  width: 180px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.TableHeader-comp-school li {
+  text-align: left;
+  width: 180px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.TableHeader-comp-school {
+  display: flex;
+  list-style: none;
+  justify-content: space-between;
+  font-size: 12px;
+  background: #fff;
+  padding: 15px 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  border-radius: 1px;
+}
+
+.school-table-container {
+  border-radius: 10px;
+  background: #eff2f5;
+  padding: 1.3%;
+  height: 50vh;
+  width: 50%;
+  margin-left: 16px;
+  margin-top: 2%;
+}
+
+.school-table-container::-webkit-scrollbar {
+  display: none;
+}
+
+.student-table-header {
+  font-size: 12px;
+  background: #fff;
+
+  font-style: normal;
+  font-weight: 500;
+
+  border-radius: 5px;
+  margin-bottom: 1%;
+}
+
+.student-table-body {
+  overflow: scroll;
+  height: 40vh;
+}
+
+.add-new-school-btn {
+  height: 50px;
+  width: 100%;
+  color: #fff;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #4b89e9 0%, #05e7c3 100%);
+}

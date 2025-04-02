@@ -1,0 +1,16 @@
+.acc-basic {
+  width: 97%;
+  /* margin: auto; */
+}
+
+.acc-basic:focus {
+  border: 1px solid #777;
+}
+
+.acc-flex .acc-basic {
+  width: 95%;
+}
+
+/* .css-1p3m7a8-multiValue{
+      border-radius: 20px;
+  } */

@@ -1,0 +1,89 @@
+.edit-preset-row {
+  display: flex;
+  /* width: 400px; */
+  /* justify-content: space-between; */
+  text-align: left;
+}
+
+.edit-preset-row p {
+  color: #000;
+  font-family: Poppins;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin-top: 5px;
+}
+
+.curr5 .accordian-left {
+  /* flex-basis: 30%; */
+  /* margin: auto; */
+  margin-left: 2%;
+}
+
+.edit-p1 {
+  width: 200px;
+}
+
+.curr5 .accordian-right {
+  /* flex-basis: 70%; */
+  margin: auto;
+  margin-left: -3%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.curr5-edit-form {
+  display: flex;
+  justify-content: space-between;
+  width: 1000px;
+  padding: 15px 30px;
+  margin-left: 1%;
+}
+
+.curr5-edit-form h4 {
+  color: #000;
+  font-family: Poppins;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.curr5-edit-form-left {
+  width: 300px;
+}
+
+.curr5-edit-form-right {
+  width: 600px;
+  display: flex;
+}
+.curr5-input input {
+  width: 40px;
+  border: 0.5px solid grey;
+  position: static;
+  margin-top: 20%;
+}
+.curr5-edit-h4 {
+  width: 290px;
+}
+
+.edit-curr-input-box {
+  padding-left: 40px;
+}
+
+.edit-curr-input-box input {
+  position: static;
+  height: 4vh;
+}
+
+.add-school-error-curr {
+  color: #bf1650 !important;
+  font-family: Poppins;
+  font-size: 14px !important;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin: 0 !important;
+}

@@ -1,0 +1,243 @@
+.right-flex {
+  display: flex;
+}
+
+.addSession {
+  /* margin-top: 2cqh;
+  margin-left: 250px; */
+}
+
+.acc-left-head-1p {
+  color: grey;
+  font-size: 12px;
+  margin-left: 4%;
+}
+
+.desc-column {
+  display: flex;
+  text-align: left;
+  width: 95%;
+  margin: auto;
+  margin-bottom: 5px;
+}
+
+.left-desc,
+.right-desc {
+  width: 48%;
+  display: flex;
+  gap: 10px;
+}
+
+.first-p {
+  color: grey;
+  /* width: 100px; */
+}
+
+.p-flex {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  margin-bottom: 5px;
+}
+
+.p-flex p {
+  /* width: 150px; */
+}
+
+.ribbon {
+  display: flex;
+  /* gap: 20px; */
+  margin: 15px 0 0 0;
+  padding-left: 1.3%;
+}
+
+.ribbon-item {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.ribbon-item-1 {
+  border-radius: 8px 8px 0px 0px;
+  background: #eff2f5;
+}
+
+.hidden-p {
+  visibility: hidden;
+}
+
+.gameName input {
+  position: static;
+  width: 100%;
+  height: 42px;
+  color: #707070;
+  padding: 0 16px;
+  border-radius: 6px;
+  border: 1px solid #cbcbcb;
+}
+
+.accordian-flex p {
+  font-size: 12px;
+}
+
+.flex-sess {
+  display: flex;
+  align-items: center;
+}
+
+.date-in {
+  margin-left: -2.3%;
+}
+
+.flex-sess p {
+  font-size: 16px;
+}
+
+.attendence-checkbox input {
+  position: static;
+  width: 15%;
+}
+
+.cohort-table-container-2 {
+  border-radius: 10px;
+  background: #eff2f5;
+  padding: 1.3%;
+  height: 55vh;
+  width: 57%;
+  /* overflow: scroll; */
+  margin-left: 16px;
+  margin-top: 2%;
+}
+
+.attendance-flex {
+  display: flex;
+}
+
+.accordian-btn-attendance {
+  border-radius: 10px;
+  border: 2px solid #000;
+  color: #000;
+  font-family: Poppins;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  width: 200px;
+  cursor: pointer;
+  padding: 8px;
+  margin-top: 20%;
+  margin-left: 60%;
+}
+
+.ses-eval-table-header {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.ses-eval-table-header h4 {
+  font-size: 12px;
+}
+
+.ses-eval-table-header-flex input {
+  position: static;
+  width: 8%;
+  max-width: 13%;
+  min-width: 6%;
+  margin-left: 2%;
+  text-align: left;
+  margin-right: 2%;
+}
+
+/* .ses-eval-table-header-flex {
+  display: flex;
+  gap: 6%;
+  justify-content: center;
+} */
+
+.ses-eval-table-header-flex {
+  display: flex;
+  gap: 10%;
+  justify-content: space-between;
+  max-width: 600px;
+}
+.addSession .selected-option {
+  text-wrap: nowrap;
+  overflow: hidden;
+}
+
+.session-eval-btn {
+  border-radius: 10px;
+  border: 2px solid #000;
+  color: #000;
+  font-family: Poppins;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  width: 150px;
+  cursor: pointer;
+  padding: 8px;
+  margin-left: 3%;
+}
+
+.attendance-btn-work {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.sess-input {
+  width: 210px;
+  height: 35px;
+  margin-left: 2%;
+  margin-top: 1%;
+}
+
+.create-cohort-form-container-ses {
+  margin-left: 16px;
+  border-radius: 10px;
+  background: #eff2f5;
+  /* height: 500px; */
+  /* display: flex; */
+  width: 71vw;
+  /* margin-top: 1%; */
+  padding-top: 1%;
+  padding-bottom: 1%;
+}
+
+.sess-student-select {
+  display: flex;
+  align-items: center;
+  margin-left: 2%;
+}
+
+.sess-student-select p {
+  color: #000;
+  font-family: Poppins;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  text-transform: capitalize;
+  margin-top: 3%;
+}
+
+.ses-stu-dr-1 {
+  width: 150px;
+  height: 40px;
+}
+
+.ses-stu-dr-1 p {
+  font-size: 12px;
+  color: gray;
+}
+
+@media only screen and (min-width: 1650px) {
+  /* For desktop: */
+  .add-cohort-input-box input {
+    margin-left: 10%;
+  }
+  .add-cohort-input-box .dateTime {
+    margin-left: 9%;
+  }
+}

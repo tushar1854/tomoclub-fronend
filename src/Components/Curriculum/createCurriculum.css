@@ -1,0 +1,160 @@
+.create-curr4-container {
+  margin-top: 2cqh;
+  margin-left: 250px;
+}
+.create-curr4-container .accordian-left {
+  /* flex-basis: 30%; */
+  /* margin: auto; */
+  margin-left: 2%;
+}
+
+body {
+  overflow: scroll;
+}
+
+.create-curr4-form-container {
+  margin-left: 16px;
+  border-radius: 10px;
+  background: #eff2f5;
+  /* height: 500px; */
+  /* display: flex; */
+  width: 70vw;
+}
+
+.create-curr4-form-container hr {
+  width: 95%;
+  opacity: 0.7;
+  margin: auto;
+  background: #cbcbcb;
+}
+
+.create-curr4-submit-btn {
+  margin-left: 16px;
+  border-radius: 10px;
+  background: linear-gradient(102deg, #4b89e9 0%, #05e7c3 100%);
+  color: #fff;
+  font-family: Poppins;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  border: none;
+  padding: 10px;
+  width: 150px;
+  cursor: pointer;
+}
+
+.curr4-form-left {
+  width: 30%;
+  /* height: 50px; */
+  /* border: 1px solid black; */
+}
+
+.curr4-input {
+  margin-bottom: 100px;
+}
+
+.curr4-form-left h4 {
+  color: #000;
+  font-family: Poppins;
+  /* font-size: 14px; */
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  margin-left: 15px;
+  /* padding: 5px; */
+}
+
+.curr4-form-right {
+  margin-left: 10%;
+  width: 60%;
+  /* height: 100%; */
+  /* border: 1px solid yellow; */
+}
+
+.curr4-form-right p,
+.curr4-form-left p {
+  color: #000;
+  font-family: Poppins;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin: 0;
+  margin-left: 10%;
+}
+
+.curr4-form-row-1,
+.curr4-form-row-2,
+.curr4-form-row-3,
+.curr4-form-row-4 {
+  display: flex;
+  padding: 20px;
+  /* height: 10vh; */
+}
+
+.curr4-form-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.Select-Multi {
+  margin: 10px;
+  margin-top: 2px;
+  margin-left: -20px;
+}
+
+.add-curr4-input-box input {
+  position: relative;
+  height: 40px;
+  width: 76%;
+  outline: none;
+  font-size: 1rem;
+  color: #707070;
+  margin-top: 5px;
+  border: 1px solid #cbcbcb;
+  border-radius: 5px;
+  /* padding: 0 10px; */
+  margin-bottom: 8px;
+  margin-left: 55px;
+}
+
+.add-curr4-input-box input:focus {
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+}
+
+.curr4-flex {
+  display: flex;
+}
+
+.accordian-closed-container h4 {
+  margin-top: 10px;
+  margin-left: 10px;
+  letter-spacing: 1px;
+  cursor: pointer;
+}
+.accordian h4 {
+  letter-spacing: 1px;
+  cursor: pointer;
+}
+
+.accordian-closed-container {
+  /* border-radius: 10px; */
+  background: #eff2f5;
+  padding: 10px;
+  /* width: 98%; */
+  height: 70px;
+  margin-left: 16px;
+  /* margin-top: 50px; */
+}
+
+.button-error {
+  color: #bf1650;
+  padding-left: 18px;
+}
+
+.saved-session-tag {
+  color: green;
+  padding-left: 1px;
+}

@@ -1,0 +1,38 @@
+{
+  "files": {
+    "main.css": "/static/css/main.c7fd53b2.css",
+    "main.js": "/static/js/main.0adddb4c.js",
+    "static/js/648.c4e29d4c.chunk.js": "/static/js/648.c4e29d4c.chunk.js",
+    "static/media/Saly.png": "/static/media/Saly.39904d74106caeca168a.png",
+    "static/media/Apple.svg": "/static/media/Apple.55bb2c2e693e1cb336ff.svg",
+    "static/media/Google.svg": "/static/media/Google.ba099e3d50d7b80d76f3.svg",
+    "static/media/Microsoft.svg": "/static/media/Microsoft.9220ce6f5188b474e335.svg",
+    "static/media/vector.png": "/static/media/vector.b599eab44e263330a964.png",
+    "static/media/Tomoclub.svg": "/static/media/Tomoclub.ff54e971805b972ab166a6e72bcf0595.svg",
+    "static/media/moderators.svg": "/static/media/moderators.54c0196f0828982c82145cbf8e6cc82c.svg",
+    "static/media/account.svg": "/static/media/account.47a513cd843e850774a909c68c798ee5.svg",
+    "static/media/warnIcon.svg": "/static/media/warnIcon.e4e9cf66f7d44b27094e2bfffaa6c7d3.svg",
+    "static/media/students.svg": "/static/media/students.b3127e94c0fc473d19569ac6166dc544.svg",
+    "static/media/schools.svg": "/static/media/schools.57eac4159a0f8ce42cb6fe10c399dbcf.svg",
+    "static/media/edit.svg": "/static/media/edit.a26a28f37ce8a7f5f57614e517dd0cf7.svg",
+    "static/media/cohorts.svg": "/static/media/cohorts.8b2f6258038c70536bdac169ad929e91.svg",
+    "static/media/duplicate.svg": "/static/media/duplicate.e8e8c90e172251a71747909f23cf75a2.svg",
+    "static/media/sucessIcon.svg": "/static/media/sucessIcon.f2992f5ffd50c4cbf25c2856755a8183.svg",
+    "static/media/curriculumA.svg": "/static/media/curriculumA.aa7329829949e1a2c308b01119aa14a0.svg",
+    "index.html": "/index.html",
+    "static/media/library.svg": "/static/media/library.12aed66373ef840fec536dff6ebcaa29.svg",
+    "static/media/session.svg": "/static/media/session.02cec217f762863bb7b5f69b30a6b905.svg",
+    "static/media/crossIcon.svg": "/static/media/crossIcon.61ebb721da2259f8939db5b6bcaa9b67.svg",
+    "static/media/arrow-left-circle.svg": "/static/media/arrow-left-circle.e0160250ccb5adb3ce8b42a5f3820075.svg",
+    "static/media/home.svg": "/static/media/home.9e75a0bde0cd0b746d08def67f443c06.svg",
+    "static/media/next.svg": "/static/media/next.fa18ae9d984a5d6448c255baff612ad3.svg",
+    "static/media/prev.svg": "/static/media/prev.0537bdf529f1f2b50ed6646cfff1bc87.svg",
+    "main.c7fd53b2.css.map": "/static/css/main.c7fd53b2.css.map",
+    "main.0adddb4c.js.map": "/static/js/main.0adddb4c.js.map",
+    "648.c4e29d4c.chunk.js.map": "/static/js/648.c4e29d4c.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.c7fd53b2.css",
+    "static/js/main.0adddb4c.js"
+  ]
+}

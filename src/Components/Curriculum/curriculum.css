@@ -1,0 +1,147 @@
+.curriculum1-container {
+  margin-top: 2cqh;
+  margin-left: 250px;
+}
+
+.curriculum1-btn {
+  border-radius: 10px;
+  background: linear-gradient(102deg, #4b89e9 0%, #05e7c3 100%);
+  color: #fff;
+  font-family: Poppins;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  border: none;
+  padding: 10px;
+  margin-left: 16px;
+  width: 180px;
+  cursor: pointer;
+}
+
+.curriculum1-main {
+  display: flex;
+  /* justify-content: space-around; */
+  align-items: center;
+  background: #f4f4f4;
+  width: 430px;
+  /* height: 70px; */
+  padding: 10px;
+  border-radius: 5px;
+  margin-left: 16px;
+}
+
+.curriculum1-main img {
+  margin: 0;
+  margin-right: 3%;
+  width: 40px;
+
+  height: 40px;
+}
+
+.curriculum2-container {
+  margin-top: 2cqh;
+  margin-left: 250px;
+}
+
+body {
+  overflow: hidden;
+}
+
+.curriculum2-table {
+  border-radius: 10px;
+  background: #eff2f5;
+  padding: 1.3%;
+  height: 55vh;
+  width: 87%;
+  /* overflow: scroll; */
+  margin-left: 16px;
+  margin-top: 2%;
+}
+
+.curriculum2-table::-webkit-scrollbar {
+  display: none;
+}
+
+.curriculum2-table-body::-webkit-scrollbar {
+  display: none;
+}
+
+.curriculum2-table-body {
+  overflow: scroll;
+  height: 40vh;
+}
+
+.curriculum2-table-header {
+  font-size: 12px;
+  background: #fff;
+  font-style: normal;
+  font-weight: 500;
+  border-radius: 5px;
+  margin-bottom: 1%;
+}
+
+.TableData-curriculum2-comp li {
+  /* text-align: left; */
+  width: 150px;
+}
+
+.TableHeader-curriculum2-comp li {
+  text-align: left;
+  width: 150px;
+  font-weight: bold;
+}
+
+.TableHeader-curriculum2-comp {
+  display: flex;
+  list-style: none;
+  justify-content: space-between;
+  font-size: 12px;
+  background: #fff;
+  padding: 15px 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  border-radius: 1px;
+}
+
+.TableData-curriculum2-comp {
+  display: flex;
+  list-style: none;
+  justify-content: space-between;
+  font-size: 12px;
+  background: #fff;
+  padding: 30px 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  border-radius: 1px;
+}
+
+.edit-img {
+  width: 22%;
+  text-align: right;
+  margin: 0;
+  margin-left: 50%;
+  margin-top: -10%;
+  cursor: pointer;
+}
+
+.TableHeader-curriculum2-comp .hidden {
+  visibility: hidden;
+  width: 60px;
+}
+.TableData-curriculum2-comp .cur-wid {
+  width: 250px;
+  flex-direction: column;
+}
+
+.TableHeader-curriculum2-comp .cur-wid {
+  width: 250px;
+  flex-direction: column;
+}
+
+.TableData-curriculum2-comp .edit {
+  /* text-align: left; */
+  width: 60px;
+}

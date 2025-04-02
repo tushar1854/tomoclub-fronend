@@ -1,0 +1,70 @@
+.school-success-container {
+  /* height: 1080px; */
+  display: flex;
+  position: relative;
+  justify-content: center;
+}
+
+.school-success-box {
+  width: 340px;
+  height: 150px;
+  margin-top: 2%;
+  display: flex;
+  border-radius: 5px;
+  background-color: #fff;
+  flex-direction: column;
+}
+
+.school-success-internal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: -20px;
+}
+
+#school-success-icon {
+  /* cursor: pointer; */
+}
+
+#school-success-icon img {
+  margin-left: 87%;
+  margin-top: 6px;
+  /* cursor: pointer; */
+}
+
+.school-success-internal img {
+  width: 13%;
+}
+
+.school-success-internal h2 {
+  color: #000;
+  font-family: Poppins;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  padding: 20px;
+}
+
+#popup {
+  position: fixed;
+  top: 0%;
+  left: 40%;
+  /* transform: translate(-50%,-50%); */
+  box-shadow: 0 5px 30px rgba(0, 0, 0, 0.2);
+  background-color: #fff;
+  visibility: hidden;
+  opacity: 0;
+  transition: 0.5s;
+}
+#popup.activeNotification {
+  top: 5%;
+  visibility: visible;
+  opacity: 1;
+  transition: 0.5s;
+}
+
+#school-success-cross {
+  cursor: pointer;
+  padding: 6px;
+}

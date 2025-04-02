@@ -1,0 +1,193 @@
+.create-cohort-container {
+  margin-top: 2cqh;
+  margin-left: 250px;
+}
+
+.create-cohort-form-container {
+  margin-left: 16px;
+  border-radius: 10px;
+  background: #eff2f5;
+  /* height: 500px; */
+  /* display: flex; */
+  width: 70vw;
+  margin-top: 1%;
+}
+
+.create-cohort-form-container hr {
+  width: 95%;
+  opacity: 0.7;
+  margin: auto;
+  background: #cbcbcb;
+}
+
+.create-cohort-submit-btn {
+  margin-left: 16px;
+  border-radius: 10px;
+  background: linear-gradient(102deg, #4b89e9 0%, #05e7c3 100%);
+  color: #fff;
+  font-family: Poppins;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  border: none;
+  padding: 10px;
+  width: 200px;
+  cursor: pointer;
+}
+
+.cohort-form-left {
+  width: 30%;
+  /* height: 50px; */
+  /* border: 1px solid black; */
+}
+
+.cohort-input {
+  margin-bottom: 100px;
+}
+
+.cohort-form-left h4 {
+  color: #000;
+  font-family: Poppins;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  /* padding: 5px; */
+}
+
+.cohort-form-right {
+  margin-left: 10%;
+  width: 60%;
+  /* height: 100%; */
+  /* border: 1px solid yellow; */
+}
+
+.cohort-form-right p {
+  /* color: #000; */
+  font-family: Poppins;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin-left: 10%;
+}
+
+.cohort-form-row-1,
+.cohort-form-row-2,
+.cohort-form-row-3,
+.cohort-form-row-4 {
+  display: flex;
+  padding: 28px 50px;
+  /* height: 10vh; */
+}
+
+.cohort-form-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.Select-Multi {
+  margin: 10px;
+  margin-top: 2px;
+  margin-left: -20px;
+}
+
+.add-cohort-input-box input {
+  position: relative;
+  height: 40px;
+  width: 76%;
+  outline: none;
+  font-size: 1rem;
+  color: #707070;
+  margin-top: 5px;
+  border: 1px solid #cbcbcb;
+  border-radius: 5px;
+  /* padding: 0 10px; */
+  margin-bottom: 8px;
+  margin-left: 55px;
+}
+
+.add-cohort-input-box input:focus {
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+}
+
+.openCohort {
+  display: flex;
+  margin-left: 0%;
+  margin-bottom: 2%;
+}
+
+p {
+  color: #000;
+  font-family: Poppins;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.openCohort p {
+  color: #000;
+  font-family: Poppins;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.openCohort input {
+  position: static;
+  height: 20px;
+  margin: 0;
+  /* width: ; */
+  outline: none;
+  font-size: 1rem;
+  color: #707070;
+  margin-top: 0%;
+  margin-left: -10%;
+
+  border: 1px solid #cbcbcb;
+  border-radius: 5px;
+  /* padding: 0 10px; */
+  /* margin-bottom: 8px; */
+  /* margin-left: 55px; */
+}
+
+.dateTime {
+  display: flex;
+  margin-left: 8%;
+  margin-bottom: 6%;
+  /* justify-content: space-between; */
+}
+
+.date {
+  height: 75px;
+  margin: 6px;
+  width: 140px;
+  display: flex;
+  flex-direction: column;
+}
+
+.date-select {
+  height: 42px;
+}
+
+.date p {
+  margin-left: 3%;
+}
+
+.edit-cohort-r1 {
+  display: flex;
+  margin-left: 7%;
+}
+
+.edit-cohort-r1 p {
+  line-height: 2;
+  width: 200px;
+}
+
+.edit-cohort-p-bold {
+  width: 100px;
+}

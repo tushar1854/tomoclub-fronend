@@ -1,0 +1,201 @@
+.add-teacher-container {
+  margin-top: 2cqh;
+  margin-left: 250px;
+}
+
+.add-teacher-container a {
+  text-decoration: none;
+  color: black;
+  font-weight: 400;
+  font-size: 14px;
+  padding: 13px;
+  border-radius: 0px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  margin: 0px;
+  margin-right: 5px;
+}
+
+.add-teacher-container #add-teacher-options-active {
+  background: #eff2f5;
+  cursor: pointer;
+}
+.add-teacher-header {
+  margin-bottom: 20px;
+  font-size: 12px;
+  font-weight: 900;
+  padding-left: 13px;
+}
+
+/* code form */
+p {
+  font-size: 13px;
+}
+
+label {
+  color: #000;
+  font-family: Poppins;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.add-teacher-form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 85%;
+  background: #eff2f5;
+  padding: 25px;
+  border-radius: 8px;
+}
+
+.add-teacher-main-form {
+  padding-left: 13px;
+}
+
+.add-teacher-container .input-box {
+  width: 100%;
+  /* margin-top: 20px; */
+}
+
+.input-box label {
+  color: #333;
+}
+.bulk-btn {
+  display: inline-flex;
+  padding: 12px 22px;
+  border-radius: 6px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  font-weight: 600;
+}
+.add-teacher-options {
+  padding-bottom: 5px;
+}
+.add-teacher-container :where(.input-box input, .select-box) {
+  position: relative;
+  height: 50px !important;
+  width: 100% !important;
+  outline: none;
+  font-size: 1rem;
+  color: #707070;
+  margin-top: 5px !important;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 0 15px;
+  margin-bottom: 8px;
+}
+.select-box {
+  padding: 0;
+  border-radius: 6px;
+}
+.input-box input:focus {
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+}
+
+.add-teacher-container .column {
+  display: flex;
+  column-gap: 15px;
+}
+
+.address :where(input, .select-box) {
+  margin-top: 15px;
+}
+
+.select-box select {
+  height: 100%;
+  width: 100%;
+  outline: none;
+  border: none;
+  color: #707070;
+  font-size: 1rem;
+}
+
+.submit-btn {
+  height: 55px;
+  width: 15%;
+  color: #fff;
+  border-radius: 5px;
+  margin-top: 10px;
+  font-size: 1rem;
+  font-weight: 400;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #4b89e9 0%, #05e7c3 100%);
+}
+
+/*Responsive*/
+@media screen and (max-width: 500px) {
+  .form .column {
+    flex-wrap: wrap;
+  }
+
+  .form :where(.gender-option, .gender) {
+    row-gap: 15px;
+  }
+}
+
+.flexx {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.flexleft {
+  flex-basis: 30%;
+}
+
+.flexright {
+  flex-basis: 70%;
+}
+
+.left {
+  width: 40%;
+}
+.right {
+  width: 60%;
+}
+
+#myFile {
+  height: 1px;
+  /* width: 50%; */
+  visibility: hidden;
+  outline: none;
+  font-size: 0px;
+  color: #707070;
+  /* margin-top: 5px; */
+  border: none;
+  border-radius: 6px;
+  padding: 0;
+}
+
+.photo-upload-btn {
+  height: 120px;
+  width: 120px;
+  padding: 10px;
+  color: blue;
+  border: 1px solid black;
+}
+
+.teacher-section {
+  width: 70vw;
+}
+
+.add-teacher-options a:hover {
+  cursor: pointer;
+}
+
+.react-tel-input .flag-dropdown {
+  background-color: white !important;
+}
+
+.react-tel-input .country-list {
+  width: 730%;
+}

@@ -1,0 +1,8 @@
+.loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* width: 100px; */
+  height: 70vh;
+  /* filter: blur(0.1rem); */
+}

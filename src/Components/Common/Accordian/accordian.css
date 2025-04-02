@@ -1,0 +1,114 @@
+.accordian-page-container {
+  /* margin-left: 250px;
+    margin-top: 2cqh; */
+  margin-left: 16px;
+}
+
+.accordian {
+  /* border-radius: 10px; */
+  background: #eff2f5;
+  width: 100%;
+  padding: 15px;
+  display: flex;
+  justify-content: center;
+}
+.accordian input {
+  /* width: calc(240px - 32px); */
+  height: 32px;
+  width: 40%;
+  font-size: 14px;
+  /* line-height: 32px; */
+  padding: 0 10px;
+  margin-bottom: 8px;
+  border-radius: 6px;
+  position: static;
+  border: 1px solid #f3dcdc;
+}
+.accordian-date-input input {
+  height: 42px;
+  outline: none;
+  border: 1px solid #f3dcdc;
+}
+.accordian-left {
+  /* flex-basis: 30%; */
+  /* margin: auto; */
+  margin-left: 5%;
+}
+.acc-left-head {
+  cursor: pointer;
+}
+
+.accordian-right {
+  /* flex-basis: 70%; */
+  margin: auto;
+  margin-left: 3%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.accordian-right-row {
+  display: flex;
+  margin: 10px 0px;
+  flex-direction: column;
+  width: 87%;
+  /* margin-left: 45%; */
+}
+
+.acc-flex {
+  display: flex;
+  /* width: 450px; */
+}
+
+.accordian-flex {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}
+
+.accordian-closed-container {
+  /* border-radius: 10px; */
+  background: #eff2f5;
+  padding: 10px;
+  /* width: 98%; */
+  height: 70px;
+  margin-left: 16px;
+  /* margin-top: 50px; */
+}
+
+.accordian-closed-container h4 {
+  margin-top: 10px;
+  margin-left: 30px;
+  cursor: pointer;
+}
+
+.accordian-btn {
+  border-radius: 10px;
+  border: 2px solid #000;
+  color: #000;
+  font-family: Poppins;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  width: 150px;
+  cursor: pointer;
+  padding: 8px;
+}
+
+.accordian-select {
+  display: flex;
+  align-items: center;
+  /* width: 500px; */
+}
+
+.accordian-select p {
+  margin: 10px;
+  margin-left: -15px;
+  color: #7d7d7d;
+  font-family: Poppins;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}

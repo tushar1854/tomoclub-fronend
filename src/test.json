@@ -1,0 +1,66 @@
+{
+  "columns": [
+    { "field": "id" },
+    {
+      "field": "name",
+      "headerName": "Account Name",
+      "dataGeneratorUniquenessEnabled": true,
+      "width": 200,
+      "editable": false,
+      "groupable": false,
+      "aggregable": false
+    },
+    {
+      "field": "accountType",
+      "headerName": "Account type",
+      "type": "string",
+      "width": 150,
+      "editable": false
+    },
+    {
+      "field": "status",
+      "headerName": "Status",
+      "type": "boolean",
+      "width": 150,
+      "editable": true
+    }
+  ],
+  "rows": [
+    {
+      "id": "6601f77a-a7c2-5ac4-844f-cd33c51a74ba",
+      "name": "Virgie Mathis",
+      "accountType": "Tomo admin",
+      "status": false
+    },
+    {
+      "id": "ddf198d6-032e-55d2-81d3-3b5c946e8613",
+      "name": "Virgie Mathis",
+      "accountType": "Tomo admin",
+      "status": false
+    },
+    {
+      "id": "31f06abe-3994-5db2-bc81-bb6315da5248",
+      "name": "Virgie Mathis",
+      "accountType": "School",
+      "status": false
+    },
+    {
+      "id": "9420d833-5b77-5816-aa2d-20bca8b546c5",
+      "name": "Virgie Mathis",
+      "accountType": "Moderator",
+      "status": false
+    },
+    {
+      "id": "5f5164dd-9f3d-5637-86c1-8692e08ed10d",
+      "name": "Virgie Mathis",
+      "accountType": "Tomo admin",
+      "status": false
+    },
+    {
+      "id": "8a024499-2c8a-5d5d-877c-8968d64e4571",
+      "name": "Virgie Mathis",
+      "accountType": "School",
+      "status": false
+    }
+  ]
+}

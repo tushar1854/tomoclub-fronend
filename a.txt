@@ -1,0 +1,27 @@
+I helped my current company to migrate from AWS and Azure to GCP. The migration involved getting various teams such as Data Analytics, Machine Learning, and product teams move to GCP. The migration needed redesigning of cloud architecture with best practices including project organization, VPCs, setting org policies for organization.
+Some challeneges that we faced were that this activity resulted in team members having to do extra steps to get inside VPCs. I introduced OpenVPN for this to aid the team members.
+The migration involved setting up the infrastructure using Compute Engine, Artefact Registry, GKE, BQ, Cloud SQL, Redis Memory Store, Cloud Functions.
+
+
+
+I'm active on tech twitter. I'm an ardend follower of Andrej Karpathy, Jeremy Howard etc.
+Apart form this i'm active on reddit. I also follow blogs by tech companies like Uber, DropBox, Netflix etc.
+
+
+I have used Github, Bitbucket, Azure DevOps. Version control is important to keep a clean track of changes in a project it helps in rolling back to a previous stable version in case there is something wrong with the latest version. I also used it for the above mentioned reasons.
+
+
+Yes. I extensivily use vscode debugger, testing, co-pilot and other extensions to increase my efficiency.
+
+
+Most of the modern tech scsdis cloud native these days. CSPs gives us the peace of mind of not mantaining the under line hardware and network tables. They usually have managed offerings of technologies used in modern tech. For example cloud-composer for airflow, memory store for redis etc.
+
+
+i'll start with an example, For this project https://github.com/ParallelDots/RetailTree i use github Actions to add cicd pipeline that tests and deploy the version to pypi.
+
+CI/CD process help in delivering a reliable software and automate the process of doing so.
+
+i have worked a lot with cloud build for CI/CD pipelines on GCP. Also I have worked with Bitbucket pipelines too.
+
+
+Yes, I use postman to test APIs.
