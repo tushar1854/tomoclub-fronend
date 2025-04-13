@@ -9,7 +9,7 @@ import cohorts from '../../../assets/icons/cohorts.svg';
 import curriculum from '../../../assets/icons/curriculum.svg';
 // import tasks from '../../../assets/icons/tasks.svg';
 import moderators from '../../../assets/icons/moderators.svg';
-// import teachers from '../../../assets/icons/teachers.svg';
+import teachers from '../../../assets/icons/teachers.svg';
 import students from '../../../assets/icons/students.svg';
 import schools from '../../../assets/icons/schools.svg';
 import library from '../../../assets/icons/library.svg';
@@ -107,7 +107,66 @@ const Navbar = () => {
                 </span>{' '}
               </div>
             </div>
-          ) : (
+          ) : user?.entity === 'teacher' ? (
+            // Teacher view
+            <div className="nav_list">
+              <div
+                id="home"
+                className={
+                  activeTag.classActive && activeTag.name === 'home'
+                    ? 'nav_link back active'
+                    : 'nav_link back'
+                }
+                onClick={navigateToActive}>
+                <img id="home" src={homeIcon} className="nav_icon" />
+                <span id="home" className="nav_name">Home</span>
+              </div>
+              <div
+                id="session"
+                className={
+                  activeTag.classActive && activeTag.name === 'session'
+                    ? 'nav_link back active'
+                    : 'nav_link back'
+                }
+                onClick={navigateToActive}>
+                <img id="session" src={session} className="nav_icon" />
+                <span id="session" className="nav_name">Session</span>
+              </div>
+              <div
+                id="cohorts"
+                className={
+                  activeTag.classActive && activeTag.name === 'cohorts'
+                    ? 'nav_link back active'
+                    : 'nav_link back'
+                }
+                onClick={navigateToActive}>
+                <img id="cohorts" src={cohorts} className="nav_icon" />
+                <span id="cohorts" className="nav_name">Cohorts</span>
+              </div>
+              <div
+                id="students"
+                className={
+                  activeTag.classActive && activeTag.name === 'students'
+                    ? 'nav_link back active'
+                    : 'nav_link back'
+                }
+                onClick={navigateToActive}>
+                <img id="students" src={students} className="nav_icon" />
+                <span id="students" className="nav_name">Students</span>
+              </div>
+              <div
+                id="library"
+                className={
+                  activeTag.classActive && activeTag.name === 'library'
+                    ? 'nav_link back active'
+                    : 'nav_link back'
+                }
+                onClick={navigateToActive}>
+                <img id="library" src={library} className="nav_icon" />
+                <span id="library" className="nav_name">Library</span>
+              </div>
+            </div>
+          ) :  (
             <div className="nav_list">
               <div
                 id="home"
@@ -150,6 +209,20 @@ const Navbar = () => {
                 <img id="schools" src={schools} className="nav_icon"></img>{' '}
                 <span id="schools" className="nav_name">
                   Schools
+                </span>{' '}
+              </div>
+              <div
+                id="teachers"
+                className={
+                  activeTag.classActive && activeTag.name === 'teachers'
+                    ? 'nav_link back active'
+                    : 'nav_link back'
+                }
+                onClick={navigateToActive}>
+                {' '}
+                <img id="teachers" src={teachers} className="nav_icon"></img>{' '}
+                <span id="teachers" className="nav_name">
+                  Teachers
                 </span>{' '}
               </div>
               <div

@@ -19,6 +19,9 @@ import AddSchools from './Components/Accounts/AddSchools/AddSchools';
 import School from './Components/Schools/School/School';
 import Students from './Components/Students/Students';
 import Student from './Components/Students/Student/Student';
+// Teachers 
+import Teachers from './Components/Teachers/Teachers';
+import Teacher from './Components/Teachers/Teacher/Teacher';
 import Cohorts from './Components/Cohorts/Cohorts';
 import CreateCohort from './Components/Cohorts/CreateCohort/CreateCohort';
 import Accordian from './Components/Common/Accordian/Accordian';
@@ -174,6 +177,30 @@ const App = () => {
                   <Navbar />
                   <Header />
                   <Student />
+                </>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/teachers/"
+            element={
+              <ProtectedRoute>
+                <>
+                  <Navbar />
+                  <Header />
+                  <Teachers />
+                </>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/teachers/:teacher"
+            element={
+              <ProtectedRoute>
+                <>
+                  <Navbar />
+                  <Header />
+                  <Teacher />
                 </>
               </ProtectedRoute>
             }

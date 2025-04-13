@@ -8,7 +8,7 @@
 # testing
 /coverage
 
-
+.gittoken.txt
 
 # misc
 .DS_Store

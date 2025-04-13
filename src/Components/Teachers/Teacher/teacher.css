@@ -1,0 +1,267 @@
+.hanna-container {
+  margin-top: 2cqh;
+  margin-left: 250px;
+}
+
+.hanna-basic {
+  margin-left: 16px;
+}
+
+.hanna-basic h1 {
+  color: #000;
+  font-family: Poppins;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.hanna-basic p {
+  color: #7d7d7d;
+  font-family: Poppins;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.hanna-box {
+  display: flex;
+  margin-left: 16px;
+}
+
+.hanna-left {
+  /* border: 1px solid black; */
+  margin-right: 15%;
+  margin-top: 2.5%;
+  flex-basis: 35%;
+  height: 55vh;
+  border-radius: 10px;
+  background: #eff2f5;
+  padding: 1.5%;
+}
+
+.hanna-left hr {
+  width: 80%;
+  position: relative;
+  opacity: 0.5;
+  left: 8%;
+}
+
+.hanna-right {
+  /* border: 1px solid black; */
+  margin-left: 2px;
+  flex-basis: 48%;
+}
+
+.hanna-row {
+  display: flex;
+  justify-content: space-around;
+}
+
+.hanna-left-data {
+  width: 150px;
+  padding: 1%;
+  margin: 1%;
+}
+
+.hanna-left-data h5 {
+  color: #7d7d7d;
+  font-family: Poppins;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  margin-bottom: 1%;
+}
+
+.hanna-left-data h6 {
+  color: #000;
+  font-family: Poppins;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin-top: 5%;
+}
+
+#noen {
+  visibility: hidden;
+}
+
+.hanna-right-btn {
+  border-radius: 10px;
+  border: 2px solid #7d7d7d;
+  padding: 10px;
+  width: 80%;
+  color: #000;
+  font-family: Poppins;
+  /* font-size: 16px; */
+  font-style: normal;
+  font-weight: 600;
+  background: #fff;
+  cursor: pointer;
+}
+
+/* progress bar */
+@import url(http://fonts.googleapis.com/css?family=Roboto:400,700,300);
+
+.circle-wrap {
+  margin: 15px auto;
+  width: 150px;
+  height: 150px;
+  background: #e6e2e7;
+  border-radius: 50%;
+  margin-right: 50px;
+}
+
+.circle-wrap .circle .mask,
+.circle-wrap .circle .fill {
+  width: 150px;
+  height: 150px;
+  position: absolute;
+  border-radius: 50%;
+}
+
+.circle-wrap .circle .mask {
+  clip: rect(0px, 150px, 150px, 75px);
+}
+
+.circle-wrap .circle .mask .fill {
+  clip: rect(0px, 75px, 150px, 0px);
+  background: linear-gradient(90deg, #4c86e9 0.06%, #03e9c2 99.95%);
+}
+
+.circle-wrap .circle .mask.full,
+.circle-wrap .circle .fill {
+  animation: fill ease-in-out 3s;
+  transform: rotate(126deg);
+}
+
+@keyframes fill {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(126deg);
+  }
+}
+
+.circle-wrap .inside-circle {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  background: #fff;
+  line-height: 130px;
+  text-align: center;
+  margin-top: 10px;
+  margin-left: 10px;
+  position: absolute;
+  z-index: 100;
+  font-weight: 700;
+  font-size: 2em;
+}
+
+.student-progress-row {
+  display: flex;
+  margin-right: 50px;
+  padding: 5px;
+  justify-content: center;
+  align-items: center;
+  margin-left: 10px;
+}
+
+.student-progress-row h3 {
+  text-align: center;
+  margin-right: 25%;
+  /* width: 70px; */
+  margin-bottom: 5px;
+}
+
+.progress-student {
+  padding: 5px;
+}
+
+.hanna-circle {
+  width: 140px;
+  height: 140px;
+  margin-left: 20px;
+  margin-right: 5vw;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.textbox-progress {
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+  margin-left: 5%;
+}
+
+.textbox-progress textarea {
+  height: 100px;
+}
+
+.textarea-label {
+  color: #000;
+  font-family: Poppins;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  text-transform: capitalize;
+}
+
+.textarea {
+  border-radius: 5px;
+  border: 1px solid #cbcbcb;
+  background: #fff;
+}
+
+.hanna-eval-btn {
+  border-radius: 10px;
+  border: 2px solid #000;
+  color: #000;
+  text-align: center;
+  font-family: Poppins;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  width: 120px;
+  height: 40px;
+  margin-left: 5%;
+}
+
+.hanna-eval-btn-1 {
+  border-radius: 10px;
+  border: 2px solid #000;
+  color: #000;
+  text-align: center;
+  font-family: Poppins;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  width: 20%;
+  height: 40px;
+  margin-left: 5%;
+  cursor: pointer;
+}
+
+.create-cohort-form-container-sess {
+  margin-left: 16px;
+  border-radius: 10px;
+  background: #eff2f5;
+  /* height: 500px; */
+  /* display: flex; */
+  width: 71vw;
+  /* margin-top: 1%; */
+  padding-top: 1%;
+  padding-bottom: 1%;
+  border-top-left-radius: 0;
+}
