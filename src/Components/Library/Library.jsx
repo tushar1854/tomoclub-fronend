@@ -60,7 +60,8 @@ const TableData = ({
               tcCompetency
             }
           })
-        }>
+        }
+      >
         <img className="edit-img-library1" src={edit} alt="edit" />
       </li>
     </div>

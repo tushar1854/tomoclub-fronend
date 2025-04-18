@@ -29,7 +29,8 @@ const TableData = ({ name, createdBy, modId }) => {
               modId
             }
           });
-        }}>
+        }}
+      >
         {name}
       </li>
       <li className="">{createdBy}</li>
@@ -42,7 +43,8 @@ const TableData = ({ name, createdBy, modId }) => {
               name
             }
           })
-        }>
+        }
+      >
         View
       </li>
 
@@ -91,7 +93,8 @@ const ModeratorHome = () => {
               type="submit"
               onClick={() => {
                 navigate(`/moderators/add`);
-              }}>
+              }}
+            >
               + Add Experts
             </button>
           </div>

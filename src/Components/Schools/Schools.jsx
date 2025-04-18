@@ -24,7 +24,8 @@ const TableData = ({ title, teachercount, studentcount, dated }) => {
         style={{ cursor: 'pointer' }}
         onClick={() => {
           navigate(`/schools/${title.split(' ').join('_')}`);
-        }}>
+        }}
+      >
         {title}
       </li>
       <li>{teachercount}</li>
@@ -73,7 +74,8 @@ const Schools = () => {
                 <button
                   className="add-new-school-btn"
                   type="submit"
-                  onClick={() => navigate('/accounts/addschool')}>
+                  onClick={() => navigate('/accounts/addschool')}
+                >
                   + Add School
                 </button>
               </div>

@@ -14,7 +14,8 @@ const Notification = ({ icon, data, blur, setBlur }) => {
           onClick={() => {
             setBlur(false);
             document.body.style.overflow = 'scroll';
-          }}>
+          }}
+        >
           <img
             src={crossIcon}
             onClick={() => {

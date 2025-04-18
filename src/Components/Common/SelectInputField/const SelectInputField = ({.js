@@ -9,7 +9,8 @@ const SelectInputField = ({ options, selectData, select = '' }) => {
           e.currentTarget.children[0].children[1].innerHTML = visibility
             ? 'arrow_drop_down'
             : 'arrow_drop_up';
-        }}>
+        }}
+      >
         <div className="selected-option">
           <span>{`${select.slice(0, 20)}...`}</span>
           <i className="material-icons">arrow_drop_down</i>
@@ -23,7 +24,8 @@ const SelectInputField = ({ options, selectData, select = '' }) => {
                   className={select === option ? 'active-option' : null}
                   onClick={() => {
                     selectData(option);
-                  }}>
+                  }}
+                >
                   {option}
                 </li>
               ))}

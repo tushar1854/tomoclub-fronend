@@ -42,7 +42,8 @@ const TimeSlotPicker = ({ day, selectedSlots, onTimeSlotChange }) => {
               <button
                 type="button"
                 className="btn-mod unaval"
-                onClick={() => handleRemoveSlot(index)}>
+                onClick={() => handleRemoveSlot(index)}
+              >
                 -
               </button>
             )}

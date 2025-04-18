@@ -65,7 +65,8 @@ const TableData = ({ list, setSubmitApprovalList }) => {
         style={{
           color: isActive ? 'green' : 'red'
         }}
-        onDoubleClick={handleClick}>
+        onDoubleClick={handleClick}
+      >
         {title}
       </li>
     </div>

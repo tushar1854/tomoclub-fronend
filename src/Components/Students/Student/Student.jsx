@@ -136,7 +136,8 @@ const Student = () => {
                       lastName: student.lastName
                     }
                   });
-                }}>
+                }}
+              >
                 View all session details
               </button>
               <div className="progress-student">

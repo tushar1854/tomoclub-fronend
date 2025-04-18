@@ -13,12 +13,14 @@ body {
 }
 
 .create-curr4-form-container {
+  margin-top: 0.5%;
+  margin-bottom: 1%;
   margin-left: 16px;
   border-radius: 10px;
   background: #eff2f5;
   /* height: 500px; */
   /* display: flex; */
-  width: 70vw;
+  width: 50vw;
 }
 
 .create-curr4-form-container hr {

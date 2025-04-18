@@ -115,7 +115,8 @@ function EditCurriculum() {
                     sessions: curriculumData?.sessions
                   }
                 })
-              }>
+              }
+            >
               Save this preset
             </button>
           </div>

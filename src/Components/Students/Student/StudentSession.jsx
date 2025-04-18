@@ -70,7 +70,8 @@ const TableData = ({
               status
             }
           });
-        }}>
+        }}
+      >
         {report === '0' ? 'Pending' : 'View'}
       </li>
       {/* <li>

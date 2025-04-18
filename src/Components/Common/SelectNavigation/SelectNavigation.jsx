@@ -16,7 +16,8 @@ const SelectNavigation = ({ options }) => {
           e.currentTarget.children[0].children[1].innerHTML = visibility
             ? 'arrow_drop_down'
             : 'arrow_drop_up';
-        }}>
+        }}
+      >
         <div className="selected-option-navigation">
           <span
           // title={selectedOption === '' ? '' : selectedOption}
@@ -47,7 +48,8 @@ const SelectNavigation = ({ options }) => {
                     // className={select === option ? 'active-option-navigation' : null}
                     onClick={() => {
                       navigate(option[1]);
-                    }}>
+                    }}
+                  >
                     {option[0]}
                   </li>
                 ))}

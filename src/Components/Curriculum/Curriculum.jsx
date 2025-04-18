@@ -39,7 +39,8 @@ const TableData = ({ assignedTo, createdAt, curriculumUid, nameOfPreset, noOfSes
               nameOfPreset: nameOfPreset
             }
           })
-        }>
+        }
+      >
         <img className="edit-img" src={duplicate} alt="" />
       </li>
     </div>

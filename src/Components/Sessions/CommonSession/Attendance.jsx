@@ -102,7 +102,8 @@ const Attendance = ({
                       `https://5nynvhrbr3.execute-api.us-east-1.amazonaws.com/testing/attendance-read?sessionid=${sessionId}`,
                       '_blank'
                     )
-                  }>
+                  }
+                >
                   Download Attendance
                 </button>
               </div>

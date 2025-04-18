@@ -24,13 +24,15 @@ const TableData = ({ studentUsername, cohortName, firstName, lastName, schoolNam
       <li
         onClick={() => {
           navigate(`/students/${studentUsername}`);
-        }}>
+        }}
+      >
         {studentUsername}
       </li>
       <li
         onClick={() => {
           navigate(`/students/${studentUsername}`);
-        }}>
+        }}
+      >
         {firstName + ' ' + lastName}
       </li>
       <li>{cohortName}</li>
@@ -169,7 +171,8 @@ const Students = () => {
               <button
                 className="add-new-school-btn"
                 type="submit"
-                onClick={() => navigate('/accounts/addstudent')}>
+                onClick={() => navigate('/accounts/addstudent')}
+              >
                 + Add Student
               </button>
             )}

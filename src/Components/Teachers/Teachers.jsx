@@ -24,13 +24,15 @@ const TableData = ({ staffId, emailId, firstName, lastName, schoolName, phoneNum
       <li
         onClick={() => {
           navigate(`/teachers/${staffId}`);
-        }}>
+        }}
+      >
         {staffId}
       </li>
       <li
         onClick={() => {
           navigate(`/teachers/${staffId}`);
-        }}>
+        }}
+      >
         {firstName + ' ' + lastName}
       </li>
       <li>{emailId}</li>
@@ -40,7 +42,7 @@ const TableData = ({ staffId, emailId, firstName, lastName, schoolName, phoneNum
   );
 };
 
-const Teachers  = () => {
+const Teachers = () => {
   const navigate = useNavigate();
   const [loader, setLoader] = useState(false);
   const [teacherAll, setteacherAll] = useState([]);
@@ -53,16 +55,16 @@ const Teachers  = () => {
   useEffect(() => {
     setLoader(true);
     callAPI('get', 'https://l2nxmy3sh0.execute-api.us-east-1.amazonaws.com/testing/teacher_read')
-    .then((teacherAllData) => {
-      console.log(teacherAllData);
-      setteacherAll(teacherAllData);
-      setLoader(false);
-    })
-    .catch((error) => {
-      console.log(error);
-      setLoader(false);
-    });
-  }, [])
+      .then((teacherAllData) => {
+        console.log(teacherAllData);
+        setteacherAll(teacherAllData);
+        setLoader(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoader(false);
+      });
+  }, []);
   //   if (user?.entity === 'moderator') {
   //     callAPI(
   //       'get',
@@ -180,7 +182,8 @@ const Teachers  = () => {
               <button
                 className="add-new-teacher-btn"
                 type="submit"
-                onClick={() => navigate('/accounts/addteacher')}>
+                onClick={() => navigate('/accounts/addteacher')}
+              >
                 + Add Teacher
               </button>
             )}

@@ -41,7 +41,8 @@ const TableData = ({
               session: session
             }
           })
-        }>
+        }
+      >
         {sessionUid}
       </li>
       <li>{teachers}</li>
@@ -55,7 +56,8 @@ const TableData = ({
               session: session
             }
           })
-        }>
+        }
+      >
         {capitalizeFirstChar(status)}
       </li>
       <li
@@ -66,7 +68,8 @@ const TableData = ({
               session: session
             }
           })
-        }>
+        }
+      >
         {attendance === '0' ? 'Pending' : 'View'}
       </li>
       <li
@@ -77,7 +80,8 @@ const TableData = ({
               session: session
             }
           })
-        }>
+        }
+      >
         {report === '0' ? 'Pending' : 'View'}
       </li>
       {/* <li>

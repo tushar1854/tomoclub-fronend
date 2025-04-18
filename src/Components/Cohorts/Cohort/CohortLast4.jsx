@@ -120,7 +120,8 @@ const CohortLast4 = () => {
           )}
           <p
             className="cohort-single-view-all"
-            onClick={() => navigate(`/cohorts/all/${cohortId}`)}>
+            onClick={() => navigate(`/cohorts/all/${cohortId}`)}
+          >
             View all sessions
           </p>
         </>

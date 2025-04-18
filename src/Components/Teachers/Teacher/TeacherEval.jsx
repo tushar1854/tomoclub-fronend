@@ -173,7 +173,8 @@ const StudentEval = () => {
                     `https://pzjhm1zapg.execute-api.us-east-1.amazonaws.com/testing/evaluation-download?sessionid=${location.state.sessionUid}`,
                     '_blank'
                   )
-                }>
+                }
+              >
                 Download Report
               </button>
               <TableCombined

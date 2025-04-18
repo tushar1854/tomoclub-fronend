@@ -71,7 +71,8 @@ const Navbar = () => {
                     ? 'nav_link back active'
                     : 'nav_link back'
                 }
-                onClick={navigateToActive}>
+                onClick={navigateToActive}
+              >
                 {' '}
                 <img id="session" src={session} className="nav_icon"></img>{' '}
                 <span id="session" className="nav_name">
@@ -85,7 +86,8 @@ const Navbar = () => {
                     ? 'nav_link back active'
                     : 'nav_link back'
                 }
-                onClick={navigateToActive}>
+                onClick={navigateToActive}
+              >
                 {' '}
                 <img id="cohorts" src={cohorts} className="nav_icon"></img>{' '}
                 <span id="cohorts" className="nav_name">
@@ -99,7 +101,8 @@ const Navbar = () => {
                     ? 'nav_link back active'
                     : 'nav_link back'
                 }
-                onClick={navigateToActive}>
+                onClick={navigateToActive}
+              >
                 {' '}
                 <img id="students" src={students} className="nav_icon"></img>{' '}
                 <span id="students" className="nav_name">
@@ -117,9 +120,12 @@ const Navbar = () => {
                     ? 'nav_link back active'
                     : 'nav_link back'
                 }
-                onClick={navigateToActive}>
+                onClick={navigateToActive}
+              >
                 <img id="home" src={homeIcon} className="nav_icon" />
-                <span id="home" className="nav_name">Home</span>
+                <span id="home" className="nav_name">
+                  Home
+                </span>
               </div>
               <div
                 id="session"
@@ -128,9 +134,12 @@ const Navbar = () => {
                     ? 'nav_link back active'
                     : 'nav_link back'
                 }
-                onClick={navigateToActive}>
+                onClick={navigateToActive}
+              >
                 <img id="session" src={session} className="nav_icon" />
-                <span id="session" className="nav_name">Session</span>
+                <span id="session" className="nav_name">
+                  Session
+                </span>
               </div>
               <div
                 id="cohorts"
@@ -139,9 +148,12 @@ const Navbar = () => {
                     ? 'nav_link back active'
                     : 'nav_link back'
                 }
-                onClick={navigateToActive}>
+                onClick={navigateToActive}
+              >
                 <img id="cohorts" src={cohorts} className="nav_icon" />
-                <span id="cohorts" className="nav_name">Cohorts</span>
+                <span id="cohorts" className="nav_name">
+                  Cohorts
+                </span>
               </div>
               <div
                 id="students"
@@ -150,9 +162,12 @@ const Navbar = () => {
                     ? 'nav_link back active'
                     : 'nav_link back'
                 }
-                onClick={navigateToActive}>
+                onClick={navigateToActive}
+              >
                 <img id="students" src={students} className="nav_icon" />
-                <span id="students" className="nav_name">Students</span>
+                <span id="students" className="nav_name">
+                  Students
+                </span>
               </div>
               <div
                 id="library"
@@ -161,12 +176,15 @@ const Navbar = () => {
                     ? 'nav_link back active'
                     : 'nav_link back'
                 }
-                onClick={navigateToActive}>
+                onClick={navigateToActive}
+              >
                 <img id="library" src={library} className="nav_icon" />
-                <span id="library" className="nav_name">Library</span>
+                <span id="library" className="nav_name">
+                  Library
+                </span>
               </div>
             </div>
-          ) :  (
+          ) : (
             <div className="nav_list">
               <div
                 id="home"
@@ -175,7 +193,8 @@ const Navbar = () => {
                     ? 'nav_link back active'
                     : 'nav_link back'
                 }
-                onClick={navigateToActive}>
+                onClick={navigateToActive}
+              >
                 {' '}
                 <img id="home" src={homeIcon} className="nav_icon "></img>
                 <span id="home" className="nav_name">
@@ -190,7 +209,8 @@ const Navbar = () => {
                     ? 'nav_link back active'
                     : 'nav_link back'
                 }
-                onClick={navigateToActive}>
+                onClick={navigateToActive}
+              >
                 {' '}
                 <img id="accounts" src={account} className="nav_icon"></img>{' '}
                 <span id="accounts" className="nav_name">
@@ -204,7 +224,8 @@ const Navbar = () => {
                     ? 'nav_link back active'
                     : 'nav_link back'
                 }
-                onClick={navigateToActive}>
+                onClick={navigateToActive}
+              >
                 {' '}
                 <img id="schools" src={schools} className="nav_icon"></img>{' '}
                 <span id="schools" className="nav_name">
@@ -218,7 +239,8 @@ const Navbar = () => {
                     ? 'nav_link back active'
                     : 'nav_link back'
                 }
-                onClick={navigateToActive}>
+                onClick={navigateToActive}
+              >
                 {' '}
                 <img id="teachers" src={teachers} className="nav_icon"></img>{' '}
                 <span id="teachers" className="nav_name">
@@ -232,7 +254,8 @@ const Navbar = () => {
                     ? 'nav_link back active'
                     : 'nav_link back'
                 }
-                onClick={navigateToActive}>
+                onClick={navigateToActive}
+              >
                 {' '}
                 <img id="students" src={students} className="nav_icon"></img>{' '}
                 <span id="students" className="nav_name">
@@ -246,7 +269,8 @@ const Navbar = () => {
                     ? 'nav_link back active'
                     : 'nav_link back'
                 }
-                onClick={navigateToActive}>
+                onClick={navigateToActive}
+              >
                 {' '}
                 <img id="moderators" src={moderators} className="nav_icon"></img>{' '}
                 <span id="moderators" className="nav_name">
@@ -260,7 +284,8 @@ const Navbar = () => {
                     ? 'nav_link back active'
                     : 'nav_link back'
                 }
-                onClick={navigateToActive}>
+                onClick={navigateToActive}
+              >
                 {' '}
                 <img id="cohorts" src={cohorts} className="nav_icon"></img>{' '}
                 <span id="cohorts" className="nav_name">
@@ -274,7 +299,8 @@ const Navbar = () => {
                     ? 'nav_link back active'
                     : 'nav_link back'
                 }
-                onClick={navigateToActive}>
+                onClick={navigateToActive}
+              >
                 {' '}
                 <img id="session" src={session} className="nav_icon"></img>{' '}
                 <span id="session" className="nav_name">
@@ -282,22 +308,22 @@ const Navbar = () => {
                 </span>{' '}
               </div>
 
-              
-            <div
-              id="curriculum"
-              className={
-                activeTag.classActive && activeTag.name === 'curriculum'
-                  ? 'nav_link back active'
-                  : 'nav_link back'
-              }
-              onClick={navigateToActive}>
-              {' '}
-              <img id="curriculum" src={curriculum} className="nav_icon"></img>{' '}
-              <span id="curriculum" className="nav_name">
-                Curriculum
-              </span>{' '}
-            </div>
-           
+              <div
+                id="curriculum"
+                className={
+                  activeTag.classActive && activeTag.name === 'curriculum'
+                    ? 'nav_link back active'
+                    : 'nav_link back'
+                }
+                onClick={navigateToActive}
+              >
+                {' '}
+                <img id="curriculum" src={curriculum} className="nav_icon"></img>{' '}
+                <span id="curriculum" className="nav_name">
+                  Curriculum
+                </span>{' '}
+              </div>
+
               {/* <div
               id="tasks"
               className={
@@ -335,7 +361,8 @@ const Navbar = () => {
                     ? 'nav_link back active'
                     : 'nav_link back'
                 }
-                onClick={navigateToActive}>
+                onClick={navigateToActive}
+              >
                 {' '}
                 <img id="library" src={library} className="nav_icon"></img>{' '}
                 <span id="library" className="nav_name">

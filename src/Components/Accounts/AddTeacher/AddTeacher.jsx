@@ -226,7 +226,8 @@ const AddTeacher = () => {
                   <div className="add-teacher-options">
                     <a
                       onClick={() => navigate('/accounts/addteacher?activeTab=addTeacher')}
-                      id="add-teacher-options-active">
+                      id="add-teacher-options-active"
+                    >
                       Teacher details
                     </a>
                     <a onClick={() => navigate('/accounts/addteacher?activeTab=bulkTeacher')}>
@@ -343,7 +344,8 @@ const AddTeacher = () => {
                     </a>
                     <a
                       onClick={() => navigate('/accounts/addteacher?activeTab=bulkTeacher')}
-                      id="add-teacher-options-active">
+                      id="add-teacher-options-active"
+                    >
                       Bulk upload
                     </a>
                   </div>

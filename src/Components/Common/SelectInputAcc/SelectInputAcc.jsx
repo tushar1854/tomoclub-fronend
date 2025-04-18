@@ -12,7 +12,8 @@ const SelectInputAcc = ({ options, selectData, select = '', selectError }) => {
           e.currentTarget.children[0].children[1].innerHTML = visibility
             ? 'arrow_drop_down'
             : 'arrow_drop_up';
-        }}>
+        }}
+      >
         <div className="selected-option-acc">
           <div className="selected-option-2-acc">
             {select === '' ? '' : select.length <= 20 ? select : `${select.slice(0, 20)}...`}
@@ -28,7 +29,8 @@ const SelectInputAcc = ({ options, selectData, select = '', selectError }) => {
                   className={select === option ? 'active-option' : null}
                   onClick={() => {
                     selectData(option);
-                  }}>
+                  }}
+                >
                   {option}
                 </li>
               ))}

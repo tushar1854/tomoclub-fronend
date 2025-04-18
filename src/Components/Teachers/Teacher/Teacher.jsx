@@ -136,7 +136,8 @@ const teacher = () => {
                       lastName: teacher.lastName
                     }
                   });
-                }}>
+                }}
+              >
                 View all session details
               </button>
               <div className="progress-teacher">

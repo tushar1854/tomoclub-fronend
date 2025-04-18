@@ -1,13 +1,11 @@
-import React, { useEffect, useState } from 'react';
+'use client';
+
+import { useEffect, useState } from 'react';
 import BreadcrumbsLink from '../../Common/BreadcrumbsLink/BreadcrumbsLink';
-// import AccordianCurriculum from '../../Common/AccordianCurriculum/AccordianCurriculum';
-// import AccordianSession from '../../Common/AccordianSession/AccordianSession';
 import SelectInputField from '../../Common/SelectInputField/SelectInputField';
 import AccordianSelect from '../../Common/Acordian-Select/AccordianSelect';
-
 import { useForm } from 'react-hook-form';
 import { useLocation, useNavigate } from 'react-router-dom';
-
 import { callAPI, convertTo24Hour } from '../../../Helper';
 import SelectInputFieldMod from '../../Common/SelectInputFieldMod/SelectInputFieldMod';
 import Constants from '../../../Constants';
@@ -16,7 +14,8 @@ import TableCombined from '../CommonSession/TableCombined';
 import Attendance from '../CommonSession/Attendance';
 import TextBox from '../../Common/TextBox/TextBox';
 import { removeBeforeTime } from '../../../Helper/common';
-// import SelectFieldSession from '../../Common/SelectFieldSession/SelectFieldSession';
+import TeacherEditSingleSession from './teacher-edit-single-session';
+import { getSessionStorage } from '../../../Helper';
 
 const EditSingleSession = () => {
   const location = useLocation();
@@ -72,6 +71,10 @@ const EditSingleSession = () => {
     },
     remark: ''
   });
+
+  // Get user from session storage
+  const user = JSON.parse(getSessionStorage('user'));
+  const isTeacher = user?.entity === 'teacher';
 
   console.log('studentListForEval', studentListForEval);
   useEffect(() => {
@@ -185,10 +188,10 @@ const EditSingleSession = () => {
   }, [singleStudentEval]);
 
   useEffect(() => {
-    setSelectValue({
-      ...selectValue,
+    setSelectValue((prevState) => ({
+      ...prevState,
       gameMode: []
-    });
+    }));
     reset({
       skillToFocus: []
     });
@@ -294,6 +297,31 @@ const EditSingleSession = () => {
       });
   };
 
+  // If user is a teacher, render the TeacherEditSingleSession component
+  if (isTeacher) {
+    return (
+      <div className="addSession">
+        <div className="create-curr4-container">
+          <BreadcrumbsLink
+            breadcrumbValues={{
+              1: {
+                name: 'Home',
+                link: '/home'
+              },
+              2: {
+                name: 'Session',
+                link: '/session'
+              }
+            }}
+            lastValue={'Single session'}
+          />
+          <TeacherEditSingleSession session={location.state.session} studentAll={studentAll} />
+        </div>
+      </div>
+    );
+  }
+
+  // Original component for non-teacher users
   return (
     <>
       <div className="addSession">
@@ -378,7 +406,8 @@ const EditSingleSession = () => {
                             `https://pzjhm1zapg.execute-api.us-east-1.amazonaws.com/testing/evaluation-download?sessionid=${location.state.session.sessionId}`,
                             '_blank'
                           )
-                        }>
+                        }
+                      >
                         Download Report
                       </button>
                       <TableCombined
@@ -495,7 +524,8 @@ const EditSingleSession = () => {
                         <div className="accordian-right-row">
                           <button
                             className="accordian-btn"
-                            onClick={() => setIsEditSessionDetail(false)}>
+                            onClick={() => setIsEditSessionDetail(false)}
+                          >
                             Edit
                           </button>
                         </div>

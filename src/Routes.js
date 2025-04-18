@@ -19,7 +19,7 @@ import AddSchools from './Components/Accounts/AddSchools/AddSchools';
 import School from './Components/Schools/School/School';
 import Students from './Components/Students/Students';
 import Student from './Components/Students/Student/Student';
-// Teachers 
+// Teachers
 import Teachers from './Components/Teachers/Teachers';
 import Teacher from './Components/Teachers/Teacher/Teacher';
 import Cohorts from './Components/Cohorts/Cohorts';
@@ -65,11 +65,11 @@ const App = () => {
             path="/home"
             element={
               // <ProtectedRoute entity={user?.entity}>
-                <>
-                  <Navbar />
-                  <Header />
-                  <Home />
-                </>
+              <>
+                <Navbar />
+                <Header />
+                <Home />
+              </>
               // </ProtectedRoute>
             }
           />
@@ -299,7 +299,7 @@ const App = () => {
                   <Header />
                   <Curriculum />
                 </>
-               </ProtectedRoute>
+              </ProtectedRoute>
             }
           />
           <Route

@@ -6,22 +6,35 @@ import Loader from '../Common/Loader/Loader';
 import edit from '../../assets/icons/edit.svg';
 import { callAPI, capitalizeFirstChar, getSessionStorage } from '../../Helper';
 import SelectInputFieldMod from '../Common/SelectInputFieldMod/SelectInputFieldMod';
-// import prev from '../../assets/icons/prev.svg';
-// import next from '../../assets/icons/next.svg';
+
 const TableHeader = () => {
+  const user = JSON.parse(getSessionStorage('user'));
+  const isTeacher = user?.entity === 'teacher';
+
   return (
     <div className="TableHeader-cohort-comp">
-      <li>Cohort ID</li>
-      <li>Cohort Name</li>
-      <li>No. of students</li>
-      <li>Planned Sessions</li>
-      <li>Completed Sessions</li>
-      <li>Date created</li>
-      <li className="hidden"></li>
-      {/* <li>Session evaluation</li> */}
+      {isTeacher ? (
+        <>
+          <li>Date Created</li>
+          <li>Cohort Name</li>
+          <li>No. of Students</li>
+          <li>Sessions</li>
+        </>
+      ) : (
+        <>
+          <li>Cohort ID</li>
+          <li>Cohort Name</li>
+          <li>No. of students</li>
+          <li>Planned Sessions</li>
+          <li>Completed Sessions</li>
+          <li>Date created</li>
+          <li className="hidden"></li>
+        </>
+      )}
     </div>
   );
 };
+
 const TableData = ({
   cohortUid,
   createdAt,
@@ -29,48 +42,77 @@ const TableData = ({
   plannedSessions,
   completedSessions,
   numberOfStudent,
+  noOfSessions,
   cohort
 }) => {
+  const user = JSON.parse(getSessionStorage('user'));
+  const isTeacher = user?.entity === 'teacher';
   const navigate = useNavigate();
+
+  const formatDate = (rawDate) => {
+    const dateObj = new Date(rawDate);
+    const options = { day: 'numeric', month: 'long', year: 'numeric' };
+    return dateObj.toLocaleDateString('en-US', options); // e.g. 9 July 2023
+  };
+
   return (
     <div className="TableData-cohort-comp">
-      <li>{cohortUid.substring(0, 4)}</li>
-      <li
-        onClick={() => {
-          navigate(`/cohorts/${cohortUid}`, {
-            state: { ...cohort }
-          });
-          // navigate(/cohorts/{cohortName});`
-        }}
-        className="cohort-hover">
-        {capitalizeFirstChar(cohortName)}
-      </li>
-      <li style={{ paddingLeft: '30px' }}>{numberOfStudent}</li>
-      <li style={{ paddingLeft: '30px' }}>{plannedSessions}</li>
-      <li style={{ paddingLeft: '30px' }}>{completedSessions}</li>
-      <li>{createdAt.split(' ')[0]}</li>
-      <li
-        onClick={() =>
-          navigate('/cohorts/editcohort', {
-            state: {
-              cohortUid
+      {isTeacher ? (
+        <>
+          <li>{formatDate(createdAt)}</li>
+          <li
+            onClick={() =>
+              navigate(`/cohorts/${cohortUid}`, {
+                state: { ...cohort }
+              })
             }
-          })
-        }>
-        <img className="edit-img-cohort" src={edit} alt="edit" />
-      </li>
-      {/* <li>03 out of 12</li> */}
-      {/* <li>View evaluation</li> */}
+            className="cohort-hover">
+            {capitalizeFirstChar(cohortName)}
+          </li>
+          <li>{numberOfStudent}</li>
+          <li>
+            {plannedSessions.toString().padStart(2, '0')} out of{' '}
+            {noOfSessions.toString().padStart(2, '0')}
+          </li>
+        </>
+      ) : (
+        <>
+          <li>{cohortUid.substring(0, 4)}</li>
+          <li
+            onClick={() =>
+              navigate(`/cohorts/${cohortUid}`, {
+                state: { ...cohort }
+              })
+            }
+            className="cohort-hover">
+            {capitalizeFirstChar(cohortName)}
+          </li>
+          <li style={{ paddingLeft: '30px' }}>{numberOfStudent}</li>
+          <li style={{ paddingLeft: '30px' }}>{plannedSessions}</li>
+          <li style={{ paddingLeft: '30px' }}>{completedSessions}</li>
+          <li>{createdAt.split(' ')[0]}</li>
+          <li
+            onClick={() =>
+              navigate('/cohorts/editcohort', {
+                state: {
+                  cohortUid
+                }
+              })
+            }>
+            <img className="edit-img-cohort" src={edit} alt="edit" />
+          </li>
+        </>
+      )}
     </div>
   );
 };
+
 const Cohorts = () => {
   const navigate = useNavigate();
   const [loader, setLoader] = useState(false);
   const [cohortAll, seCohortAll] = useState([]);
   const [schoolList, setSchoolList] = useState([]);
   const [selectValue, setSelectValue] = useState({});
-
   const user = JSON.parse(getSessionStorage('user'));
 
   useEffect(() => {
@@ -81,9 +123,19 @@ const Cohorts = () => {
         `https://7vz4zwaw90.execute-api.us-east-1.amazonaws.com/testing/cohort_read?moderatoruid=${user?.uid}`
       )
         .then((cohortAllData) => {
-          console.log(cohortAllData);
           seCohortAll(cohortAllData);
-          // setLoader(false);
+        })
+        .catch((error) => {
+          console.log(error);
+          setLoader(false);
+        });
+    } else if (user?.entity === 'teacher') {
+      callAPI(
+        'get',
+        `https://qalb91pdu7.execute-api.us-east-1.amazonaws.com/testing/cohort-teacher-read?teacheremail=${user?.emailId}`
+      )
+        .then((cohortAllData) => {
+          seCohortAll(cohortAllData);
         })
         .catch((error) => {
           console.log(error);
@@ -92,18 +144,16 @@ const Cohorts = () => {
     } else {
       callAPI('get', 'https://7vz4zwaw90.execute-api.us-east-1.amazonaws.com/testing/cohort_read')
         .then((cohortAllData) => {
-          console.log(cohortAllData);
           seCohortAll(cohortAllData);
-          // setLoader(false);
         })
         .catch((error) => {
           console.log(error);
           setLoader(false);
         });
     }
+
     callAPI('get', 'https://trfdx152e8.execute-api.us-east-1.amazonaws.com/testing/allschoolinfo')
       .then((schoolAll) => {
-        console.log(schoolAll);
         setSchoolList(schoolAll);
         setLoader(false);
       })
@@ -122,7 +172,6 @@ const Cohorts = () => {
         `https://7vz4zwaw90.execute-api.us-east-1.amazonaws.com/testing/cohort_read?schoolname=${schoolName}`
       )
         .then((sessionAllData) => {
-          console.log(sessionAllData);
           seCohortAll(sessionAllData);
           setLoader(false);
         })
@@ -148,7 +197,7 @@ const Cohorts = () => {
       <div className="accounts-header">
         <h1>Cohorts</h1>
         <div className="cohort-top-btn">
-          {user?.entity === 'moderator' ? null : (
+          {user?.entity === 'moderator' || user?.entity === 'teacher' ? null : (
             <button
               className="create-cohort-btn"
               onClick={() => {
@@ -157,17 +206,22 @@ const Cohorts = () => {
               Create Cohort
             </button>
           )}
-          <div className="stu-dr-1 ct-1">
-            <p>Filter School</p>
-            <SelectInputFieldMod
-              options={schoolList}
-              selectData={(dataValue) => setSelectValue({ ...selectValue, school: dataValue })}
-              select={selectValue.school}
-              providedList="school"
-            />
-          </div>
+          {user?.entity === 'teacher' ? null : (
+            <div className="stu-dr-1 ct-1">
+              <p>Filter School</p>
+              <SelectInputFieldMod
+                options={schoolList}
+                selectData={(dataValue) =>
+                  setSelectValue({ ...selectValue, school: dataValue })
+                }
+                select={selectValue.school}
+                providedList="school"
+              />
+            </div>
+          )}
         </div>
       </div>
+
       {loader ? (
         <Loader />
       ) : (
@@ -185,24 +239,11 @@ const Cohorts = () => {
                 numberOfStudent={cohort.noOfstudents}
                 plannedSessions={cohort.plannedSessions}
                 completedSessions={cohort.completedSessions}
+                noOfSessions={cohort.noOfSessions}
                 cohort={cohort}
               />
             ))}
           </div>
-          {/* <div className="cohort-pagination-container">
-          <div className="cohort-table-pagination">
-            <div className="cohort-table-pagination-left">
-              <p>Rows per page: 25</p>
-            </div>
-            <div className="cohort-table-pagination-right">
-              <div className="cohort-table-right-inner">
-                <p>1 of 6</p>
-                <img src={prev} alt="" />
-                <img src={next} alt="" />
-              </div>
-            </div>
-          </div>
-        </div> */}
         </div>
       )}
     </div>
