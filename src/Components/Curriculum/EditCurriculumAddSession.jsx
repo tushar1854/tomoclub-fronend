@@ -5,6 +5,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import AccordianCurriculum from '../Common/AccordianCurriculum/AccordianCurriculum';
 import { callAPI, removeDuplicateObjects } from '../../Helper';
 import Loader from '../Common/Loader/Loader';
+
 function EditCurriculumAddSession() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -17,6 +18,8 @@ function EditCurriculumAddSession() {
   const setSessionAll = (session) => {
     setAddSession([...addSession, session]);
   };
+
+  
 
   useEffect(() => {
     setLoader(true);

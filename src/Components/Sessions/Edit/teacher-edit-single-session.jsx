@@ -9,26 +9,27 @@ import Constants from '../../../Constants';
 import Loader from '../../Common/Loader/Loader';
 import './teacher-edit-single-session.scss';
 
+
 const TeacherEditSingleSession = ({ session, studentAll }) => {
+  console.log('session', session);
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('Session Details');
   const [loader, setLoader] = useState(false);
   const [isEditSessionDetail, setIsEditSessionDetail] = useState(true);
-  const { handleSubmit, reset, register } = useForm({ criteriaMode: 'all' });
+  const { handleSubmit, register } = useForm({ criteriaMode: 'all' });
   const [selectValue, setSelectValue] = useState({
     moderator: {
-      moderatorName: session.sessionModerator,
-      moderatorUid: session.moderatorUid
+      moderatorName: session.sessionModerator || '',
+      moderatorUid: session.moderatorUid || ''
     },
-    startTime: session.time,
-    endTime: session.time,
-    timezone: session.timezone,
+    startTime: session.sessionTime || '',
+    endTime: session.sessionEndTime || '',
+    timezone: session.timeZone || '',
     gameName: session.gameName || '',
-    gameMode: session.gameMode || ''
+    gameMode: session.gameMode || '',
+    skillToFocus: session.skillInFocus
   });
-  const [gameMode, setGameMode] = useState([]);
   const [skills, setSkills] = useState([]);
-  const [gameData, setGameData] = useState([]);
   const [singleStudentEval, setSingleStudentEval] = useState('');
   const [studentListForEval, setStudentListForEval] = useState([]);
   const [attendanceStu, setAttendanceStu] = useState({});
@@ -56,25 +57,22 @@ const TeacherEditSingleSession = ({ session, studentAll }) => {
     },
     remark: ''
   });
+  useEffect(() => {
+    if (session.skillInFocus) {
+      setSkills(session.skillInFocus.split(',').map((skill) => skill.trim()));
+    } else {
+      setSkills([]);
+    }
+  }, [session.skillInFocus]);
 
   useEffect(() => {
     setLoader(true);
-    callAPI('get', 'https://mslpuh4oe1.execute-api.us-east-1.amazonaws.com/testing/game_name')
-      .then((res) => {
-        setGameData(res);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-
     callAPI(
       'get',
       `https://l8at6mypj6.execute-api.us-east-1.amazonaws.com/testing/evaluation-enables?sessionid=${session.sessionId}`
-    )
-      .then((res) => {
+    ).then((res) => {
         setStudentListForEval(res);
-      })
-      .catch((error) => {
+      }).catch((error) => {
         console.log(error);
       });
     callAPI(
@@ -136,46 +134,27 @@ const TeacherEditSingleSession = ({ session, studentAll }) => {
           setLoader(false);
         });
     }
-  }, [singleStudentEval, session.sessionId]);
-
-  useEffect(() => {
-    setSelectValue((prevSelectValue) => ({
-      ...prevSelectValue,
-      gameMode: []
-    }));
-    reset({
-      skillToFocus: []
-    });
-    const foundGameMode = gameData?.find(
-      (item) => item.gameName === selectValue.gameName
-    )?.modeAndSkills;
-    setGameMode(foundGameMode);
-  }, [selectValue.gameName, gameData, reset]);
-
-  useEffect(() => {
-    const foundSkills = gameMode?.find((item) => item.gameMode === selectValue.gameMode)?.skills;
-    setSkills(foundSkills);
-  }, [selectValue.gameMode, gameMode]);
-
+  }, [singleStudentEval, session.sessionId]); 
+  
   const onSubmit = (data) => {
     const sessionD = {
       cohortUid: session.cohortUid,
       info: {
         [session.sessionId]: {
           sessionId: session.sessionId,
-          sessionModerator: selectValue.moderator.moderatorName,
+          sessionModerator: session.sessionModerator,
           date: data.sessionDate,
           time: convertTo24Hour(selectValue.startTime).trim(),
           endTime: convertTo24Hour(selectValue.endTime).trim(),
           timezone: selectValue.timezone,
-          gameName: selectValue.gameName,
-          gameMode: selectValue.gameMode,
-          skillInFocus: data.skillToFocus?.map((skillToFocus) => skillToFocus.value).join(','),
-          moderatorUid: selectValue.moderator.moderatorUid
+          gameName: session.gameName,
+          gameMode: session.gameMode,
+          skillInFocus: session.skillInFocus,
+          moderatorUid: session.moderatorUid
         }
       }
     };
-
+  
     setLoader(true);
     callAPI(
       'post',
@@ -191,6 +170,7 @@ const TeacherEditSingleSession = ({ session, studentAll }) => {
         setLoader(false);
       });
   };
+  
 
   const handleReschedule = () => {
     setIsEditSessionDetail(false);
@@ -220,26 +200,46 @@ const TeacherEditSingleSession = ({ session, studentAll }) => {
                   value={session.date?.split('-')[2] || '03'}
                   disabled
                 />
-                <input type="text" className="form-control month-input" value="December" disabled />
-                <input type="text" className="form-control year-input" value="2023" disabled />
+                <input
+                  type="text"
+                  className="form-control month-input"
+                  value={session.date ? new Date(session.date).toLocaleString('default', { month: 'long' }) : 'December'}
+                  disabled
+                />
+                <input
+                  type="text"
+                  className="form-control year-input"
+                  value={session.date ? new Date(session.date).getFullYear() : '2023'}
+                  disabled
+                />
               </div>
             </div>
-
+    
             <div className="form-group">
               <label className="form-label">Session Time</label>
               <div className="time-inputs">
-                <input type="text" className="form-control time-input" value="11:00am" disabled />
+                <input
+                  type="text"
+                  className="form-control time-input"
+                  value={selectValue.startTime || '11:00am'}
+                  disabled
+                />
                 <span className="separator">to</span>
                 <input
                   type="text"
                   className="form-control time-input time-input-left"
-                  value="12:00pm"
+                  value={selectValue.endTime || '12:00pm'}
                   disabled
                 />
-                <input type="text" className="form-control timezone-input" value="PST" disabled />
+                <input
+                  type="text"
+                  className="form-control timezone-input"
+                  value={selectValue.timezone || 'PST'}
+                  disabled
+                />
               </div>
             </div>
-
+    
             {/* Row 2: Game Name & Game Mode */}
             <div className="form-group game-align">
               <label className="form-label">Game Name</label>
@@ -250,25 +250,45 @@ const TeacherEditSingleSession = ({ session, studentAll }) => {
                 disabled
               />
             </div>
-
+    
             <div className="form-group game-align">
               <label className="form-label">Game Mode</label>
-              <input type="text" className="form-control" value="Chapter 01 - Normal" disabled />
+              <input
+                type="text"
+                className="form-control"
+                value={session.gameMode || 'Chapter 01 - Normal'}
+                disabled
+              />
             </div>
-
+    
             {/* Row 3: Skills */}
             <div className="form-group full-width">
               <label className="form-label">Skills in Focus</label>
               <div className="skills-container">
-                <span className="skill-tag">Communication</span>
-                <span className="skill-tag">Leadership</span>
+                {Array.isArray(skills) && skills.length > 0
+                  ? skills.map((skill, index) => (
+                      <span key={index} className="skill-tag">
+                        {skill.trim()}
+                      </span>
+                    ))
+                  : session.skillInFocus
+                  ? session.skillInFocus.split(',').map((skill, index) => (
+                      <span key={index} className="skill-tag">
+                        {skill.trim()}
+                      </span>
+                    ))
+                  : <span className="skill-tag">No skills available</span>
+                }
               </div>
             </div>
-          </div>
 
+
+          </div>
+    
           {/* Actions */}
           <div className="actions">
-            <button onClick={handleReschedule} className="btn btn-secondary">
+            {/*btn btn-secondary*/}
+            <button onClick={handleReschedule} className="reschedule-btn">
               Reschedule
             </button>
             <a href="#" onClick={handleViewLessonPlan} className="link">
@@ -276,122 +296,75 @@ const TeacherEditSingleSession = ({ session, studentAll }) => {
             </a>
           </div>
         </div>
-      );
+      );    
     } else {
       return (
-        <div className="session-details">
+      <div className="session-details">
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="form-grid">
-              <div>
-                <div className="form-group">
-                  <label className="form-label">Session Date</label>
-                  <input
-                    type="date"
-                    className="form-control"
-                    {...register('sessionDate', { required: 'This input is required.' })}
-                    defaultValue={session.date}
-                    min={today}
-                  />
-                </div>
-                <div className="form-group">
-                  <label className="form-label">Game Name</label>
-                  <select
-                    className="form-control"
-                    value={selectValue.gameName}
-                    onChange={(e) => setSelectValue({ ...selectValue, gameName: e.target.value })}
-                  >
-                    <option value="">Select Game</option>
-                    {gameData?.map((item, index) => (
-                      <option key={index} value={item.gameName}>
-                        {item.gameName}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <div className="form-group">
-                  <label className="form-label">Skills in Focus</label>
-                  <select
-                    className="form-control"
-                    multiple
-                    {...register('skillToFocus', { required: 'This input is required.' })}
-                  >
-                    {skills?.map((item, index) => (
-                      <option key={index} value={item}>
-                        {item}
-                      </option>
-                    ))}
-                  </select>
-                </div>
+              <div className="form-group">
+                <label className="form-label">Session Date</label>
+                <input
+                  type="date"
+                  className="date-picker"
+                  {...register('sessionDate', { required: 'This input is required.' })}
+                  defaultValue={session.date}
+                  min={today}
+                />
               </div>
-              <div>
-                <div className="form-group">
-                  <label className="form-label">Session Time</label>
-                  <div className="time-inputs">
-                    <select
-                      className="form-control time-input"
-                      value={selectValue.startTime}
-                      onChange={(e) =>
-                        setSelectValue({ ...selectValue, startTime: e.target.value })
-                      }
-                    >
-                      {Constants.TIME.map((time, index) => (
-                        <option key={index} value={time}>
-                          {time}
-                        </option>
-                      ))}
-                    </select>
-                    <span className="separator">to</span>
-                    <select
-                      className="form-control time-input"
-                      value={selectValue.endTime}
-                      onChange={(e) => setSelectValue({ ...selectValue, endTime: e.target.value })}
-                    >
-                      {removeBeforeTime(Constants.TIME, selectValue.startTime).map(
-                        (time, index) => (
-                          <option key={index} value={time}>
-                            {time}
-                          </option>
-                        )
-                      )}
-                    </select>
-                    <select
-                      className="form-control timezone-input"
-                      value={selectValue.timezone}
-                      onChange={(e) => setSelectValue({ ...selectValue, timezone: e.target.value })}
-                    >
-                      {Constants.TIMEZONE.map((timezone, index) => (
-                        <option key={index} value={timezone}>
-                          {timezone}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
-                <div className="form-group">
-                  <label className="form-label">Game Mode</label>
+
+              <div className="form-group">
+                <label className="form-label">Session Time</label>
+                <div className="time-inputs">
                   <select
-                    className="form-control"
-                    value={selectValue.gameMode}
-                    onChange={(e) => setSelectValue({ ...selectValue, gameMode: e.target.value })}
+                    className="form-control time-input"
+                    value={selectValue.startTime}
+                    onChange={(e) => setSelectValue({ ...selectValue, startTime: e.target.value })}
                   >
-                    <option value="">Select Game Mode</option>
-                    {gameMode?.map((item, index) => (
-                      <option key={index} value={item.gameMode}>
-                        {item.gameMode}
+                    {Constants.TIME.map((time, index) => (
+                      <option key={index} value={time}>
+                        {time}
+                      </option>
+                    ))}
+                  </select>
+
+                  <span className="separator">to</span>
+
+                  <select
+                    className="form-control time-input"
+                    value={selectValue.endTime}
+                    onChange={(e) => setSelectValue({ ...selectValue, endTime: e.target.value })}
+                  >
+                    {removeBeforeTime(Constants.TIME, selectValue.startTime).map((time, index) => (
+                      <option key={index} value={time}>
+                        {time}
+                      </option>
+                    ))}
+                  </select>
+
+                  <select
+                    className="form-control timezone-input"
+                    value={selectValue.timezone}
+                    onChange={(e) => setSelectValue({ ...selectValue, timezone: e.target.value })}
+                  >
+                    {Constants.TIMEZONE.map((timezone, index) => (
+                      <option key={index} value={timezone}>
+                        {timezone}
                       </option>
                     ))}
                   </select>
                 </div>
               </div>
             </div>
+
             <div className="actions">
-              <button type="submit" className="btn btn-primary">
-                Save Changes
+              <button type="submit" className="reschedule-btn">
+                Confirm
               </button>
               <button
                 type="button"
                 onClick={() => setIsEditSessionDetail(true)}
-                className="btn btn-secondary"
+                className="reschedule-btn"
               >
                 Cancel
               </button>
@@ -592,54 +565,41 @@ const TeacherEditSingleSession = ({ session, studentAll }) => {
       ) : (
         <>
           <div className="session-header">
-            <div className="header-content">
-              <div className="header-left">
-                <h1 className="title">Single Session</h1>
-                <div className="session-info">
-                  <div className="info-item">
-                    <span className="label">Cohort name:</span>
-                    <span>{session?.cohortName || 'Crafters'}</span>
-                  </div>
-                  <div className="info-item">
-                    <span className="label">Session ID:</span>
-                    <span>{session?.sessionId || 'crafters_s03'}</span>
-                  </div>
-                </div>
-              </div>
-              <div className="header-right">
-                <div className="status-wrapper">
-                  <span className="status-label">Session Status:</span>
-                  <span
-                    className={`status-badge ${
-                      session?.status === 'completed'
-                        ? 'completed'
-                        : session?.status === 'live'
-                        ? 'live'
-                        : 'pending'
-                    }`}
-                  >
-                    {session?.status === 'completed'
-                      ? 'Completed'
-                      : session?.status === 'live'
-                      ? 'Live'
-                      : 'Pending'}
-                  </span>
-                </div>
-                <div className="timing-info">
-                  <span className="label">Session Timing:</span>
-                  <span>
-                    {session?.day || 'SUNDAY'} | {session?.sessionTime || '00:00'} |{' '}
-                    {session?.timeZone || 'AKST'}
-                  </span>
-                </div>
-              </div>
+          <h1 className="title">Single Session</h1>
+          <div className="header-content">
+            <div className="grid-item">
+              <span className="label">Cohort name:</span>
+              <span>{session?.cohortName || 'Crafters'}</span>
             </div>
+            <div className="grid-item status-wrapper">
+              <span className="status-label">Session Status:</span>
+              <span className="status-badge">
+                {session?.status === 'completed'
+                  ? 'Completed'
+                  : session?.status === 'live'
+                  ? 'Live'
+                  : 'Pending'}
+              </span>
+            </div>
+            <div className="grid-item">
+              <span className="label">Session ID:</span>
+              <span>{session?.sessionId || 'crafters_s03'}</span>
+            </div>
+            <div className="grid-item timing-info">
+              <span className="label">Session Timing:</span>
+              <span>
+                {session?.sessionTime || '00:00'} |{' '}
+                {session?.timeZone || 'AKST'}
+              </span>
+            </div>
+          </div>
+
 
             <div className="tabs">
               {tabs.map((tab) => (
                 <button
                   key={tab}
-                  className={`tab-button ${activeTab === tab ? 'active' : ''}`}
+                  className={`tab-button ${activeTab === tab ? 'active-btn' : ''}`}
                   onClick={() => setActiveTab(tab)}
                 >
                   {tab}

@@ -55,14 +55,36 @@ export function removeBeforeTime(times, time) {
 }
 
 export function convertTo24Hour(time) {
-  let [hours, minutes] = time.slice(0, -2).split(':');
-  const period = time.slice(-2);
+  if (!time) return '';
 
-  if (period === 'PM' && hours !== '12') {
-    hours = String(+hours + 12);
-  } else if (hours === '12' && period === 'AM') {
-    hours = '00';
+  // Handle different formats and trim whitespace
+  const timeString = time.trim().toUpperCase();
+  const amPmMatch = timeString.match(/(.*?)\s*(AM|PM)$/i);
+  
+  if (!amPmMatch) return time; // Return original if no AM/PM found
+  
+  const timePart = amPmMatch[1];
+  const modifier = amPmMatch[2];
+  
+  let [hours, minutes] = timePart.split(':');
+  
+  // Ensure hours and minutes are valid numbers
+  hours = parseInt(hours, 10);
+  minutes = minutes ? parseInt(minutes, 10) : 0;
+  
+  if (isNaN(hours) || isNaN(minutes)) return time;
+  
+  // Convert to 24-hour format
+  if (modifier === 'PM' && hours !== 12) {
+    hours += 12;
+  } else if (modifier === 'AM' && hours === 12) {
+    hours = 0;
   }
-
-  return `${hours.padStart(2, '0')}:${minutes}`;
+  
+  // Ensure hours and minutes are in valid ranges
+  hours = Math.min(23, Math.max(0, hours));
+  minutes = Math.min(59, Math.max(0, minutes));
+  
+  return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
 }
+
