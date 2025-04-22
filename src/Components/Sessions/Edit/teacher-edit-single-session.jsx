@@ -573,11 +573,13 @@ const TeacherEditSingleSession = ({ session, studentAll }) => {
             </div>
             <div className="grid-item status-wrapper">
               <span className="status-label">Session Status:</span>
-              <span className="status-badge">
+              <span>
                 {session?.status === 'completed'
                   ? 'Completed'
                   : session?.status === 'live'
                   ? 'Live'
+                  : session?.status === 'cancelled'
+                  ? 'Cancelled'
                   : 'Pending'}
               </span>
             </div>
