@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import './editCurriculum.css';
-import BreadcrumbsLink from '../Common/BreadcrumbsLink/BreadcrumbsLink';
-import { useLocation, useNavigate } from 'react-router-dom';
+// import BreadcrumbsLink from '../Common/BreadcrumbsLink/BreadcrumbsLink';
+import { useLocation } from 'react-router-dom';
 import AccordianCurriculum from '../Common/AccordianCurriculum/AccordianCurriculum';
-import { callAPI, removeDuplicateObjects } from '../../Helper';
+import { callAPI } from '../../Helper';
 import Loader from '../Common/Loader/Loader';
 
 function EditCurriculumAddSession() {
   const location = useLocation();
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
   const presetState = location.state || {
     noOfSessions: 0,
     addNewSession: 0,
@@ -17,8 +17,8 @@ function EditCurriculumAddSession() {
   const [addSession, setAddSession] = useState([]);
   const [loader, setLoader] = useState(false);
   const [gameData, setGameData] = useState([]);
-  const [nameCheck, setNameCheck] = useState(false);
-  const [currName, setCurrName] = useState('');
+  //const [nameCheck, setNameCheck] = useState(false);
+  //const [currName, setCurrName] = useState('');
 
   const setSessionAll = (session) => {
     setAddSession([...addSession, session]);
@@ -39,60 +39,60 @@ function EditCurriculumAddSession() {
       });
   }, []);
 
-  const onSubmit = (e) => {
-    e.preventDefault();
-    setLoader(true);
-    callAPI(
-      'get',
-      `https://7nluheb3kb.execute-api.us-east-1.amazonaws.com/testing/check_availability?name=${currName}`
-    )
-      .then((res) => {
-        console.log(res);
-        if (res.success) {
-          setNameCheck(true);
-        } else {
-          setNameCheck(false);
-          const transformedS = addSession.map((item) => {
-            return {
-              gameName: item?.gameName, //?.map((game) => game.value).join(','),
-              gameMode: item?.gameMode, //?.map((mode) => mode.value).join(','),
-              skillToFocus: item?.skillToFocus?.map((skillToFocus) => skillToFocus.value).join(',')
-            };
-          });
-          callAPI(
-            'post',
-            'https://d6mqosu8sl.execute-api.us-east-1.amazonaws.com/testing/curriculum',
-            {
-              noOfSessions:
-                parseInt(presetState?.noOfSessions) + parseInt(presetState.addNewSession),
-              nameOfPreset: currName,
-              assignedTo: '',
-              session: removeDuplicateObjects(
-                [...presetState.sessions, ...transformedS],
-                ['gameName', 'gameMode', 'skillToFocus']
-              )
-            }
-          )
-            .then((res) => {
-              console.log(res);
-              navigate('/curriculum');
-              setLoader(false);
-            })
-            .catch((error) => {
-              console.log(error);
-              setLoader(false);
-            });
-        }
-        // setLoader(false);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+  // const onSubmit = (e) => {
+  //   e.preventDefault();
+  //   setLoader(true);
+  //   callAPI(
+  //     'get',
+  //     `https://7nluheb3kb.execute-api.us-east-1.amazonaws.com/testing/check_availability?name=${currName}`
+  //   )
+  //     .then((res) => {
+  //       console.log(res);
+  //       if (res.success) {
+  //         setNameCheck(true);
+  //       } else {
+  //         setNameCheck(false);
+  //         const transformedS = addSession.map((item) => {
+  //           return {
+  //             gameName: item?.gameName, //?.map((game) => game.value).join(','),
+  //             gameMode: item?.gameMode, //?.map((mode) => mode.value).join(','),
+  //             skillToFocus: item?.skillToFocus?.map((skillToFocus) => skillToFocus.value).join(',')
+  //           };
+  //         });
+  //         callAPI(
+  //           'post',
+  //           'https://d6mqosu8sl.execute-api.us-east-1.amazonaws.com/testing/curriculum',
+  //           {
+  //             noOfSessions:
+  //               parseInt(presetState?.noOfSessions) + parseInt(presetState.addNewSession),
+  //             nameOfPreset: currName,
+  //             assignedTo: '',
+  //             session: removeDuplicateObjects(
+  //               [...presetState.sessions, ...transformedS],
+  //               ['gameName', 'gameMode', 'skillToFocus']
+  //             )
+  //           }
+  //         )
+  //           .then((res) => {
+  //             console.log(res);
+  //             navigate('/curriculum');
+  //             setLoader(false);
+  //           })
+  //           .catch((error) => {
+  //             console.log(error);
+  //             setLoader(false);
+  //           });
+  //       }
+  //       // setLoader(false);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // };
 
   return (
     <div className="create-curr4-container curr5">
-      <BreadcrumbsLink
+      {/* <BreadcrumbsLink
         breadcrumbValues={{
           1: {
             name: 'Home',
@@ -104,16 +104,16 @@ function EditCurriculumAddSession() {
           }
         }}
         lastValue={'Edit Preset'}
-      />
-      <div className="accounts-header">
+      /> */}
+      {/* <div className="accounts-header">
         <h1> Edit Preset</h1>
-      </div>
+      </div> */}
       {loader ? (
         <Loader />
       ) : (
         <>
           <div className="create-curr4-form-container">
-            <div className="curr4-form-row-1">
+            {/*<div className="curr4-form-row-1">
               <div className="curr4-form-left">
                 <div className="curr4-flex">
                   <h4>Number of sessions in this preset. </h4>
@@ -138,7 +138,7 @@ function EditCurriculumAddSession() {
                     )}
                   </div>
                   {/* <p>{location.state.nameOfPreset}</p> */}
-                </div>
+                {/* </div>
               </div>
             </div>
             <div className="curr4-form-row-1">
@@ -148,8 +148,8 @@ function EditCurriculumAddSession() {
                   <p>{presetState.addNewSession}</p>
                 </div>
               </div>
-            </div>
-            <hr />
+            </div> */}
+            {/* <hr /> */}
 
             {Array.from({ length: presetState?.addNewSession }, (_, index) => (
               <>
@@ -164,11 +164,11 @@ function EditCurriculumAddSession() {
             ))}
           </div>
 
-          <div className="create-curr4-submit">
+          {/* <div className="create-curr4-submit">
             <button className="create-curr4-submit-btn" onClick={onSubmit}>
               Save this preset
             </button>
-          </div>
+          </div> */}
         </>
       )}
     </div>
