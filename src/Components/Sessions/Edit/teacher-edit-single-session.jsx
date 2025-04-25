@@ -3,14 +3,23 @@
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { callAPI, convertTo24Hour } from '../../../Helper';
+import { callAPI, convertTo24Hour} from '../../../Helper';
 import { removeBeforeTime } from '../../../Helper/common';
 import Constants from '../../../Constants';
 import Loader from '../../Common/Loader/Loader';
 import './teacher-edit-single-session.scss';
+import Attendance from '../CommonSession/Attendance';
 
 
 const TeacherEditSingleSession = ({ session, studentAll }) => {
+
+  const convertTo12Hour = (time24) => {
+    const [hour, minute] = time24.split(':');
+    const hourNum = parseInt(hour, 10);
+    const ampm = hourNum >= 12 ? 'PM' : 'AM';
+    const hour12 = hourNum % 12 || 12;
+    return `${String(hour12).padStart(2, '0')}:${minute} ${ampm}`;
+  };
   console.log('session', session);
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('Session Details');
@@ -28,11 +37,11 @@ const TeacherEditSingleSession = ({ session, studentAll }) => {
     gameName: session.gameName || '',
     gameMode: session.gameMode || '',
     skillToFocus: session.skillInFocus
-  });
+  });  
   const [skills, setSkills] = useState([]);
   const [singleStudentEval, setSingleStudentEval] = useState('');
-  const [studentListForEval, setStudentListForEval] = useState([]);
-  const [attendanceStu, setAttendanceStu] = useState({});
+  //const [studentListForEval, setStudentListForEval] = useState([]);
+  //const [attendanceStu, setAttendanceStu] = useState({});
   const [sessionEval, setSessionEval] = useState({
     leadership: {
       'Initiative Taking and Tenacity': -1,
@@ -57,6 +66,33 @@ const TeacherEditSingleSession = ({ session, studentAll }) => {
     },
     remark: ''
   });
+
+  const [attendanceStu, setAttendanceStu] = useState({});
+  const [isEditAttendance, setIsEditAttendance] = useState(true);
+  const [attendanceStuEval, setAttendanceStuEval] = useState({});
+
+  useEffect(() => {
+    if (session) {
+      setSelectValue((prev) => ({
+        ...prev,
+        moderator: {
+          moderatorName: session.sessionModerator || '',
+          moderatorUid: session.moderatorUid || ''
+        },
+        startTime: convertTo12Hour(session.sessionTime || '00:00'),
+        endTime: convertTo12Hour(session.sessionEndTime || '00:00'),
+        timezone: session.timeZone || Constants.TIMEZONE[0],
+        gameName: session.gameName || '',
+        gameMode: session.gameMode || '',
+        skillToFocus: session.skillInFocus || ''
+      }));
+    }
+  }, []); // <-- empty dependency array so it runs once only
+  
+
+  console.log('Session:', session);
+  console.log('Select Value:', selectValue);
+
   useEffect(() => {
     if (session.skillInFocus) {
       setSkills(session.skillInFocus.split(',').map((skill) => skill.trim()));
@@ -69,26 +105,19 @@ const TeacherEditSingleSession = ({ session, studentAll }) => {
     setLoader(true);
     callAPI(
       'get',
-      `https://l8at6mypj6.execute-api.us-east-1.amazonaws.com/testing/evaluation-enables?sessionid=${session.sessionId}`
-    ).then((res) => {
-        setStudentListForEval(res);
-      }).catch((error) => {
-        console.log(error);
-      });
-    callAPI(
-      'get',
       `https://w2zs50l54d.execute-api.us-east-1.amazonaws.com/testing/attendance-read?sessionid=${session.sessionId}`
     )
-      .then((res) => {
-        if (res) {
-          setAttendanceStu(res.studentInfo_attendance);
-        }
-        setLoader(false);
-      })
-      .catch((error) => {
-        console.log(error);
-        setLoader(false);
-      });
+    .then((res) => {
+      if (res) {
+        setAttendanceStu(res.studentInfo_attendance);
+        setAttendanceStuEval(res.studentInfo_evaluation);
+      }
+      setLoader(false);
+    })
+    .catch((error) => {
+      console.log(error);
+      setLoader(false);
+    });
   }, []);
 
   useEffect(() => {
@@ -154,6 +183,8 @@ const TeacherEditSingleSession = ({ session, studentAll }) => {
         }
       }
     };
+
+    console.log('Session Data:', sessionD);
   
     setLoader(true);
     callAPI(
@@ -180,6 +211,9 @@ const TeacherEditSingleSession = ({ session, studentAll }) => {
     // Implement view lesson plan functionality
     alert('View Lesson Plan functionality will be implemented here');
   };
+
+  
+  
 
   const today = new Date().toISOString().split('T')[0];
 
@@ -376,33 +410,17 @@ const TeacherEditSingleSession = ({ session, studentAll }) => {
   };
 
   const renderReportsStatus = () => {
-    return (
-      <div className="reports-status">
-        <h3 className="section-title">Reports Status</h3>
-        <div className="reports-list">
-          <div className="report-item">
-            <span>Attendance Report</span>
-            <span
-              className={`status-badge ${
-                attendanceStu && Object.keys(attendanceStu).length > 0 ? 'completed' : 'pending'
-              }`}
-            >
-              {attendanceStu && Object.keys(attendanceStu).length > 0 ? 'Completed' : 'Pending'}
-            </span>
-          </div>
-          <div className="report-item">
-            <span>Evaluation Report</span>
-            <span
-              className={`status-badge ${
-                studentListForEval && studentListForEval.length > 0 ? 'completed' : 'pending'
-              }`}
-            >
-              {studentListForEval && studentListForEval.length > 0 ? 'Completed' : 'Pending'}
-            </span>
-          </div>
-        </div>
-      </div>
-    );
+      return (
+          <Attendance
+            setAttendanceStu={setAttendanceStu}
+            attendanceStu={attendanceStu}
+            attendanceStuEval={attendanceStuEval} // optional if you want evaluation link too
+            students={studentAll}
+            sessionId={session.sessionId}
+            isEditAttendance={isEditAttendance}
+            setIsEditAttendance={setIsEditAttendance}
+          />
+      );    
   };
 
   const renderTeacherFeedback = () => {

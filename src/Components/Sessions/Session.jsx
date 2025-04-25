@@ -12,10 +12,6 @@ import SelectInputFieldMod from '../Common/SelectInputFieldMod/SelectInputFieldM
 const TableHeader = () => {
   return (
     <div className="TableHeader-cohort-comp">
-      {/* //       <div className="bg-pink-200 text-xl font-semibold p-4 rounded-md">
-//   Tailwind is finally working! 🎉
-// </div> */}
-
       <li>Session ID</li>
       <li>Experts</li>
       <li>Date</li>
@@ -152,7 +148,7 @@ const Session = () => {
         });
       callAPI(
         'get',
-        `https://7vz4zwaw90.execute-api.us-east-1.amazonaws.com/testing/cohort_read?moderatoruid=${user?.uid}`
+        `https://qalb91pdu7.execute-api.us-east-1.amazonaws.com/testing/cohort-teacher-read?teacheremail=${user?.emailId}`
       )
         .then((cohortAll) => {
           console.log(cohortAll);
@@ -216,7 +212,22 @@ const Session = () => {
             console.log(error);
             setLoader(false);
           });
-      } else {
+      } else if (user?.entity === 'teacher') {
+        callAPI(
+          'get',
+          `https://zzpq0vmz17.execute-api.us-east-1.amazonaws.com/testing/session-teacher?teacheruid=${user?.uid}&cohortid=${cohortUid}`
+        )
+          .then((sessionAllData) => {
+            console.log(sessionAllData);
+            setSessionAll(sessionAllData);
+            setLoader(false);
+          })
+          .catch((error) => {
+            console.log(error);
+            setLoader(false);
+          });
+      } 
+       else {
         callAPI(
           'get',
           `https://93t8sqirr6.execute-api.us-east-1.amazonaws.com/testing/session-read?cohortid=${cohortUid}&schoolname=${schoolName}`
@@ -261,6 +272,8 @@ const Session = () => {
               </button>
             </>
           )}
+          {user?.entity !== 'teacher' && (
+            <>
           <div className="ses-stu-dr-1">
             <p>Filter School</p>
             <SelectInputFieldMod
@@ -279,6 +292,19 @@ const Session = () => {
               providedList={'cohort'}
             />
           </div>
+          </>
+          )}
+          {user?.entity === 'teacher' && (
+            <div className="ses-stu-dr-2">
+              <span>Filter sessions by Cohort:</span>
+              <SelectInputFieldMod
+                options={cohortList}
+                selectData={(dataValue) => setSelectValue({ ...selectValue, cohort: dataValue })}
+                select={selectValue.cohort}
+                providedList={'cohort'}
+              />
+            </div>
+          )}
         </div>
       </div>
       {loader ? (
@@ -296,7 +322,7 @@ const Session = () => {
                   sessionUid={session.sessionId}
                   teachers={session.sessionModerator}
                   sessionDate={session.date}
-                  time={session.sessionTime + ' ' + session.timeZone}
+                  time={session.sessionTime + ' - ' + session.sessionEndTime + ' ' + session.timeZone}
                   status={session.status}
                   attendance={session.attendance_status}
                   report={session.evaluation_status}

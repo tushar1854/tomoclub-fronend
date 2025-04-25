@@ -223,8 +223,28 @@
 }
 
 .ses-stu-dr-1 {
-  width: 150px;
+  width: 300px;
   height: 40px;
+}
+
+.ses-stu-dr-2 {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 500px;
+  height: 40px;
+  gap: 20px;
+}
+.ses-stu-dr-2 span {
+  font-size: 14px;
+  color: gray;
+  flex: 1;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.ses-stu-dr-2 select-wrapper{
+  flex: 1;
 }
 
 .ses-stu-dr-1 p {

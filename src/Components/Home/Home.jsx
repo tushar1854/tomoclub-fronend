@@ -41,11 +41,15 @@ const Home = () => {
   //     console.log(e.message);
   //   }
   // };
+  if(loader) {
+    return (
+      <div className="homeContent-container">
+        <Loader />
+      </div>
+    );
+  }
   return (
     <>
-      {loader ? (
-        <Loader />
-      ) : (
         <div className="homeContent-container">
           <HomeContent
             title={'Hello ' + displayName + ' !'}
@@ -58,7 +62,6 @@ const Home = () => {
             schoolData={school}
           />
         </div>
-      )}
       {/* <div>
         Home Page <p>User Email: {user && user.email}</p>
         <button onClick={handleLogout}>Logout</button>

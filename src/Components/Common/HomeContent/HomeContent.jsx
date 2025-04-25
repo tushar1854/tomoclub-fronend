@@ -1,18 +1,18 @@
 import React from 'react';
 import './HomeContent.css';
 
-// import homeGame from '../../../assets/homeGame.svg';
-// import homeKing from '../../../assets/homeKing.svg';
-// import homeTarget from '../../../assets/homeTarget.svg';
+import homeGame from '../../../assets/homeGame.svg';
+import homeKing from '../../../assets/homeKing.svg';
+import homeTarget from '../../../assets/homeTarget.svg';
 
 const HomeContent = ({
   title,
   addCard1,
   addCard2,
   addCard3,
-  // statsCard1,
-  // statsCard2,
-  // statsCard3,
+  statsCard1,
+  statsCard2,
+  statsCard3,
   schoolData
 }) => {
   return (
@@ -50,7 +50,7 @@ const HomeContent = ({
           </div>
         </div>
       </div>
-      {/* <div className="homeContent-heading">
+      <div className="homeContent-heading">
         <p>Stats and Reports</p>
       </div>
       <div className="homeContent-box">
@@ -69,7 +69,7 @@ const HomeContent = ({
           <h1>{statsCard3}</h1>
           <p>Game completion rate</p>
         </div>
-      </div> */}
+      </div>
     </div>
   );
 };
