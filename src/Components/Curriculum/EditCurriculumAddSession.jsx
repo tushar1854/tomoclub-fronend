@@ -9,6 +9,11 @@ import Loader from '../Common/Loader/Loader';
 function EditCurriculumAddSession() {
   const location = useLocation();
   const navigate = useNavigate();
+  const presetState = location.state || {
+    noOfSessions: 0,
+    addNewSession: 0,
+    sessions: []
+  };  
   const [addSession, setAddSession] = useState([]);
   const [loader, setLoader] = useState(false);
   const [gameData, setGameData] = useState([]);
@@ -59,11 +64,11 @@ function EditCurriculumAddSession() {
             'https://d6mqosu8sl.execute-api.us-east-1.amazonaws.com/testing/curriculum',
             {
               noOfSessions:
-                parseInt(location.state?.noOfSessions) + parseInt(location.state.addNewSession),
+                parseInt(presetState?.noOfSessions) + parseInt(presetState.addNewSession),
               nameOfPreset: currName,
               assignedTo: '',
               session: removeDuplicateObjects(
-                [...location.state.sessions, ...transformedS],
+                [...presetState.sessions, ...transformedS],
                 ['gameName', 'gameMode', 'skillToFocus']
               )
             }
@@ -112,7 +117,7 @@ function EditCurriculumAddSession() {
               <div className="curr4-form-left">
                 <div className="curr4-flex">
                   <h4>Number of sessions in this preset. </h4>
-                  <p>{location.state.noOfSessions}</p>
+                  <p>{presetState.noOfSessions}</p>
                 </div>
               </div>
               <div className="curr4-form-right">
@@ -140,21 +145,21 @@ function EditCurriculumAddSession() {
               <div className="curr4-form-left">
                 <div className="curr4-flex">
                   <h4>Number of new sessions you want to add this curriculum preset. </h4>
-                  <p>{location.state.addNewSession}</p>
+                  <p>{presetState.addNewSession}</p>
                 </div>
               </div>
             </div>
             <hr />
 
-            {Array.from({ length: location.state?.addNewSession }, (_, index) => (
+            {Array.from({ length: presetState?.addNewSession }, (_, index) => (
               <>
                 <AccordianCurriculum
                   key={index}
-                  name={`Session ${parseInt(location.state.noOfSessions) + index + 1} details`}
+                  name={`Session ${parseInt(presetState.noOfSessions) + index + 1} details`}
                   setSession={setSessionAll}
                   gameData={gameData}
                 />
-                {index === location.state?.addNewSession - 1 ? null : <hr />}
+                {index === presetState?.addNewSession - 1 ? null : <hr />}
               </>
             ))}
           </div>
