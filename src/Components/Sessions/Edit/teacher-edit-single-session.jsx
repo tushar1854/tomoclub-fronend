@@ -71,9 +71,9 @@ const TeacherEditSingleSession = ({ session, studentAll }) => {
   const [isEditAttendance, setIsEditAttendance] = useState(true);
   const [attendanceStuEval, setAttendanceStuEval] = useState({});
 
-  //const [feedback, setFeedback] = useState({});
-  //const [feedbackUid, setFeedbackUid] = useState('');
-  //const [submitted, setSubmitted] = useState(false);
+  const [feedback, setFeedback] = useState({});
+  const [feedbackUid, setFeedbackUid] = useState('');
+  const [submitted, setSubmitted] = useState(false);
 
 
   useEffect(() => {
@@ -217,76 +217,6 @@ const TeacherEditSingleSession = ({ session, studentAll }) => {
     alert('View Lesson Plan functionality will be implemented here');
   };
 
-  // useEffect(() => {
-  //   if (activeTab === 'Teacher Feedback') {
-  //     const teacherEmail = session?.teachers?.split(',')[0]?.match(/\((.*?)\)/)?.[1];
-  //     const sessionId = session?.sessionId;
-  
-  //     if (teacherEmail && sessionId) {
-  //       // Reset state before fetching
-  //       setFeedback({});
-  //       setFeedbackUid('');
-  //       setSubmitted(false); // Reset to avoid old state from previous teacher
-  
-  //       callAPI(
-  //         'get',
-  //         `https://2djbmnhlsc.execute-api.us-east-1.amazonaws.com/testing/teacher-feedback-read?teacher_emailid=${teacherEmail}&session_id=${sessionId}`
-  //       )
-  //         .then((res) => {
-  //           setFeedback(res.feedbackForm || {});
-  //           setFeedbackUid(res.feedbackFormUid || '');
-  //           setSubmitted(res.submitted || false);
-  //         })
-  //         .catch((err) => console.error('Feedback fetch error:', err));
-  //     }
-  //   }
-  // }, [activeTab, session]);
-
-  // const handleFeedbackChange = (question, value) => {
-  //   setFeedback((prev) => ({
-  //     ...prev,
-  //     [question]: value
-  //   }));
-  // };
-  
-  // const handleFeedbackSubmit = () => {
-  //   const teacherEmailId = session?.teachers?.split(',')[0]?.match(/\((.*?)\)/)?.[1];
-  //   const sessionId = session?.sessionId;
-  
-  //   if (!teacherEmailId || !sessionId || !feedbackUid) {
-  //     alert("❗ Missing required teacher or session info.");
-  //     return;
-  //   }
-  
-  //   const payload = {
-  //     teacherEmailId,
-  //     sessionId,
-  //     feedbackFormUid: feedbackUid,
-  //     feedbackForm: feedback
-  //   };
-  
-  //   console.log("📝 Feedback to be submitted:", JSON.stringify(payload, null, 2));
-  
-  //   callAPI(
-  //     'post',
-  //     'https://tbtn0cvij8.execute-api.us-east-1.amazonaws.com/testing/teacher-feedback-insert',
-  //     payload
-  //   )
-  //     .then((res) => {
-  //       console.log('✅ Feedback submission success:', res);
-  //       alert('✅ Feedback submitted successfully!');
-  //       setSubmitted(true);
-  //     })
-  //     .catch((err) => {
-  //       console.error('❌ Feedback submission error:', err);
-  //       alert('❌ Failed to submit feedback. Please try again.');
-  //     });
-  // }; 
-
-  const [feedback, setFeedback] = useState({});
-  const [feedbackUid, setFeedbackUid] = useState('');
-  const [submitted, setSubmitted] = useState(false);
-
   // ✅ Fetch feedback on tab change or session change
   useEffect(() => {
     if (activeTab === 'Teacher Feedback') {
@@ -301,7 +231,7 @@ const TeacherEditSingleSession = ({ session, studentAll }) => {
 
         callAPI(
           'get',
-          `https://2djbmnhlsc.execute-api.us-east-1.amazonaws.com/testing/teacher-feedback-read?teacher_emailid=jyotigoyal4344@gmail.com&session_id=${sessionId}`
+          `https://2djbmnhlsc.execute-api.us-east-1.amazonaws.com/testing/teacher-feedback-read?teacher_emailid=${teacherEmail}&session_id=${sessionId}`
         )
           .then((res) => {
             setFeedback(res.feedbackForm || {});
@@ -562,99 +492,8 @@ const TeacherEditSingleSession = ({ session, studentAll }) => {
           />
       );    
   };
-
-  // const renderTeacherFeedback = () => {
-  //   if (!feedback || Object.keys(feedback).length === 0) return null;
   
-  //   const yesNoQuestions = Object.entries(feedback)
-  //     .filter(([question, value]) => (typeof value === 'string' || typeof value === 'boolean') && question !== 'Remarks');
-  
-  //   const ratingQuestions = Object.entries(feedback)
-  //     .filter(([question, value]) => typeof value === 'number' && question !== 'Remarks');
-  
-  //   return (
-  //     <div className="teacher-feedback">
-  //       <div className="feedback-form">
-
-  //         {/* ✅ Yes/No Questions */}
-  //         {yesNoQuestions.map(([question]) => (
-  //           <div key={question}>
-  //             <div className="feedback-row">
-  //               <span className="feedback-question">{question}</span>
-  //               <div className="feedback-options yes-no">
-  //                 {['Yes', 'No'].map((option) => (
-  //                   <label key={option}>
-  //                     <input
-  //                       type="checkbox"
-  //                       disabled={submitted}
-  //                       checked={feedback[question] === option}
-  //                       onChange={() =>
-  //                         handleFeedbackChange(
-  //                           question,
-  //                           feedback[question] === option ? '' : option
-  //                         )
-  //                       }
-  //                     />
-  //                   </label>
-  //                 ))}
-  //               </div>
-  //             </div>
-  //             <hr />
-  //           </div>
-  //         ))}
-  
-  //         {/* ✅ Rating Questions */}
-  //         {ratingQuestions.map(([question]) => (
-  //           <div key={question}>
-  //             <div className="feedback-row">
-  //               <span className="feedback-question">{question}</span>
-  //               <div className="feedback-options rating">
-  //                 {[1, 2, 3, 4, 5].map((option) => (
-  //                   <label key={option}>
-  //                     <input
-  //                       type="checkbox"
-  //                       disabled={submitted}
-  //                       checked={feedback[question] === option}
-  //                       onChange={() =>
-  //                         handleFeedbackChange(
-  //                           question,
-  //                           feedback[question] === option ? 0 : option
-  //                         )
-  //                       }
-  //                     />
-  //                   </label>
-  //                 ))}
-  //               </div>
-  //             </div>
-  //             <hr />
-  //           </div>
-  //         ))}
-  
-  //         {/* ✅ Remarks Field */}
-  //         <div className="form-group">
-  //           <label className="form-remark">Remarks</label>
-  //           <textarea
-  //             className="form-control remarks"
-  //             value={feedback.Remarks || ''}
-  //             disabled={submitted}
-  //             onChange={(e) => handleFeedbackChange('Remarks', e.target.value)}
-  //             rows={2}
-  //           />
-  //         </div>
-  
-  //         {/* ✅ Submit Button */}
-  //         {!submitted && (
-  //           <button className="btn-primary" onClick={handleFeedbackSubmit}>
-  //             Submit
-  //           </button>
-  //         )}
-  
-  //         {submitted && <p className="submitted-note">Feedback already submitted.</p>}
-  //       </div>
-  //     </div>
-  //   );
-  // };
-  
+  // ✅ Render Teacher Feedback
   const renderTeacherFeedback = () => {
     if (!feedback) return null;
 
