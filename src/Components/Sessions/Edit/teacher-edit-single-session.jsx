@@ -240,10 +240,15 @@ const TeacherEditSingleSession = ({ session, studentAll }) => {
 
   useEffect(() => {
     if (activeTab === 'Teacher Feedback') {
-      const teacherEmail = session?.teachers?.split(',')[0]?.match(/\((.*?)\)/)?.[1]; // gets email from "Name (email)"
+      const teacherEmail = session?.teachers?.split(',')[0]?.match(/\((.*?)\)/)?.[1];
       const sessionId = session?.sessionId;
   
       if (teacherEmail && sessionId) {
+        // Reset state before fetching
+        setFeedback({});
+        setFeedbackUid('');
+        setSubmitted(false); // Reset to avoid old state from previous teacher
+  
         callAPI(
           'get',
           `https://2djbmnhlsc.execute-api.us-east-1.amazonaws.com/testing/teacher-feedback-read?teacher_emailid=${teacherEmail}&session_id=${sessionId}`
@@ -257,6 +262,7 @@ const TeacherEditSingleSession = ({ session, studentAll }) => {
       }
     }
   }, [activeTab, session]);
+  
   
 
   const handleFeedbackChange = (question, value) => {
@@ -589,8 +595,8 @@ const TeacherEditSingleSession = ({ session, studentAll }) => {
   
           {/* ✅ Submit Button */}
           {!submitted && (
-            <button className="reschedule-btn" onClick={handleFeedbackSubmit}>
-              Submit Feedback
+            <button className="btn-primary" onClick={handleFeedbackSubmit}>
+              Submit
             </button>
           )}
   

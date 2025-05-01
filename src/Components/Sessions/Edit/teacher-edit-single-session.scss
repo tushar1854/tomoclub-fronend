@@ -345,7 +345,7 @@
       }
     }
 
-  // Teacher feedback
+   // Teacher feedback
     .teacher-feedback {
       .feedback-form {
         width: 100%;
@@ -415,14 +415,34 @@
         border-radius: 4px;
       }
     
+      .btn-primary {
+        margin-top: 1rem;
+        padding: 0.5rem 1.2rem;
+        background-color: var(--primary-cta, linear-gradient(90deg, #4c86e9 0%, #03e9c2 100%));
+        color: white;
+        border: none;
+        border-radius: 4px;
+        font-weight: 500;
+        cursor: pointer;
+        width: 20rem;
+        transition: background-color 0.3s ease;
+      }
+    
+      .btn-primary:hover {
+        background-color: #2563eb;
+      }
+    
       .submitted-note {
         margin-top: 0.5rem;
         color: green;
         font-weight: 500;
       }
     }
+    
+    
+    
 
-  // Students feedback
+    // Students feedback
     .students-feedback {
       .section-title {
         font-size: 1.125rem;
