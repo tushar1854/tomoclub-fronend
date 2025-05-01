@@ -3,13 +3,12 @@
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { callAPI, convertTo24Hour} from '../../../Helper';
+import { callAPI, convertTo24Hour, getSessionStorage} from '../../../Helper';
 import { removeBeforeTime } from '../../../Helper/common';
 import Constants from '../../../Constants';
 import Loader from '../../Common/Loader/Loader';
 import './teacher-edit-single-session.scss';
 import Attendance from '../CommonSession/Attendance';
-
 
 const TeacherEditSingleSession = ({ session, studentAll }) => {
 
@@ -96,7 +95,7 @@ const TeacherEditSingleSession = ({ session, studentAll }) => {
   
 
   console.log('Session:', session);
-  console.log('Select Value:', selectValue);
+  //console.log('Select Value:', selectValue);
 
   useEffect(() => {
     if (session.skillInFocus) {
@@ -217,14 +216,27 @@ const TeacherEditSingleSession = ({ session, studentAll }) => {
     alert('View Lesson Plan functionality will be implemented here');
   };
 
+  const user = JSON.parse(getSessionStorage('user'));
+  console.log('User:', user);
+
   // ✅ Fetch feedback on tab change or session change
   useEffect(() => {
     if (activeTab === 'Teacher Feedback') {
-      const teacherEmail = session?.teachers?.split(',')[0]?.match(/\((.*?)\)/)?.[1];
+      //const teacherEmail = session?.teachers?.split(',')[0]?.match(/\((.*?)\)/)?.[1];
+      const teacherList = session?.teachers?.split(',') || [];
+      // Match teacher string that contains the logged-in user's emailId
+      const matchedTeacher = teacherList.find((entry) =>
+        entry.toLowerCase().includes(user?.emailId?.toLowerCase())
+      );
+      // Extract email from matched string or fallback to user.emailId
+      const teacherEmail = matchedTeacher?.match(/\((.*?)\)/)?.[1] || user?.emailId;
+
+      console.log('Matched Teacher String:', matchedTeacher);
+      console.log('✅ Teacher Email Used in API:', teacherEmail);
+
       const sessionId = session?.sessionId;
 
       if (teacherEmail && sessionId) {
-        // Clear previous state
         setFeedback({});
         setFeedbackUid('');
         setSubmitted(false);
