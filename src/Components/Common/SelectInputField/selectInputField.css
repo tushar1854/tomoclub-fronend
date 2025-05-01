@@ -86,7 +86,7 @@ input {
   padding: 0 10px;
   margin-bottom: 8px;
   border-radius: 6px;
-  position: fixed;
+  //position: fixed;
   border: 1px solid #f3dcdc;
 }
 input::placeholder {
