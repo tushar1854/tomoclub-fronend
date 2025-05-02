@@ -79,8 +79,8 @@ body {
   width: 208px;
 } */
 input {
-  width: calc(240px - 32px);
-  height: 32px;
+  width: calc(400px - 32px);
+  height: 45px;
   font-size: 14px;
   line-height: 32px;
   padding: 0 10px;
