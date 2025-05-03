@@ -83,7 +83,7 @@
       background-color: transparent;
       cursor: pointer;
       padding: 0.5rem 1.5rem;
-      font-size: 0.875rem;
+      font-size: 0.75rem;
       font-weight: 800;
       color: #6b7280;
 
@@ -569,26 +569,11 @@
 }
 
 
-.students-feedback {
-  // padding: 1.5rem;
-  // background: #f9f9f9;
+// Students-feedback 
 
-  .section-title {
-    font-size: 1.4rem;
-    font-weight: 600;
-    margin-bottom: 1rem;
-  }
-
-  // .feedback-content {
-  //   //background: #fff;
-  //   //padding: 1rem;
-  //   //border-radius: 12px;
-  //   //box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-  // }
-}
 .question-block {
   margin-bottom: 1.5rem;
-  padding: 1rem;
+  padding: 0.75rem;
   border-bottom: 1px solid #e0e0e0;
 
   .form-group {
@@ -608,7 +593,7 @@
       border-radius: 6px;
     }
 
-    input.form-control {
+    input.form-control{
       font-size: 0.95rem;
       padding: 0.5rem 0.75rem;
       border: 1px solid #ccc;
@@ -630,10 +615,10 @@
 .btn-secondary {
   background-color: transparent;
   color: #000000;
-  font-size: 1rem;
+  font-size: 0.75rem;
   font-weight: 600;
-  width: 12rem;
-  height: 3rem;
+  width: 10rem;
+  height: 2.5rem;
   border: 2px solid #000; 
 
   &:hover {
@@ -644,8 +629,8 @@
 .btn-primary {
   background: linear-gradient(to right, #4c86e9, #03e9c2);
   color: white;
-  width: 12rem;
-  height: 3rem;
+  width: 10rem;
+  height: 2.5rem;
 
   &:hover {
     opacity: 0.9;
@@ -710,17 +695,12 @@
 //   }
 .students-feedback {
   width: 100%;
-  //padding: 1.5rem;
   display: flex;
   justify-content: center;
 
   .feedback-content {
     width: 100%;
-    max-width: 1000px; // prevent full-screen stretching
-    // background: #fff;
-    // padding: 1rem;
-    // border-radius: 12px;
-    // box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+    max-width: 1000px;
   }
 
   .question-row {
@@ -736,8 +716,13 @@
       max-width: 45%;
       min-width: 250px;
       font-weight: 600;
-      font-size: 1rem;
+      font-size: 0.5rem;
       word-break: break-word;
+
+      .form-label-question {
+        font-size: 0.75rem;
+        font-weight: 400;
+      }
     }
 
     .option-column {
@@ -805,8 +790,8 @@
   }
 
   .rating-value {
-    font-weight: bold;
-    font-size: 1rem;
+    font-weight: 800;
+    font-size: 0.75rem;
   }
 
   .option-count-horizontal {
@@ -825,12 +810,29 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0.5rem 0.75rem;
-    background-color: #f0f0f0;
-    border-radius: 6px;
+    //padding: 0.5rem 0.75rem;
+    //background-color: #f0f0f0;
+    //border-radius: 6px;
 
     .option-text {
       font-weight: 500;
+      font-size: 0.75rem;
+    }
+
+    .option-count-vertical {
+      font-size: 0.85rem;
+      color: #333;
+    }
+  }
+
+  .option-input-completed {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .option-text {
+      font-weight: 500;
+      font-size: 0.75rem;
     }
 
     .option-count-vertical {

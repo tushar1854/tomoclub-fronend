@@ -80,10 +80,10 @@ body {
 } */
 input {
   width: calc(300px - 32px);
-  height: 45px;
-  font-size: 14px;
-  line-height: 32px;
-  padding: 0 10px;
+  height: 40px;
+  font-size: 12px;
+  line-height: 24px;
+  padding: 0 6px;
   margin-bottom: 8px;
   border-radius: 6px;
   //position: fixed;

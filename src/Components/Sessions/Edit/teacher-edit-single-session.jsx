@@ -694,7 +694,7 @@ const TeacherEditSingleSession = ({ session, studentAll }) => {
                       onChange={(e) => handleQuestionChange(qIndex, e.target.value)}
                     />
                   ) : (
-                    <label className="form-label">{q.question}</label>
+                    <label className="form-label-question">{q.question}</label>
                   )}
                 </div>
                 <div className="option-column">
@@ -725,7 +725,7 @@ const TeacherEditSingleSession = ({ session, studentAll }) => {
                   ) : (
                     <div className="vertical-options">
                       {q.options.map((opt, oIndex) => (
-                        <div key={oIndex} className="option-input">
+                        <div key={oIndex} className={!isCompleted ? 'option-input' : 'option-input-completed'}>
                           {isEditMode && q.isEditable && !isCompleted ? (
                             <input
                               type="text"
