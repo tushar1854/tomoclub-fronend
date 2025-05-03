@@ -54,42 +54,6 @@ const TeacherEditSingleSession = ({ session, studentAll }) => {
   const [feedbackStudentUid, setFeedbackStudentUid] = useState('');
   const [isEditMode, setIsEditMode] = useState(false);
 
-  //mock simulation for status completed
-  // const isMockTesting = session.status !== 'completed';
-  // useEffect(() => {
-  //   if (activeTab === 'Students Feedback') {
-  //     if (session.status === 'completed') {
-  //       callAPI('get', 'https://fy82ysdxe3.execute-api.us-east-1.amazonaws.com/testing/student_feedback_form_read')
-  //         .then((res) => {
-  //           const updatedQuestions = (res.feedback_form || []).map((q) => ({
-  //             ...q,
-  //             isEditable: q.isEditable || false
-  //           }));
-  //           setFeedbackQuestions(updatedQuestions);
-  //           setFeedbackStudentUid(res.uid || '');
-  //         })
-  //         .catch((err) => console.error('Feedback form fetch error:', err));
-  //     } else {
-  //       callAPI(
-  //         'get',
-  //         `https://244krp4i50.execute-api.us-east-1.amazonaws.com/testing/student_feedback_form_get_answer_count?session_id=session_123`
-  //       )
-  //         .then((res) => {
-  //           console.log('✅ Answer count API response:', res); // ✅
-  //           if (Array.isArray(res)) {
-  //             setFeedbackQuestions(res); // ✅ the real fix
-  //           } else if (res.feedback_form) {
-  //             setFeedbackQuestions(res.feedback_form);
-  //           } else {
-  //             setFeedbackQuestions([]);
-  //           }
-  //         })
-  //         .catch((err) => console.error('Feedback count fetch error:', err));
-  //     }
-  //   }
-  // }, [activeTab, session.status]);
-  
-
   const isCompleted = session.status === 'completed';
   useEffect(() => {
     if (activeTab === 'Students Feedback') {
@@ -585,6 +549,14 @@ const TeacherEditSingleSession = ({ session, studentAll }) => {
     return (
       <div className="teacher-feedback">
         <div className="feedback-form">
+        
+          <div className="feedback-row-label">
+            <span className="feedback-question"></span>
+              <div className="feedback-options yes-no">
+                  <span className="option-text">Yes</span>
+                  <span className="option-text">No</span>
+                </div>
+              </div>
           {/* ✅ Yes/No Questions */}
           {yesNoQuestions.map(([question]) => (
             <div key={question}>
@@ -611,6 +583,17 @@ const TeacherEditSingleSession = ({ session, studentAll }) => {
               <hr />
             </div>
           ))}
+
+          <div className="feedback-row-label">
+            <span className="feedback-question"></span>
+              <div className="feedback-options rating">
+                  <span className="option-text">1</span>
+                  <span className="option-text">2</span>
+                  <span className="option-text">3</span>
+                  <span className="option-text">4</span>
+                  <span className="option-text">5</span>
+                </div>
+          </div>
   
           {/* ✅ Rating Questions */}
           {ratingQuestions.map(([question]) => (
@@ -767,98 +750,6 @@ const TeacherEditSingleSession = ({ session, studentAll }) => {
         </div>
       </div>
     );
-    // you are simulating completed state for testing  
-  //   return (
-  //     <div className="students-feedback">
-  //       <div className="feedback-content">
-  //         {feedbackQuestions.map((q, qIndex) => (
-  //           <div key={qIndex}>
-  //             <div className="question-row">
-  //               <div className="question-column">
-  //                 {isEditMode && q.isEditable && isMockTesting ? (
-  //                   <input
-  //                     type="text"
-  //                     className="form-control"
-  //                     value={q.question}
-  //                     onChange={(e) => handleQuestionChange(qIndex, e.target.value)}
-  //                   />
-  //                 ) : (
-  //                   <label className="form-label">{q.question}</label>
-  //                 )}
-  //               </div>
-  //               <div className="option-column">
-  //                 {isRatingQuestion(q.options, q.question) ? (
-  //                   <div className="rating-box-group">
-  //                     {q.options.map((opt, oIndex) => (
-  //                       <div key={oIndex} className="rating-box">
-  //                         {isEditMode && q.isEditable && isMockTesting ? (
-  //                           <input
-  //                             type="text"
-  //                             className="form-control rating-input"
-  //                             value={opt.text}
-  //                             onChange={(e) =>
-  //                               handleOptionChange(qIndex, oIndex, e.target.value)
-  //                             }
-  //                           />
-  //                         ) : (
-  //                           <>
-  //                             <div className="rating-value">{opt.text}</div>
-  //                             {typeof opt.count === 'number' && (
-  //                               <div className="option-count-horizontal">
-  //                                 {opt.count}
-  //                               </div>
-  //                             )}
-  //                           </>
-  //                         )}
-  //                       </div>
-  //                     ))}
-  //                   </div>
-  //                 ) : (
-  //                   <div className="vertical-options">
-  //                     {q.options.map((opt, oIndex) => (
-  //                       <div key={oIndex} className="option-input">
-  //                         {isEditMode && q.isEditable && isMockTesting ? (
-  //                           <input
-  //                             type="text"
-  //                             className="form-control"
-  //                             value={opt.text}
-  //                             onChange={(e) =>
-  //                               handleOptionChange(qIndex, oIndex, e.target.value)
-  //                             }
-  //                           />
-  //                         ) : (
-  //                           <>
-  //                             <span className="option-text">{opt.text}</span>
-  //                             {typeof opt.count === 'number' && (
-  //                               <span className="option-count-vertical">
-  //                                 {opt.count}
-  //                               </span>
-  //                             )}
-  //                           </>
-  //                         )}
-  //                       </div>
-  //                     ))}
-  //                   </div>
-  //                 )}
-  //               </div>
-  //             </div>
-  //             <hr />
-  //           </div>
-  //         ))}
-    
-  //         {isMockTesting &&
-  //           (!isEditMode ? (
-  //             <button className="btn-secondary" onClick={() => setIsEditMode(true)}>
-  //               Edit Questions
-  //             </button>
-  //           ) : (
-  //             <button className="btn-primary" onClick={handleSubmitFeedbackForm}>
-  //               Submit
-  //             </button>
-  //           ))}
-  //       </div>
-  //     </div>
-  //   );
   };
 
   const renderTabContent = () => {

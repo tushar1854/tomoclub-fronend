@@ -363,6 +363,13 @@
         //min-width: 700px; // allows scroll on smaller screens
       }
     
+      .feedback-row-label {
+        display: grid;
+        grid-template-columns: 3fr 2fr; // 2 parts question, 3 parts checkboxes
+        align-items: center;
+        gap: 1rem;
+        //min-width: 700px; // allows scroll on smaller screens
+      }
       .feedback-question {
         font-size: 0.875rem;
         font-weight: 500;
@@ -381,6 +388,12 @@
         display: flex;
         align-items: center;
         justify-content: center;
+      }
+
+      .feedback-options span{
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: #374151;
       }
     
       .feedback-options input[type='checkbox'] {
@@ -441,122 +454,223 @@
       }
     }
     
+    //student feedback
+    .question-block {
+      margin-bottom: 1.5rem;
+      padding: 0.75rem;
+      border-bottom: 1px solid #e0e0e0;
     
-    
-
-    // Students feedback
-    .students-feedback {
-      .section-title {
-        font-size: 1.125rem;
-        font-weight: 500;
-        margin-bottom: 1rem;
-      }
-
-      .feedback-content {
+      .form-group {
         display: flex;
         flex-direction: column;
+        gap: 0.6rem;
+    
+        .form-label {
+          font-weight: 500;
+          font-size: 1rem;
+        }
+    
+        .option-input {
+          font-size: 0.95rem;
+          padding: 0.5rem 0.75rem;
+          //background-color: #f0f0f0;
+          border-radius: 6px;
+        }
+    
+        input.form-control{
+          font-size: 0.95rem;
+          padding: 0.5rem 0.75rem;
+          border: 1px solid #ccc;
+          border-radius: 6px;
+        }
+      }
+    }
+    .btn-secondary,
+    .btn-primary {
+      margin-top: 1rem;
+      padding: 0.6rem 1.5rem;
+      font-weight: 500;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s ease-in-out;
+    }
+    
+    .btn-secondary {
+      background-color: transparent;
+      color: #000000;
+      font-size: 0.75rem;
+      font-weight: 600;
+      width: 10rem;
+      height: 2.5rem;
+      border: 2px solid #000; 
+    
+      &:hover {
+        background-color: #cbcaca;
+      }
+    }
+    
+    .btn-primary {
+      background: linear-gradient(to right, #4c86e9, #03e9c2);
+      color: white;
+      width: 10rem;
+      height: 2.5rem;
+    
+      &:hover {
+        opacity: 0.9;
+      }
+    }
+    .option-input {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    
+      input[type='checkbox'],
+      input[type='radio'] {
+        transform: scale(1.2);
+      }
+    }
+    .students-feedback {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    
+      .feedback-content {
+        width: 100%;
+        max-width: 1000px;
+      }
+    
+      .question-row {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
         gap: 1rem;
-
-        .report-card {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          padding: 0.75rem;
-          background-color: #fff;
-          border: 1px solid #e5e7eb;
-          border-radius: 0.375rem;
-
-          .card-content {
-            h4 {
-              font-weight: 500;
-            }
-
-            p {
-              font-size: 0.875rem;
-              color: #6b7280;
-            }
-          }
-
-          .download-btn {
-            padding: 0.25rem 0.75rem;
-            background-color: #2563eb;
-            color: #fff;
-            border-radius: 0.375rem;
-            font-size: 0.875rem;
-
-            &:hover {
-              background-color: #1d4ed8;
-            }
+        padding: 1rem 0;
+        border-bottom: 1px solid #eee;
+    
+        .question-column {
+          flex: 1 1 40%;
+          max-width: 45%;
+          min-width: 250px;
+          font-weight: 600;
+          font-size: 0.5rem;
+          word-break: break-word;
+    
+          .form-label-question {
+            font-size: 0.75rem;
+            font-weight: 400;
           }
         }
-
-        .form-group {
-          .form-label {
-            display: block;
-            font-size: 0.875rem;
-            font-weight: 500;
-            color: #374151;
-            margin-bottom: 0.5rem;
+    
+        .option-column {
+          flex: 1 1 50%;
+          max-width: 55%;
+          min-width: 250px;
+    
+          .rating-box-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
           }
-
-          .form-control {
-            width: 100%;
-            padding: 0.5rem 0.75rem;
-            border: 1px solid #d1d5db;
-            border-radius: 0.375rem;
-          }
-        }
-
-        .evaluation-card {
-          background-color: #fff;
-          padding: 1rem;
-          border: 1px solid #e5e7eb;
-          border-radius: 0.375rem;
-
-          .card-title {
-            font-weight: 500;
-            margin-bottom: 0.5rem;
-          }
-
-          .evaluation-stats {
+    
+          .vertical-options {
             display: flex;
             flex-direction: column;
             gap: 0.5rem;
-
-            .stat-row {
-              display: flex;
-              justify-content: space-between;
-
-              .stat-label {
-                font-size: 0.875rem;
-              }
-
-              .stat-value {
-                font-size: 0.875rem;
-                font-weight: 500;
-              }
-            }
           }
-
-          .remarks-section {
-            margin-top: 0.75rem;
-            padding-top: 0.75rem;
-            border-top: 1px solid #e5e7eb;
-
-            .remarks-title {
-              font-size: 0.875rem;
-              font-weight: 500;
-              margin-bottom: 0.25rem;
-            }
-
-            .remarks-text {
-              font-size: 0.875rem;
-              color: #374151;
-            }
+    
+          .text-option {
+            padding: 0.75rem 1rem;
+            //background: #f3f3f3;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            line-height: 1.4;
+            word-break: break-word;
+          }
+        }
+      }
+    
+      @media (max-width: 768px) {
+        .question-row {
+          flex-direction: column;
+    
+          .question-column,
+          .option-column {
+            max-width: 100%;
+            width: 100%;
           }
         }
       }
     }
+    
+    .rating-box-group {
+      display: flex;
+      gap: 0.5rem;
+    
+      .rating-box {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 0.5rem 1rem;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        background: #f5f5f5;
+        text-align: center;
+        min-width: 40px;
+      }
+    
+      .rating-value {
+        font-weight: 800;
+        font-size: 0.75rem;
+      }
+    
+      .option-count-horizontal {
+        font-size: 0.75rem;
+        color: #333;
+        margin-top: 4px;
+      }
+    }
+    
+    .vertical-options {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    
+      .option-input {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        //padding: 0.5rem 0.75rem;
+        //background-color: #f0f0f0;
+        //border-radius: 6px;
+    
+        .option-text {
+          font-weight: 500;
+          font-size: 0.75rem;
+        }
+    
+        .option-count-vertical {
+          font-size: 0.85rem;
+          color: #333;
+        }
+      }
+    
+      .option-input-completed {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    
+        .option-text {
+          font-weight: 500;
+          font-size: 0.75rem;
+        }
+    
+        .option-count-vertical {
+          font-size: 0.85rem;
+          color: #333;
+        }
+      }
+    }    
   }
 
   // Loader
@@ -565,280 +679,6 @@
     justify-content: center;
     align-items: center;
     height: 16rem;
-  }
-}
-
-
-// Students-feedback 
-
-.question-block {
-  margin-bottom: 1.5rem;
-  padding: 0.75rem;
-  border-bottom: 1px solid #e0e0e0;
-
-  .form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 0.6rem;
-
-    .form-label {
-      font-weight: 500;
-      font-size: 1rem;
-    }
-
-    .option-input {
-      font-size: 0.95rem;
-      padding: 0.5rem 0.75rem;
-      //background-color: #f0f0f0;
-      border-radius: 6px;
-    }
-
-    input.form-control{
-      font-size: 0.95rem;
-      padding: 0.5rem 0.75rem;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-    }
-  }
-}
-.btn-secondary,
-.btn-primary {
-  margin-top: 1rem;
-  padding: 0.6rem 1.5rem;
-  font-weight: 500;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: all 0.2s ease-in-out;
-}
-
-.btn-secondary {
-  background-color: transparent;
-  color: #000000;
-  font-size: 0.75rem;
-  font-weight: 600;
-  width: 10rem;
-  height: 2.5rem;
-  border: 2px solid #000; 
-
-  &:hover {
-    background-color: #cbcaca;
-  }
-}
-
-.btn-primary {
-  background: linear-gradient(to right, #4c86e9, #03e9c2);
-  color: white;
-  width: 10rem;
-  height: 2.5rem;
-
-  &:hover {
-    opacity: 0.9;
-  }
-}
-.option-input {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-
-  input[type='checkbox'],
-  input[type='radio'] {
-    transform: scale(1.2);
-  }
-}
-// .students-feedback {
-//   .question-row {
-//     display: flex;
-//     justify-content: space-between;
-//     gap: 2rem;
-//     padding: 1rem 0;
-
-//     .question-column {
-//       width: 40%;
-//       font-weight: 600;
-//       font-size: 1rem;
-//     }
-
-//     .option-column {
-//       width: 60%;
-
-//       .rating-box-group {
-//         display: flex;
-//         gap: 0.5rem;
-
-//         .rating-box {
-//           padding: 0.5rem 1rem;
-//           border: 1px solid #ccc;
-//           border-radius: 6px;
-//           background: #f5f5f5;
-//           text-align: center;
-//         }
-
-//         .rating-input {
-//           width: 40px;
-//           text-align: center;
-//         }
-//       }
-
-//       .vertical-options {
-//         display: flex;
-//         flex-direction: column;
-//         gap: 0.5rem;
-
-//         .option-input {
-//           padding: 0.4rem 0.75rem;
-//           //background: #f0f0f0;
-//           border-radius: 6px;
-//         }
-//       }
-//     }
-//   }
-.students-feedback {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-
-  .feedback-content {
-    width: 100%;
-    max-width: 1000px;
-  }
-
-  .question-row {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 1rem;
-    padding: 1rem 0;
-    border-bottom: 1px solid #eee;
-
-    .question-column {
-      flex: 1 1 40%;
-      max-width: 45%;
-      min-width: 250px;
-      font-weight: 600;
-      font-size: 0.5rem;
-      word-break: break-word;
-
-      .form-label-question {
-        font-size: 0.75rem;
-        font-weight: 400;
-      }
-    }
-
-    .option-column {
-      flex: 1 1 50%;
-      max-width: 55%;
-      min-width: 250px;
-
-      .rating-box-group {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-      }
-
-      .vertical-options {
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
-      }
-
-      .text-option {
-        padding: 0.75rem 1rem;
-        //background: #f3f3f3;
-        border-radius: 8px;
-        font-size: 0.95rem;
-        line-height: 1.4;
-        word-break: break-word;
-      }
-    }
-  }
-
-  @media (max-width: 768px) {
-    .question-row {
-      flex-direction: column;
-
-      .question-column,
-      .option-column {
-        max-width: 100%;
-        width: 100%;
-      }
-    }
-  }
-
-
-  // hr {
-  //   border: none;
-  //   border-top: 1px solid #ddd;
-  //   margin: 1rem 0;
-  // }
-}
-
-.rating-box-group {
-  display: flex;
-  gap: 0.5rem;
-
-  .rating-box {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 0.5rem 1rem;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    background: #f5f5f5;
-    text-align: center;
-    min-width: 40px;
-  }
-
-  .rating-value {
-    font-weight: 800;
-    font-size: 0.75rem;
-  }
-
-  .option-count-horizontal {
-    font-size: 0.75rem;
-    color: #333;
-    margin-top: 4px;
-  }
-}
-
-.vertical-options {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-
-  .option-input {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    //padding: 0.5rem 0.75rem;
-    //background-color: #f0f0f0;
-    //border-radius: 6px;
-
-    .option-text {
-      font-weight: 500;
-      font-size: 0.75rem;
-    }
-
-    .option-count-vertical {
-      font-size: 0.85rem;
-      color: #333;
-    }
-  }
-
-  .option-input-completed {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    .option-text {
-      font-weight: 500;
-      font-size: 0.75rem;
-    }
-
-    .option-count-vertical {
-      font-size: 0.85rem;
-      color: #333;
-    }
   }
 }
 
