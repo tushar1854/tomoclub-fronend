@@ -93,6 +93,7 @@ const TeacherEditSingleSession = ({ session, studentAll }) => {
   const isCompleted = session.status === 'completed';
   useEffect(() => {
     if (activeTab === 'Students Feedback') {
+      setLoader(true); // Start loading
       if (session.status !== 'completed') {
         callAPI('get', 'https://fy82ysdxe3.execute-api.us-east-1.amazonaws.com/testing/student_feedback_form_read')
           .then((res) => {
@@ -103,7 +104,8 @@ const TeacherEditSingleSession = ({ session, studentAll }) => {
             setFeedbackQuestions(updatedQuestions);
             setFeedbackStudentUid(res.uid || '');
           })
-          .catch((err) => console.error('Feedback form fetch error:', err));
+          .catch((err) => console.error('Feedback form fetch error:', err))
+          .finally(() => setLoader(false)); // End loading
       } else {
         callAPI(
           'get',
@@ -119,10 +121,12 @@ const TeacherEditSingleSession = ({ session, studentAll }) => {
               setFeedbackQuestions([]);
             }
           })
-          .catch((err) => console.error('Feedback count fetch error:', err));
+          .catch((err) => console.error('Feedback count fetch error:', err))
+          .finally(() => setLoader(false)); // End loading
       }
     }
   }, [activeTab, session.status]);
+  
 
   const handleQuestionChange = (index, value) => {
     const updated = [...feedbackQuestions];
@@ -192,7 +196,7 @@ const TeacherEditSingleSession = ({ session, studentAll }) => {
   }, []); // <-- empty dependency array so it runs once only
   
 
-  console.log('Session:', session);
+  //console.log('Session:', session);
   //console.log('Select Value:', selectValue);
 
   useEffect(() => {
@@ -270,30 +274,28 @@ const TeacherEditSingleSession = ({ session, studentAll }) => {
   };
 
   const user = JSON.parse(getSessionStorage('user'));
-  console.log('User:', user);
 
   // ✅ Fetch feedback on tab change or session change
   useEffect(() => {
     if (activeTab === 'Teacher Feedback') {
-      //const teacherEmail = session?.teachers?.split(',')[0]?.match(/\((.*?)\)/)?.[1];
+      setLoader(true);
+  
       const teacherList = session?.teachers?.split(',') || [];
-      // Match teacher string that contains the logged-in user's emailId
       const matchedTeacher = teacherList.find((entry) =>
         entry.toLowerCase().includes(user?.emailId?.toLowerCase())
       );
-      // Extract email from matched string or fallback to user.emailId
       const teacherEmail = matchedTeacher?.match(/\((.*?)\)/)?.[1] || user?.emailId;
-
+  
       console.log('Matched Teacher String:', matchedTeacher);
       console.log('✅ Teacher Email Used in API:', teacherEmail);
-
+  
       const sessionId = session?.sessionId;
-
+  
       if (teacherEmail && sessionId) {
         setFeedback({});
         setFeedbackUid('');
         setSubmitted(false);
-
+  
         callAPI(
           'get',
           `https://2djbmnhlsc.execute-api.us-east-1.amazonaws.com/testing/teacher-feedback-read?teacher_emailid=${teacherEmail}&session_id=${sessionId}`
@@ -301,12 +303,16 @@ const TeacherEditSingleSession = ({ session, studentAll }) => {
           .then((res) => {
             setFeedback(res.feedbackForm || {});
             setFeedbackUid(res.feedbackFormUid || '');
-            setSubmitted(res.submitted || false); // ✅ Depend only on backend's submitted status
+            setSubmitted(res.submitted || false);
           })
-          .catch((err) => console.error('Feedback fetch error:', err));
+          .catch((err) => console.error('Feedback fetch error:', err))
+          .finally(() => setLoader(false)); // ✅ Set loader to false here
+      } else {
+        setLoader(false); // ✅ Ensure loader is disabled if no API call happens
       }
     }
   }, [activeTab, session]);
+  
 
   // ✅ Handle changes in form input
   const handleFeedbackChange = (question, value) => {
@@ -560,18 +566,25 @@ const TeacherEditSingleSession = ({ session, studentAll }) => {
   
   // ✅ Render Teacher Feedback
   const renderTeacherFeedback = () => {
+    if (loader) {
+      return (
+        <div className="loader-container">
+          <Loader />
+        </div>
+      );
+    }
+  
     if (!feedback) return null;
-
+  
     const yesNoQuestions = Object.entries(feedback)
       .filter(([question, value]) => (typeof value === 'string' || typeof value === 'boolean') && question !== 'Remarks');
-
+  
     const ratingQuestions = Object.entries(feedback)
       .filter(([question, value]) => typeof value === 'number' && question !== 'Remarks');
-
+  
     return (
       <div className="teacher-feedback">
         <div className="feedback-form">
-
           {/* ✅ Yes/No Questions */}
           {yesNoQuestions.map(([question]) => (
             <div key={question}>
@@ -598,7 +611,7 @@ const TeacherEditSingleSession = ({ session, studentAll }) => {
               <hr />
             </div>
           ))}
-
+  
           {/* ✅ Rating Questions */}
           {ratingQuestions.map(([question]) => (
             <div key={question}>
@@ -625,33 +638,47 @@ const TeacherEditSingleSession = ({ session, studentAll }) => {
               <hr />
             </div>
           ))}
-
-          {/* ✅ Remarks */}
-          <div className="form-group">
-            <label className="form-remark">Remarks</label>
-            <textarea
-              className="form-control remarks"
-              value={feedback.Remarks || ''}
-              disabled={submitted}
-              onChange={(e) => handleFeedbackChange('Remarks', e.target.value)}
-              rows={2}
-            />
-          </div>
-
-          {/* ✅ Submit Button or Message */}
-          {!submitted ? (
-            <button className="btn-primary" onClick={handleFeedbackSubmit}>
-              Submit
-            </button>
-          ) : (
-            <p className="submitted-note">Feedback already submitted.</p>
+  
+          {/* ✅ Remarks and Submit only shown when not loading */}
+          {!loader && (
+            <>
+              <div className="form-group">
+                <label className="form-remark">Remarks</label>
+                <textarea
+                  className="form-control remarks"
+                  value={feedback.Remarks || ''}
+                  disabled={submitted}
+                  onChange={(e) => handleFeedbackChange('Remarks', e.target.value)}
+                  rows={2}
+                />
+              </div>
+  
+              {!submitted ? (
+                <button className="btn-primary" onClick={handleFeedbackSubmit}>
+                  Submit
+                </button>
+              ) : (
+                <p className="submitted-note">Feedback already submitted.</p>
+              )}
+            </>
           )}
         </div>
       </div>
     );
   };
+  
 
   const renderStudentsFeedback = () => {
+    if (loader) {
+      return (
+        <div className="loader-container">
+          <Loader />
+        </div>
+      );
+    }
+  
+    if (!feedbackQuestions.length) return null;
+    
     return (
       <div className="students-feedback">
         <div className="feedback-content">
@@ -833,11 +860,6 @@ const TeacherEditSingleSession = ({ session, studentAll }) => {
   //     </div>
   //   );
   };
-  
-  
-  
-  
-  
 
   const renderTabContent = () => {
     switch (activeTab) {

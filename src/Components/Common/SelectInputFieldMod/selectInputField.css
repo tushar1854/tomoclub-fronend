@@ -79,7 +79,7 @@ body {
   width: 208px;
 } */
 input {
-  width: calc(400px - 32px);
+  width: calc(300px - 32px);
   height: 45px;
   font-size: 14px;
   line-height: 32px;
