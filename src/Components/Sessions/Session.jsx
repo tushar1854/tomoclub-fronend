@@ -303,6 +303,7 @@ const Session = () => {
                 select={selectValue.cohort}
                 providedList={'cohort'}
               />
+              <button onClick={() => window.location.reload()} className='pl-2 pr-2 mt-1 text-lg font-bold border-collapse border-none bg-slate-150 h-9'>↻</button>
             </div>
           )}
         </div>

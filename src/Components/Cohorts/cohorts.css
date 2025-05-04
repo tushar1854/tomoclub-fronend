@@ -48,6 +48,10 @@
 
 .TableData-cohort-comp .session-link-edit {
   cursor: pointer;
+  margin-right: 10px;
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .TableData-cohort-comp li a {

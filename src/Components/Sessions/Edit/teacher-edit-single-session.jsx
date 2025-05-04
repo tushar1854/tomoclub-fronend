@@ -104,6 +104,20 @@ const TeacherEditSingleSession = ({ session, studentAll }) => {
     setFeedbackQuestions(updated);
   };
 
+  const handleCheckboxChange = (qIndex, oIndex) => {
+    const updated = [...feedbackQuestions];
+  
+    // Uncheck all options first
+    updated[qIndex].options.forEach((opt, idx) => {
+      updated[qIndex].options[idx].isChosen = false;
+    });
+  
+    // Then check the selected one
+    updated[qIndex].options[oIndex].isChosen = true;
+  
+    setFeedbackQuestions(updated);
+  };
+  
   const handleSubmitFeedbackForm = () => {
     const payload = {
       uid: feedbackStudentUid,
@@ -112,7 +126,7 @@ const TeacherEditSingleSession = ({ session, studentAll }) => {
         isEditable: q.isEditable,
         options: q.options.map((opt) => ({
           text: opt.text,
-          isChosen: false
+          isChosen: opt.isChosen || false
         }))
       }))
     };
@@ -243,11 +257,6 @@ const TeacherEditSingleSession = ({ session, studentAll }) => {
   useEffect(() => {
     if (activeTab === 'Teacher Feedback') {
       setLoader(true);
-  
-      // const teacherList = session?.teachers?.split(',') || [];
-      // const matchedTeacher = teacherList.find((entry) =>
-      //   entry.toLowerCase().includes(user?.emailId?.toLowerCase())
-      // );
       const teacherEmail = user?.emailId;
   
       //console.log('Matched Teacher String:', matchedTeacher);
@@ -706,29 +715,89 @@ const TeacherEditSingleSession = ({ session, studentAll }) => {
                       ))}
                     </div>
                   ) : (
+                    // <div className="vertical-options">
+                    //   {q.options.map((opt, oIndex) => (
+                    //     <div key={oIndex} className={!isCompleted ? 'option-input' : 'option-input-completed'}>
+                    //       {isEditMode && q.isEditable && !isCompleted ? (
+                    //         <input
+                    //           type="text"
+                    //           className="form-control"
+                    //           value={opt.text}
+                    //           onChange={(e) => handleOptionChange(qIndex, oIndex, e.target.value)}
+                    //         />
+                    //       ) : (
+                    //          <>
+                    //             <span className="option-text">{opt.text}</span>
+                    //             {typeof opt.count === 'number' && (
+                    //               <span className="option-count-vertical">
+                    //                 {opt.count}
+                    //               </span>
+                    //             )}
+                    //           </>
+                    //       )}
+                    //     </div>
+                    //   ))}
+                    // </div>
                     <div className="vertical-options">
-                      {q.options.map((opt, oIndex) => (
-                        <div key={oIndex} className={!isCompleted ? 'option-input' : 'option-input-completed'}>
-                          {isEditMode && q.isEditable && !isCompleted ? (
-                            <input
-                              type="text"
-                              className="form-control"
-                              value={opt.text}
-                              onChange={(e) => handleOptionChange(qIndex, oIndex, e.target.value)}
-                            />
-                          ) : (
-                             <>
-                                <span className="option-text">{opt.text}</span>
-                                {typeof opt.count === 'number' && (
-                                  <span className="option-count-vertical">
-                                    {opt.count}
-                                  </span>
-                                )}
-                              </>
-                          )}
-                        </div>
-                      ))}
-                    </div>
+  {q.options.map((opt, oIndex) => (
+    <div
+      key={oIndex}
+      className={!isCompleted ? 'option-input' : 'option-input-completed'}
+    >
+      {isEditMode && q.isEditable && !isCompleted && !isRatingQuestion(q.options, q.question) ? (
+        <>
+          {/* <input
+            type="text"
+            className="form-control"
+            value={opt.text}
+            onChange={(e) =>
+              handleOptionChange(qIndex, oIndex, e.target.value)
+            }
+          />
+            <input
+            type="checkbox"
+            className="form-control"
+            checked={opt.isChosen}
+            onChange={() => handleCheckboxChange(qIndex, oIndex)}
+          /> */}
+          <div className="option-container">
+            <input
+              type="text"
+              className="form-control"
+              value={opt.text}
+              onChange={(e) => handleOptionChange(qIndex, oIndex, e.target.value)}
+            />
+            <div
+              className={`custom-checkbox ${opt.isChosen ? 'checked' : ''}`}
+              onClick={() => handleCheckboxChange(qIndex, oIndex)}
+              role="checkbox"
+              aria-checked={opt.isChosen}
+              tabIndex={0}
+            />
+          </div>
+
+          {/* <div
+            className={`custom-checkbox ${opt.isChosen ? 'checked' : ''}`}
+            onClick={() => handleCheckboxChange(qIndex, oIndex)}
+            role="checkbox"
+            aria-checked={opt.isChosen}
+            tabIndex={0}
+          >
+            {opt.text}
+          </div> */}
+        </>
+      ) : (
+        <>
+          <span className="option-text">{opt.text}</span>
+          {typeof opt.count === 'number' && (
+            <span className="option-count-vertical">{opt.count}</span>
+          )}
+        </>
+      )}
+    </div>
+  ))}
+</div>
+
                   )}
                 </div>
               </div>
