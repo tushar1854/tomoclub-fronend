@@ -244,13 +244,13 @@ const TeacherEditSingleSession = ({ session, studentAll }) => {
     if (activeTab === 'Teacher Feedback') {
       setLoader(true);
   
-      const teacherList = session?.teachers?.split(',') || [];
-      const matchedTeacher = teacherList.find((entry) =>
-        entry.toLowerCase().includes(user?.emailId?.toLowerCase())
-      );
-      const teacherEmail = matchedTeacher?.match(/\((.*?)\)/)?.[1] || user?.emailId;
+      // const teacherList = session?.teachers?.split(',') || [];
+      // const matchedTeacher = teacherList.find((entry) =>
+      //   entry.toLowerCase().includes(user?.emailId?.toLowerCase())
+      // );
+      const teacherEmail = user?.emailId;
   
-      console.log('Matched Teacher String:', matchedTeacher);
+      //console.log('Matched Teacher String:', matchedTeacher);
       console.log('✅ Teacher Email Used in API:', teacherEmail);
   
       const sessionId = session?.sessionId;
