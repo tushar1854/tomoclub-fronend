@@ -288,7 +288,7 @@ const TeacherEditSingleSession = ({ session, studentAll }) => {
 
   // ✅ Submit feedback to backend
   const handleFeedbackSubmit = () => {
-    const teacherEmailId = session?.teachers?.split(',')[0]?.match(/\((.*?)\)/)?.[1];
+    const teacherEmail = user?.emailId;
     const sessionId = session?.sessionId;
 
     if (!teacherEmailId || !sessionId || !feedbackUid) {
