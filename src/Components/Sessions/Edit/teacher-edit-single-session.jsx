@@ -203,6 +203,17 @@ const TeacherEditSingleSession = ({ session, studentAll }) => {
       setLoader(false);
     });
   }, []);
+
+  useEffect(() => {
+    const nextTimes = removeBeforeTime(Constants.TIME, selectValue.startTime);
+    if (nextTimes.length > 0) {
+      setSelectValue((prev) => ({
+        ...prev,
+        endTime: nextTimes[0]
+      }));
+    }
+  }, [selectValue.startTime]);
+
   
   const onSubmit = (data) => {
     const sessionD = {
@@ -240,6 +251,7 @@ const TeacherEditSingleSession = ({ session, studentAll }) => {
         setLoader(false);
       });
   };
+  
   
 
   const handleReschedule = () => {
@@ -295,7 +307,7 @@ const TeacherEditSingleSession = ({ session, studentAll }) => {
     }));
   };
 
-  // ✅ Submit feedback to backend
+  // ✅ Submit Teacher feedback to backend
   const handleFeedbackSubmit = () => {
     const teacherEmailId = user?.emailId;
     const sessionId = session?.sessionId;
@@ -739,64 +751,54 @@ const TeacherEditSingleSession = ({ session, studentAll }) => {
                     //   ))}
                     // </div>
                     <div className="vertical-options">
-  {q.options.map((opt, oIndex) => (
-    <div
-      key={oIndex}
-      className={!isCompleted ? 'option-input' : 'option-input-completed'}
-    >
-      {isEditMode && q.isEditable && !isCompleted && !isRatingQuestion(q.options, q.question) ? (
-        <>
-          {/* <input
-            type="text"
-            className="form-control"
-            value={opt.text}
-            onChange={(e) =>
-              handleOptionChange(qIndex, oIndex, e.target.value)
-            }
-          />
-            <input
-            type="checkbox"
-            className="form-control"
-            checked={opt.isChosen}
-            onChange={() => handleCheckboxChange(qIndex, oIndex)}
-          /> */}
-          <div className="option-container">
-            <input
-              type="text"
-              className="form-control"
-              value={opt.text}
-              onChange={(e) => handleOptionChange(qIndex, oIndex, e.target.value)}
-            />
-            <div
-              className={`custom-checkbox ${opt.isChosen ? 'checked' : ''}`}
-              onClick={() => handleCheckboxChange(qIndex, oIndex)}
-              role="checkbox"
-              aria-checked={opt.isChosen}
-              tabIndex={0}
-            />
-          </div>
-
-          {/* <div
-            className={`custom-checkbox ${opt.isChosen ? 'checked' : ''}`}
-            onClick={() => handleCheckboxChange(qIndex, oIndex)}
-            role="checkbox"
-            aria-checked={opt.isChosen}
-            tabIndex={0}
-          >
-            {opt.text}
-          </div> */}
-        </>
-      ) : (
-        <>
-          <span className="option-text">{opt.text}</span>
-          {typeof opt.count === 'number' && (
-            <span className="option-count-vertical">{opt.count}</span>
-          )}
-        </>
-      )}
-    </div>
-  ))}
-</div>
+                      {q.options.map((opt, oIndex) => (
+                        <div
+                          key={oIndex}
+                          className={!isCompleted ? 'option-input' : 'option-input-completed'}
+                        >
+                          {isEditMode && q.isEditable && !isCompleted && !isRatingQuestion(q.options, q.question) ? (
+                            <>
+                              {/* <input
+                                type="text"
+                                className="form-control"
+                                value={opt.text}
+                                onChange={(e) =>
+                                  handleOptionChange(qIndex, oIndex, e.target.value)
+                                }
+                              />
+                                <input
+                                type="checkbox"
+                                className="form-control"
+                                checked={opt.isChosen}
+                                onChange={() => handleCheckboxChange(qIndex, oIndex)}
+                              /> */}
+                              <div className="option-container">
+                                <input
+                                  type="text"
+                                  className="form-control"
+                                  value={opt.text}
+                                  onChange={(e) => handleOptionChange(qIndex, oIndex, e.target.value)}
+                                />
+                                <div
+                                  className={`custom-checkbox ${opt.isChosen ? 'checked' : ''}`}
+                                  onClick={() => handleCheckboxChange(qIndex, oIndex)}
+                                  role="checkbox"
+                                  aria-checked={opt.isChosen}
+                                  tabIndex={0}
+                                />
+                              </div>
+                            </>
+                          ) : (
+                            <>
+                              <span className="option-text">{opt.text}</span>
+                              {typeof opt.count === 'number' && (
+                                <span className="option-count-vertical">{opt.count}</span>
+                              )}
+                            </>
+                          )}
+                        </div>
+                      ))}
+                    </div>
 
                   )}
                 </div>
