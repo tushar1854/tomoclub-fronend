@@ -6,6 +6,7 @@ import Loader from '../Common/Loader/Loader';
 import edit from '../../assets/icons/edit.svg';
 import { callAPI, capitalizeFirstChar, getSessionStorage } from '../../Helper';
 import SelectInputFieldMod from '../Common/SelectInputFieldMod/SelectInputFieldMod';
+import TeacherCohorts from './TeacherCohorts'; // adjust path as needed
 
 const TableHeader = () => {
   const user = JSON.parse(getSessionStorage('user'));
@@ -222,9 +223,7 @@ const Cohorts = () => {
         </div>
       </div>
 
-      {loader ? (
-        <Loader />
-      ) : (
+      {user?.entity === 'teacher' ? <TeacherCohorts /> : loader ? <Loader /> : (
         <div className="cohort-table-container">
           <div className="cohort-table-header">
             <TableHeader />
@@ -246,6 +245,7 @@ const Cohorts = () => {
           </div>
         </div>
       )}
+
     </div>
   );
 };
