@@ -23,6 +23,10 @@ const TeacherCohorts = () => {
   const [sessionDataTable, setSessionDataTable] = useState([]);
   const [confirmDisabled, setConfirmDisabled] = useState(true);
 
+  const [loadingSessions, setLoadingSessions] = useState(false);
+  const [loadingCohorts, setLoadingCohorts] = useState(false);
+
+
   const handleConfirm = async () => {
     if (!selectedSessionId) return;
     try {
@@ -38,21 +42,21 @@ const TeacherCohorts = () => {
 
 
   const handleViewSessionClick = async () => {
+    setLoadingSessions(true);
     try {
       const res = await callAPI(
         'get',
         `https://zzpq0vmz17.execute-api.us-east-1.amazonaws.com/testing/session-teacher?teacheruid=${teacherUid}`
       );
-      console.log('Session Data:', res);
-      console.log('Selected Cohort:', selectedCohort);
       // Filter session IDs for selected cohort name
       const matchingSessionIds = (res || [])
         .filter(session => session.cohortUid === selectedCohort)
         .map(session => session.sessionId);
       setAllSessions(matchingSessionIds);
-      console.log('All Sessions:', matchingSessionIds);
     } catch (err) {
       console.error('Error fetching session data:', err);
+    } finally {
+      setLoadingSessions(false); // end loading
     }
   };
 
@@ -95,7 +99,11 @@ const TeacherCohorts = () => {
   // Fetch teacher cohorts once
   useEffect(() => {
     if (teacherUid) {
-      callAPI('get', `https://zzpq0vmz17.execute-api.us-east-1.amazonaws.com/testing/session-teacher?teacheruid=${teacherUid}`)
+      setLoadingCohorts(true); // start loading
+      callAPI(
+        'get',
+        `https://zzpq0vmz17.execute-api.us-east-1.amazonaws.com/testing/session-teacher?teacheruid=${teacherUid}`
+      )
         .then((res) => {
           const uniqueCohorts = [];
           const seenUids = new Set();
@@ -112,9 +120,11 @@ const TeacherCohorts = () => {
 
           setCohorts(uniqueCohorts);
         })
-        .catch((err) => console.error('Error fetching teacher cohorts:', err));
+        .catch((err) => console.error('Error fetching teacher cohorts:', err))
+        .finally(() => setLoadingCohorts(false)); // end loading
     }
   }, [teacherUid]);
+
 
   // Handle cohort selection
   const handleCohortSelect = (e) => {
@@ -154,18 +164,23 @@ const TeacherCohorts = () => {
         <div className="teacher-cohort-dashboard">
           <div className="dropdown-container">
             <label>Select a Cohort:</label>
-            <select
-              value={cohorts.find(c => c.cohortUid === selectedCohort)?.cohortName || ''}
-              onChange={handleCohortSelect}
-            >
-              <option value="">-- Select --</option>
-              {cohorts.map((cohort) => (
-                <option key={cohort.cohortUid} value={cohort.cohortName}>
-                  {cohort.cohortName}
-                </option>
-              ))}
-            </select>
+            {loadingCohorts ? (
+              <span>Loading...</span>
+            ) : (
+              <select
+                value={cohorts.find(c => c.cohortUid === selectedCohort)?.cohortName || ''}
+                onChange={handleCohortSelect}
+              >
+                <option value="">-- Select --</option>
+                {cohorts.map((cohort) => (
+                  <option key={cohort.cohortUid} value={cohort.cohortName}>
+                    {cohort.cohortName}
+                  </option>
+                ))}
+              </select>
+            )}
           </div>
+
 
           <div className="dashboard-cards">
             <div className="card card-a">
@@ -224,12 +239,16 @@ const TeacherCohorts = () => {
             <div className="session-left">
               <div className="select-row-container">
                 <label>Select Session ID:</label>
-                <select value={selectedSessionId} onChange={handleSessionChange}>
-                  <option value="">-- Select --</option>
-                  {allSessions.map(id => (
-                    <option key={id} value={id}>{id}</option>
-                  ))}
-                </select>
+                {loadingSessions ? (
+                  <span>Loading...</span>
+                ) : (
+                  <select value={selectedSessionId} onChange={handleSessionChange}>
+                    <option value="">-- Select --</option>
+                    {allSessions.map(id => (
+                      <option key={id} value={id}>{id}</option>
+                    ))}
+                  </select>
+                )}
               </div>
               <button className="confirm-btn" onClick={handleConfirm} disabled={confirmDisabled}>
                 Confirm
@@ -275,7 +294,7 @@ const TeacherCohorts = () => {
                   <ul className="table-data-list" key={index}>
                     <li>{student.studentFirstName} {student.studentLastName}</li>
                     <li>{student.studentUsername}</li>
-                    <li>{student.present ? 'Yes' : 'No'}</li>
+                    <li>{student.present ? 'P' : 'A'}</li>
                     <li>{student.preSessionRating === false ? '-' : student.preSessionRating}</li>
                     <li>{student.mood === false ? '-' : student.mood}</li>
                     <li>{student.postSessionRating === false ? '-' : student.postSessionRating}</li>
