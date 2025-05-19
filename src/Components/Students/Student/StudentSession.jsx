@@ -112,7 +112,7 @@ const TableData = ({
 
   return (
     <div className="TableData-cohort-comp">
-      <li>{sessionId}</li>
+      <li className='session-link-edit'>{sessionId}</li>
       <li>{date}</li>
       <li className={attendance ? 'text-green-500' : 'text-red-600'}>
         {attendance ? 'P' : 'A'}

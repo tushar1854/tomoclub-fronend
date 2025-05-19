@@ -88,6 +88,9 @@
   font-weight: 400;
   line-height: normal;
   border-radius: 1px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .cohort-hover:hover {
   cursor: pointer;
