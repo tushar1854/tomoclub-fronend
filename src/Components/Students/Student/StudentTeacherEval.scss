@@ -1,0 +1,742 @@
+// Main container
+.session-container {
+  width: 70%;
+
+  // Header section
+  .session-header {
+    //margin-bottom: 2rem;
+
+    .header-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      margin-bottom: 1rem;
+      column-gap: 10rem;
+    
+      .grid-item {
+        display: flex;
+        align-items:flex-start;
+        font-size: 0.875rem;
+        color: #4b5563;
+
+    
+        .label {
+          font-weight: 500;
+          margin-right: 0.5rem;
+        }
+      }
+    
+      .status-wrapper {
+        display: flex;
+        align-items: center;
+    
+        .status-label {
+          font-weight: 500;
+          font-size: 0.875rem;
+          margin-right: 0.5rem;
+        }
+    
+        .status-badge {
+          padding: 0.25rem 0.5rem;
+          border-radius: 9999px;
+          font-size: 0.75rem;
+    
+          &.completed {
+            background-color: #dcfce7;
+            color: #166534;
+          }
+    
+          &.live {
+            background-color: #dbeafe;
+            color: #2d4eb9;
+          }
+    
+          &.pending {
+            background-color: #fef9c3;
+            color: #854d0e;
+          }
+        }
+      }
+    
+      .timing-info {
+        display: flex;
+        font-size: 0.875rem;
+        color: #4b5563;
+    
+        .label {
+          font-weight: 500;
+          margin-right: 0.5rem;
+        }
+      }
+    }
+    
+  }
+
+  // Tabs
+  .tabs {
+    display: flex;
+    //border-bottom: 1px solid #e5e7eb;
+
+    .tab-button {
+      width: 229px;
+      height: 56px;
+      border: none;
+      background-color: transparent;
+      cursor: pointer;
+      padding: 0.5rem 1.5rem;
+      font-size: 0.75rem;
+      font-weight: 800;
+      color: #6b7280;
+
+      &:hover {
+        color: #374151;
+      }
+
+      &.active-btn {
+        color: #000;
+        background-color: #e9ebed;
+        //border-bottom: 2px solid #353638;
+        margin-bottom: -1px;
+        border-radius: 0.5rem;
+}
+    }
+  }
+
+  // Tab content
+  .tab-content {
+    width: 100%;
+    background-color: #f9fafb;
+    padding: 2rem;
+    border-radius: 0.5rem;
+
+    // Session details
+    .session-details {
+      .form-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 0.5rem; // reduced gap
+        margin-top: 0rem;
+        margin-bottom: 0rem;
+    
+        @media (min-width: 768px) {
+          grid-template-columns: 1fr 1fr;
+          grid-auto-rows: auto;
+          gap: 1rem; // slightly increased for larger screens
+        }
+    
+        .form-group {
+          margin-bottom: 0.5rem; // reduced spacing
+          margin-top: 0rem;
+    
+          .form-label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #374151;
+            margin-bottom: 0.25rem; // reduced label spacing
+          }
+    
+          .form-control {
+            position: sticky;
+            top: 0; // sticky to top
+            z-index: 5;
+            width: 100%;
+            height: 3rem; // slightly shorter height
+            padding: 0.5rem 0.75rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.375rem;
+            background-color: #fff;
+    
+            &:disabled {
+              background-color: #f9fafb;
+            }
+
+          }
+
+          .date-picker{
+            position: sticky;
+            top: 0;
+            z-index: 5;
+            width: 80%;
+            height: 3rem;
+          }
+    
+          .date-inputs {
+            position: sticky;
+            top: 0;
+            z-index: 5;
+            display: flex;
+            gap: 0.5rem;
+    
+            .day-input {
+              width: 4rem;
+              text-align: center;
+            }
+    
+            .month-input {
+              width: 6.5rem;
+              text-align: center;
+            }
+    
+            .year-input {
+              width: 5rem;
+              text-align: center;
+            }
+          }
+    
+          .time-inputs {
+            position: sticky;
+            top: 0;
+            z-index: 5;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+    
+            .time-input {
+              width: 6.5rem;
+            }
+    
+            .time-input-left {
+              width: 6rem;
+            }
+    
+            .timezone-input {
+              width: 5rem;
+            }
+    
+            .separator {
+              color: #6b7280;
+            }
+          }
+    
+          &.game-align {
+            display: flex;
+            flex-direction: column;
+          }
+    
+          .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            height: 3.5rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.375rem;
+            background-color: #fff;
+            padding: 0.5rem;
+    
+            .skill-tag {
+              padding: 0.25rem 0.75rem;
+              background-color: #fff;
+              border: 1px solid #d1d5db;
+              border-radius: 0.375rem;
+              font-size: 0.875rem;
+            }
+          }
+    
+          &.full-width {
+            grid-column: 1 / -1;
+          }
+        }
+      }
+    
+      .actions {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 0rem;
+
+        .reschedule-btn{
+          background-color: #d3d4d6;
+          font-size: medium;
+          width: 12rem;
+          height: 3rem;
+          color: black;
+          text-align: center;
+          justify-content: center;
+          padding: 10px;
+          margin: 1rem;
+          font-weight: 600;
+          border-radius: 10px;
+          border: 2px solid black;
+          cursor: pointer;
+          -webkit-border-radius: 10px;
+          -moz-border-radius: 10px;
+          -ms-border-radius: 10px;
+          -o-border-radius: 10px;
+        }
+    
+        .btn {
+          background-color: transparent;
+          padding: 0.5rem 1rem;
+          width: 10rem;
+          height: 2.75rem;
+          border-radius: 0.375rem;
+          font-size: 0.875rem;
+          transition: background-color 0.2s;
+    
+          &.btn-primary {
+            background-color: transparent;
+            color: #fff;
+    
+            &:hover {
+              background-color: #d1d5db;
+            }
+          }
+    
+          &.btn-secondary {
+            border: 1px solid #d1d5db;
+            background-color: #fff;
+    
+            &:hover {
+              background-color: #f9fafb;
+            }
+          }
+        }
+    
+        .link {
+          margin-top: 2rem;
+          color: #2563eb;
+    
+          &:hover {
+            color: #1d4ed8;
+          }
+        }
+      }
+    }
+    
+
+    // Reports status
+    .reports-status {
+      .section-title {
+        font-size: 1.125rem;
+        font-weight: 500;
+        margin-bottom: 1rem;
+      }
+
+      .reports-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+
+        .report-item {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 0.75rem;
+          background-color: #fff;
+          border: 1px solid #e5e7eb;
+          border-radius: 0.375rem;
+
+          .status-badge {
+            padding: 0.25rem 0.5rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+
+            &.completed {
+              background-color: #dcfce7;
+              color: #166534;
+            }
+
+            &.pending {
+              background-color: #fef9c3;
+              color: #854d0e;
+            }
+          }
+        }
+      }
+    }
+
+   // Teacher feedback
+    .teacher-feedback {
+      .feedback-form {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+    
+      .feedback-row {
+        display: grid;
+        grid-template-columns: 3fr 2fr; // 2 parts question, 3 parts checkboxes
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem;
+        //min-width: 700px; // allows scroll on smaller screens
+      }
+    
+      .feedback-row-label {
+        display: grid;
+        grid-template-columns: 3fr 2fr; // 2 parts question, 3 parts checkboxes
+        align-items: center;
+        gap: 1rem;
+        //min-width: 700px; // allows scroll on smaller screens
+      }
+      .feedback-question {
+        font-size: 0.875rem;
+        font-weight: 500;
+        line-height: 1.4;
+        word-break: break-word;
+      }
+    
+      .feedback-options {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr); // ✅ 5 equal checkbox columns
+        gap: 0.5rem;
+        justify-items: center; // ✅ Center each checkbox in its cell
+      }
+    
+      .feedback-options label {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .feedback-options span{
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: #374151;
+      }
+    
+      .feedback-options input[type='checkbox'] {
+        width: 1.2rem;
+        height: 1.2rem;
+        accent-color: #3b82f6;
+        cursor: pointer;
+        border: 1px solid #000;
+      }
+    
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        margin-top: 1rem;
+
+        .form-remark {
+          font-size: 0.875rem;
+          font-weight: 800;
+          color: #1a1e25;
+        }
+      }
+    
+      .remarks {
+        width: 100%;
+        max-width: 500px;
+        height: 60px;
+        resize: none;
+        padding: 0.5rem;
+        font-size: 0.875rem;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+    
+      .btn-primary {
+        margin-top: 1rem;
+        padding: 0.8rem 1.5rem;
+        background: linear-gradient(to right, #4c86e9, #03e9c2);
+        background-color: #51ade6;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        font-size: 1rem;
+        font-weight: 500;
+        cursor: pointer;
+        width: 12rem;
+        transition: background-color 0.3s ease;
+      }
+    
+      .btn-primary:hover {
+        background-color: #03e9c2;
+      }
+    
+      .submitted-note {
+        margin-top: 0.5rem;
+        color: green;
+        font-weight: 500;
+      }
+    }
+    
+    //student feedback
+    .question-block {
+      margin-bottom: 1.5rem;
+      padding: 0.75rem;
+      border-bottom: 1px solid #e0e0e0;
+    
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.6rem;
+    
+        .form-label {
+          font-weight: 500;
+          font-size: 1rem;
+        }
+    
+        .option-input {
+          font-size: 0.95rem;
+          padding: 0.5rem 0.75rem;
+          //background-color: #f0f0f0;
+          border-radius: 6px;
+        }
+    
+        input.form-control{
+          font-size: 0.95rem;
+          padding: 0.5rem 0.75rem;
+          border: 1px solid #ccc;
+          border-radius: 6px;
+        }
+      }
+    }
+    .btn-secondary,
+    .btn-primary {
+      margin-top: 1rem;
+      padding: 0.6rem 1.5rem;
+      font-weight: 500;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s ease-in-out;
+    }
+    
+    .btn-secondary {
+      background-color: transparent;
+      color: #000000;
+      font-size: 0.75rem;
+      font-weight: 600;
+      width: 10rem;
+      height: 2.5rem;
+      border: 2px solid #000; 
+    
+      &:hover {
+        background-color: #cbcaca;
+      }
+    }
+    
+    .btn-primary {
+      background: linear-gradient(to right, #4c86e9, #03e9c2);
+      color: white;
+      width: 10rem;
+      height: 2.5rem;
+    
+      &:hover {
+        opacity: 0.9;
+      }
+    }
+    .option-input {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    
+      input[type='checkbox'],
+      input[type='radio'] {
+        transform: scale(1.2);
+      }
+    }
+    .students-feedback {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    
+      .feedback-content {
+        width: 100%;
+        max-width: 1000px;
+      }
+    
+      .question-row {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 1rem 0;
+        border-bottom: 1px solid #eee;
+    
+        .question-column {
+          flex: 1 1 40%;
+          max-width: 45%;
+          min-width: 250px;
+          font-weight: 600;
+          font-size: 0.5rem;
+          word-break: break-word;
+    
+          .form-label-question {
+            font-size: 0.75rem;
+            font-weight: 400;
+          }
+        }
+    
+        .option-column {
+          flex: 1 1 50%;
+          max-width: 55%;
+          min-width: 250px;
+    
+          .rating-box-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+          }
+    
+          .vertical-options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+          }
+    
+          .text-option {
+            padding: 0.75rem 1rem;
+            //background: #f3f3f3;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            line-height: 1.4;
+            word-break: break-word;
+          }
+        }
+      }
+    
+      @media (max-width: 768px) {
+        .question-row {
+          flex-direction: column;
+    
+          .question-column,
+          .option-column {
+            max-width: 100%;
+            width: 100%;
+          }
+        }
+      }
+    }
+    
+    .rating-box-group {
+      display: flex;
+      gap: 0.5rem;
+    
+      .rating-box {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 0.5rem 1rem;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        background: #f5f5f5;
+        text-align: center;
+        min-width: 40px;
+      }
+    
+      .rating-value {
+        font-weight: 800;
+        font-size: 0.75rem;
+      }
+    
+      .option-count-horizontal {
+        font-size: 0.75rem;
+        color: #333;
+        margin-top: 4px;
+      }
+    }
+    
+    .vertical-options {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    
+      .option-input {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        //padding: 0.5rem 0.75rem;
+        //background-color: #f0f0f0;
+        //border-radius: 6px;
+    
+        .option-text {
+          font-weight: 500;
+          font-size: 0.75rem;
+        }
+        
+        .feedback-checkbox {
+          display: flex;
+          align-items: center;
+          gap: 2rem;
+          width: 3rem;
+          height: 3rem;
+        }
+
+        .option-container {
+          display: flex;
+          align-items: center;
+          margin-bottom: 10px;
+        }
+        
+        .option-input {
+          flex-grow: 1;
+          margin-right: 10px;
+        }
+
+        .custom-checkbox {
+          display: flex;
+          align-items: center;
+          padding: 8px 8px;
+          border: 2px solid #ccc;
+          border-radius: 3px;
+          cursor: pointer;
+          margin-bottom: 6px;
+          margin-left: 18px;
+          transition: all 0.2s ease;
+          user-select: none;
+          -webkit-border-radius: 3px;
+          -moz-border-radius: 3px;
+          -ms-border-radius: 3px;
+          -o-border-radius: 3px;
+          cursor: pointer;
+          position: relative;
+        }
+
+        .custom-checkbox.checked {
+          //background-color: #007bff;
+          background: linear-gradient(to right, #4c86e9, #03e9c2);;
+          border-color: none;
+        }
+        
+        .custom-checkbox.checked::after {
+          content: '✓';
+          position: absolute;
+          top: -2px;
+          left: 3px;
+          color: white;
+          font-size: 14px;
+        }
+        
+        .custom-checkbox:hover {
+          background-color: #f0f0f0;
+        }
+        
+        .option-count-vertical {
+          font-size: 0.85rem;
+          color: #333;
+        }
+      }
+    
+      .option-input-completed {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    
+        .option-text {
+          font-weight: 500;
+          font-size: 0.75rem;
+        }
+    
+        .option-count-vertical {
+          font-size: 0.85rem;
+          color: #333;
+        }
+      }
+    }    
+  }
+  
+
+  // Loader
+  .loader-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 16rem;
+  }
+}
+

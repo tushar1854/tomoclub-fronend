@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './teacherCohorts.scss';
 import { callAPI, getSessionStorage } from '../../Helper';
 
 const TeacherCohorts = () => {
+  const navigate = useNavigate();
   const user = JSON.parse(getSessionStorage('user'));
   const [cohorts, setCohorts] = useState([]);
   const [selectedCohort, setSelectedCohort] = useState('');
@@ -280,8 +282,8 @@ const TeacherCohorts = () => {
             <div className='teacher-cohorts'>
               <div className="table-container">
                 <div className="table-header-list">
-                  <li>Name</li>
-                  <li>Username</li>
+                  <li>Student ID</li>
+                  <li>Student Name</li>
                   <li>Present</li>
                   <li>Pre-Session Rating</li>
                   <li>Mood</li>
@@ -292,9 +294,26 @@ const TeacherCohorts = () => {
 
                 {sessionDataTable.map((student, index) => (
                   <ul className="table-data-list" key={index}>
-                    <li>{student.studentFirstName} {student.studentLastName}</li>
-                    <li>{student.studentUsername}</li>
-                    <li>{student.present ? 'P' : 'A'}</li>
+                    <li 
+                      className="cursor-pointer"
+                      onClick={() => {
+                        navigate(`/students/${student.studentUsername}`, {
+                          state: { cohortUid: selectedCohort } // pass cohortUid here
+                        });
+                    }}>
+                    {student.studentUsername}
+                    </li>
+                    <li
+                      className="cursor-pointer"
+                      onClick={() => {
+                        navigate(`/students/${student.studentUsername}`, {
+                          state: { cohortUid: selectedCohort } // pass cohortUid here
+                        });
+                      }}
+                    >
+                      {student.studentFirstName} {student.studentLastName}
+                    </li>
+                    <li className={student.present ? 'text-green-500' : 'text-red-600'}>{student.present ? 'P' : 'A'}</li>
                     <li>{student.preSessionRating === false ? '-' : student.preSessionRating}</li>
                     <li>{student.mood === false ? '-' : student.mood}</li>
                     <li>{student.postSessionRating === false ? '-' : student.postSessionRating}</li>

@@ -27,7 +27,14 @@
 
 .hanna-box {
   display: flex;
-  margin-left: 16px;
+  margin-left: 10px;
+}
+
+.hanna-left-box {
+  display: flex;
+  flex-direction: column;
+  gap: 7.5%;
+  margin-right: 10%;
 }
 
 .hanna-left {
@@ -35,10 +42,11 @@
   margin-right: 15%;
   margin-top: 2.5%;
   flex-basis: 35%;
-  height: 55vh;
+  height: 90rem;
   border-radius: 10px;
   background: #eff2f5;
   padding: 1.5%;
+  width: 25rem;
 }
 
 .hanna-left hr {
@@ -49,9 +57,11 @@
 }
 
 .hanna-right {
-  /* border: 1px solid black; */
+  //border: 1px solid black;
   margin-left: 2px;
   flex-basis: 48%;
+  height: 75vh;
+  width: 45px;
 }
 
 .hanna-row {
@@ -169,7 +179,7 @@
   padding: 5px;
   justify-content: center;
   align-items: center;
-  margin-left: 10px;
+  margin-left: 5px;
 }
 
 .student-progress-row h3 {
@@ -180,15 +190,15 @@
 }
 
 .progress-student {
-  padding: 5px;
+  //padding: 5px;
 }
 
 .hanna-circle {
   width: 140px;
   height: 140px;
-  margin-left: 20px;
-  margin-right: 5vw;
-  margin-bottom: 20px;
+  margin-left: 10px;
+  margin-right: 2vw;
+  margin-bottom: 10px;
   display: flex;
   flex-direction: column;
   justify-content: center;

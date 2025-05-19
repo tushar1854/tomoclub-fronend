@@ -49,6 +49,7 @@ import ModeratorDetail from './Components/Moderator/ModeratorDetail/ModeratorDet
 import ModSession from './Components/Moderator/ModSession/ModSession';
 import AddModerator from './Components/Moderator/AddModerator/AddModerator';
 import ProtectedRoute from './Components/ProtectedRoute/ProtectedRoute';
+import StudentTeacherEval from './Components/Students/Student/StudentTeacherEval';
 import { getSessionStorage } from './Helper';
 
 const App = () => {
@@ -446,6 +447,17 @@ const App = () => {
               </ProtectedRoute>
             }
           />
+          <Route 
+            path="/session/edit/editStudentFeedback" 
+            element={
+              <ProtectedRoute>
+                <>
+                  <Navbar />
+                  <Header />
+                  <StudentTeacherEval />
+                </>
+              </ProtectedRoute>
+            } />
           <Route
             path="/cohorts/:cohortUid"
             element={

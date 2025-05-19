@@ -315,7 +315,7 @@ const EditSingleSession = () => {
             }}
             lastValue={'Single session'}
           />
-          <TeacherEditSingleSession session={location.state.session} studentAll={studentAll} />
+          <TeacherEditSingleSession session={location.state.session} studentAll={studentAll}/>
         </div>
       </div>
     );
