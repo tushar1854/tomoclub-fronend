@@ -1,6 +1,28 @@
 // Main container
 .session-container {
   width: 70%;
+  margin-left: 250px;
+
+  .dropdown-container{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    margin-bottom: 2rem;
+
+    .dropdown-item{
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.875rem;
+        color: #4d535c;
+    
+        .dropdown-label {
+            font-weight: 700;
+            margin-right: 0.5rem;
+            color: #4d535c;
+        }
+    }
+  }
 
   // Header section
   .session-header {

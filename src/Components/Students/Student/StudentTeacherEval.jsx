@@ -3,7 +3,8 @@ import { useLocation } from 'react-router-dom';
 import { callAPI, getSessionStorage } from '../../../Helper';
 import Loader from '../../Common/Loader/Loader';
 import BreadcrumbsLink from '../../Common/BreadcrumbsLink/BreadcrumbsLink';
-import './../../Sessions/Edit/teacher-edit-single-session.scss';
+//import './../../Sessions/Edit/teacher-edit-single-session.scss';
+import './StudentTeacherEval.scss';
 
 const StudentTeacherEval = () => {
   const location = useLocation();
@@ -291,8 +292,8 @@ const StudentTeacherEval = () => {
   };
 
   return (
-    <div className="addSession">
-      <div className="create-curr4-container">
+    //<div className="addSession">
+      <div className="session-container">
         <BreadcrumbsLink
           breadcrumbValues={{ 1: { name: 'Home', link: '/home' }, 2: { name: 'Session', link: '/session' } }}
           lastValue="Edit Student Feedback"
@@ -301,9 +302,9 @@ const StudentTeacherEval = () => {
         <h1 className="title">Single Session</h1>
 
         <div className="session-header">
-          <div className="form-grid">
-            <div className="form-group">
-              <label className="form-label">Cohort Name</label>
+          <div className="dropdown-container">
+            <div className="dropdown-item">
+              <label className="dropdown-label">Cohort Name:</label>
               <select className="form-control" value={selectedCohort} onChange={handleCohortChange}>
                 <option value="">-- Select Cohort --</option>
                 {allCohorts.map((cohort, index) => (
@@ -311,8 +312,8 @@ const StudentTeacherEval = () => {
                 ))}
               </select>
             </div>
-            <div className="form-group">
-              <label className="form-label">Session ID</label>
+            <div className="dropdown-item">
+              <label className="dropdown-label">Session ID:</label>
               <select className="form-control" value={selectedSessionId} onChange={handleSessionChange}>
                 <option value="">-- Select Session ID --</option>
                 {filteredSessions.map((session, index) => (
@@ -329,7 +330,7 @@ const StudentTeacherEval = () => {
           {activeTab === 'Students Feedback' && renderStudentsFeedback()}
         </div>
       </div>
-    </div>
+    //</div>
   );
 };
 
