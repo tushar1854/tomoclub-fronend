@@ -312,6 +312,7 @@ const TeacherEditSingleSession = ({ session, studentAll }) => {
   const handleFeedbackSubmit = () => {
     const teacherEmailId = user?.emailId;
     const sessionId = session?.sessionId;
+    const cohortUid = session?.cohortUid;
 
     if (!teacherEmailId || !sessionId || !feedbackUid) {
       alert("❗ Missing required teacher or session info.");
@@ -321,6 +322,7 @@ const TeacherEditSingleSession = ({ session, studentAll }) => {
     const payload = {
       teacherEmailId,
       sessionId,
+      cohortUid,
       feedbackFormUid: feedbackUid,
       feedbackForm: feedback
     };

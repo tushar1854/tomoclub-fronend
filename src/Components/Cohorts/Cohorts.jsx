@@ -115,6 +115,7 @@ const Cohorts = () => {
   const [schoolList, setSchoolList] = useState([]);
   const [selectValue, setSelectValue] = useState({});
   const user = JSON.parse(getSessionStorage('user'));
+  const [selectedCohortName, setSelectedCohortName] = useState('');
 
   useEffect(() => {
     setLoader(true);
@@ -185,14 +186,28 @@ const Cohorts = () => {
 
   return (
     <div className="cohorts-container">
+      {/* {user?.entity === 'teacher' ? (
+        <BreadcrumbsLink
+          breadcrumbValues={{
+            1: { name: 'Home', link: '/home' },
+            2: { name: 'Cohorts', link: '/cohorts' }
+          }}
+          lastValue="Crafters"
+        />
+      ) : (
+        <BreadcrumbsLink
+          breadcrumbValues={{
+            1: { name: 'Home', link: '/home' }
+          }}
+          lastValue="Cohorts"
+        />
+      )} */}
       <BreadcrumbsLink
         breadcrumbValues={{
-          1: {
-            name: 'Home',
-            link: '/home'
-          }
+          1: { name: 'Home', link: '/home' },
+          ...(selectedCohortName ? { 2: { name: 'Cohorts', link: '/cohorts' } } : {})
         }}
-        lastValue={'Cohorts'}
+        lastValue={selectedCohortName || 'Cohorts'}
       />
 
       <div className="accounts-header">
@@ -223,7 +238,7 @@ const Cohorts = () => {
         </div>
       </div>
 
-      {user?.entity === 'teacher' ? <TeacherCohorts /> : loader ? <Loader /> : (
+      {user?.entity === 'teacher' ? <TeacherCohorts setSelectedCohortName={setSelectedCohortName} /> : loader ? <Loader /> : (
         <div className="cohort-table-container">
           <div className="cohort-table-header">
             <TableHeader />

@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './teacherCohorts.scss';
 import { callAPI, getSessionStorage } from '../../Helper';
+import Loader from '../Common/Loader/Loader';
 
-const TeacherCohorts = () => {
+const TeacherCohorts = ({setSelectedCohortName}) => {
   const navigate = useNavigate();
   const user = JSON.parse(getSessionStorage('user'));
   const [cohorts, setCohorts] = useState([]);
@@ -27,7 +28,6 @@ const TeacherCohorts = () => {
 
   const [loadingSessions, setLoadingSessions] = useState(false);
   const [loadingCohorts, setLoadingCohorts] = useState(false);
-
 
   const handleConfirm = async () => {
     if (!selectedSessionId) return;
@@ -68,6 +68,16 @@ const TeacherCohorts = () => {
     setSelectedSessionId(sessionId);
     setConfirmDisabled(!sessionId);
 
+    // Clear previous table + right panel data
+    setSessionDataTable([]);
+    setSessionData({
+      session_date: '',
+      session_topic: '',
+      attendance: '',
+      session_rating: ''
+    });
+    setLoading(true);
+
     if (sessionId) {
       try {
         const data = await callAPI(
@@ -83,9 +93,12 @@ const TeacherCohorts = () => {
         });
       } catch (err) {
         console.error('Error fetching session data:', err);
+      } finally {
+        setLoading(false);
       }
     }
   };
+
 
 
 
@@ -135,6 +148,7 @@ const TeacherCohorts = () => {
     const cohortUid = selectedCohortData?.cohortUid || '';
 
     setSelectedCohort(cohortUid);
+    setSelectedCohortName(cohortName);
     setLoading(true);
 
     callAPI('get', `https://t2mo9hijy3.execute-api.us-east-1.amazonaws.com/testing/teacher_cohort_read_dashboard_count_data?cohortuid=${cohortUid}`)
@@ -258,24 +272,28 @@ const TeacherCohorts = () => {
             </div>
 
             {/* Right Side: Data fields */}
-            <div className="session-right">
-              <div className="field">
-                <span className="label">Session Date:</span>
-                <span>{renderSessionDataDate() || '-'}</span>
+            {loading ? (
+              <div className="loader-container"><Loader /></div>
+            ) : (
+              <div className="session-right">
+                <div className="field">
+                  <span className="label">Session Date:</span>
+                  <span>{renderSessionDataDate() || '-'}</span>
+                </div>
+                <div className="field">
+                  <span className="label">Session Topic:</span>
+                  <span>{sessionData.session_topic || '-'}</span>
+                </div>
+                <div className="field">
+                  <span className="label">Attendance:</span>
+                  <span>{sessionData.attendance !== undefined && sessionData.attendance !== null ? `${sessionData.attendance}%` : '-'}</span>
+                </div>
+                <div className="field">
+                  <span className="label">Session Rating:</span>
+                  <span>{sessionData.session_rating || '-'}</span>
+                </div>
               </div>
-              <div className="field">
-                <span className="label">Session Topic:</span>
-                <span>{sessionData.session_topic || '-'}</span>
-              </div>
-              <div className="field">
-                <span className="label">Attendance:</span>
-                <span>{sessionData.attendance ? `${sessionData.attendance}%` : '-'}</span>
-              </div>
-              <div className="field">
-                <span className="label">Session Rating:</span>
-                <span>{sessionData.session_rating || '-'}</span>
-              </div>
-            </div>
+            )}
           </div>
 
           {sessionDataTable.length > 0 && (

@@ -55,7 +55,6 @@
 
   .action-buttons{
     margin-top: 4rem;
-  }
 
   .edit-btn{
     width: 12rem;
@@ -69,7 +68,15 @@
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
     -ms-border-radius: 10px;
-    -o-border-radius: 10px;
+    -o-border-radius: 10px;  
+  }
+
+  .edit-btn:hover {
+    background-color: #d4d4d4; /* Slightly darker background */
+    color: #333;              /* Slightly darker text */
+    cursor: pointer;          /* Pointer cursor on hover */
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
 }
 
 .session-screen {
@@ -120,6 +127,13 @@
         border: 1px solid #000;
         color: #000;
         //cursor: not-allowed;
+      }
+
+      .confirm-btn:hover {
+        background-color: #d4d4d4; /* Slightly darker background */
+        color: #333;              /* Slightly darker text */
+        cursor: pointer;          /* Pointer cursor on hover */
+        transition: background-color 0.3s ease, color 0.3s ease;
       }
     }
 
