@@ -115,26 +115,6 @@
           border-radius: 6px;
         }
       }
-
-      .confirm-btn {
-        margin-top: 0.5rem;
-        width: 8rem;
-        height: 2rem;
-        padding: 0.5rem 1rem;
-        font-size: 0.85rem;
-        border-radius: 6px;
-        background-color: #eae9e9;
-        border: 1px solid #000;
-        color: #000;
-        //cursor: not-allowed;
-      }
-
-      .confirm-btn:hover {
-        background-color: #d4d4d4; /* Slightly darker background */
-        color: #333;              /* Slightly darker text */
-        cursor: pointer;          /* Pointer cursor on hover */
-        transition: background-color 0.3s ease, color 0.3s ease;
-      }
     }
 
     .session-right {
@@ -154,6 +134,26 @@
         span:last-child {
           font-weight: 300;
         }
+      }
+
+      .confirm-btn {
+        margin-top: 0.5rem;
+        width: 9rem;
+        height: 3rem;
+        padding: 0.5rem 1rem;
+        font-size: 0.85rem;
+        border-radius: 6px;
+        background-color: #eae9e9;
+        border: 1px solid #000;
+        color: #000;
+        //cursor: not-allowed;
+      }
+
+      .confirm-btn:hover {
+        background-color: #d4d4d4; /* Slightly darker background */
+        color: #333;              /* Slightly darker text */
+        cursor: pointer;          /* Pointer cursor on hover */
+        transition: background-color 0.3s ease, color 0.3s ease;
       }
     }
   }

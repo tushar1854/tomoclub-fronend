@@ -497,15 +497,53 @@ const Student = () => {
                   </div>
                 </div>
                 <div className="student-progress-row">
-                    <div className="hanna-progress">
-                      <h4>Correct Answers</h4>
+                  <div className="hanna-progress">
+                    <h4>Student Mood</h4>
+                    {/* <CircularProgressbar
+                      maxValue={5}
+                      value={student.mood}
+                      className="hanna-circle"
+                      text={student.mood}
+                    /> */}                
+                    <div style={{ width: 120, height: 120, margin: '-10px 50px 30px 0px' }}>
+                      <svg style={{ height: 0 }}>
+                        <defs>
+                          <linearGradient id="gradientStroke" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" stopColor="#4c86e9" />
+                            <stop offset="100%" stopColor="#03e9c2" />
+                          </linearGradient>
+                        </defs>
+                      </svg>
+
+                      <CircularProgressbar
+                        maxValue={5}
+                        value={student.mood}
+                        text={student.mood}
+                        styles={{
+                          path: {
+                            stroke: 'url(#gradientStroke)',
+                          },
+                          trail: {
+                            stroke: '#eee',
+                          },
+                          text: {
+                            fill: '#000',
+                            fontSize: '16px',
+                            fontWeight: 'bold',
+                          },
+                        }}
+                      />
+                    </div>
+                  </div>
+                  <div className="hanna-progress">
+                    <h4>Correct Answers</h4>
                       {/* <CircularProgressbar
                         maxValue={5}
                         value={student.correctAnswerPercentage}
                         className="hanna-circle"
                         text={`${student.correctAnswerPercentage}%`}
                       /> */}
-                      <div style={{ width: 120, height: 120, margin: '-10px 15px 30px 0px' }}>
+                    <div style={{ width: 120, height: 120, margin: '-10px 15px 30px 0px' }}>
                       <svg style={{ height: 0 }}>
                         <defs>
                           <linearGradient id="gradientStroke" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -534,8 +572,8 @@ const Student = () => {
                         }}
                       />
                     </div>
-                    </div>
                   </div>
+                </div>
               </div>
             </div>
           </div>

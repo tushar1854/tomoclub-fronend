@@ -28,9 +28,11 @@ const TeacherCohorts = ({setSelectedCohortName}) => {
 
   const [loadingSessions, setLoadingSessions] = useState(false);
   const [loadingCohorts, setLoadingCohorts] = useState(false);
+  const [confirmLoader, setConfirmLoader] = useState(false);
 
   const handleConfirm = async () => {
     if (!selectedSessionId) return;
+    setConfirmLoader(true); // start loading
     try {
       const data = await callAPI(
         'get',
@@ -39,8 +41,11 @@ const TeacherCohorts = ({setSelectedCohortName}) => {
       setSessionDataTable(data.students || []);
     } catch (error) {
       console.error("Error fetching session data:", error);
+    } finally {
+      setConfirmLoader(false); // stop loading
     }
   };
+
 
 
   const handleViewSessionClick = async () => {
@@ -161,7 +166,7 @@ const TeacherCohorts = ({setSelectedCohortName}) => {
 
   const renderStatValue = (key) => {
     if (!selectedCohort || loading) return '';
-    return key === 'percentagePresent' ? `${(stats[key] || 0) / 100}%` : (stats[key] || 0);
+    return key === 'percentagePresent' ? `${(stats[key] || 0)}%` : (stats[key] || 0);
   };
 
   const renderDate = () => {
@@ -266,9 +271,6 @@ const TeacherCohorts = ({setSelectedCohortName}) => {
                   </select>
                 )}
               </div>
-              <button className="confirm-btn" onClick={handleConfirm} disabled={confirmDisabled}>
-                Confirm
-              </button>
             </div>
 
             {/* Right Side: Data fields */}
@@ -292,11 +294,18 @@ const TeacherCohorts = ({setSelectedCohortName}) => {
                   <span className="label">Session Rating:</span>
                   <span>{sessionData.session_rating || '-'}</span>
                 </div>
+                <button className="confirm-btn" onClick={handleConfirm} disabled={confirmDisabled}>
+                  Confirm
+                </button>
               </div>
             )}
           </div>
 
-          {sessionDataTable.length > 0 && (
+          {confirmLoader ? (
+            <div className="loader-container">
+              <Loader /> {/* Ensure this imports your loader component */}
+            </div>
+          ) : sessionDataTable.length > 0 && (
             <div className='teacher-cohorts'>
               <div className="table-container">
                 <div className="table-header-list">
@@ -314,24 +323,27 @@ const TeacherCohorts = ({setSelectedCohortName}) => {
                   <ul className="table-data-list" key={index}>
                     <li 
                       className="cursor-pointer"
-                      onClick={() => {
+                      onClick={() =>
                         navigate(`/students/${student.studentUsername}`, {
-                          state: { cohortUid: selectedCohort } // pass cohortUid here
-                        });
-                    }}>
-                    {student.studentUsername}
+                          state: { cohortUid: selectedCohort }
+                        })
+                      }
+                    >
+                      {student.studentUsername}
                     </li>
                     <li
                       className="cursor-pointer"
-                      onClick={() => {
+                      onClick={() =>
                         navigate(`/students/${student.studentUsername}`, {
-                          state: { cohortUid: selectedCohort } // pass cohortUid here
-                        });
-                      }}
+                          state: { cohortUid: selectedCohort }
+                        })
+                      }
                     >
                       {student.studentFirstName} {student.studentLastName}
                     </li>
-                    <li className={student.present ? 'text-green-500' : 'text-red-600'}>{student.present ? 'P' : 'A'}</li>
+                    <li className={student.present ? 'text-green-500' : 'text-red-600'}>
+                      {student.present ? 'P' : 'A'}
+                    </li>
                     <li>{student.preSessionRating === false ? '-' : student.preSessionRating}</li>
                     <li>{student.mood === false ? '-' : student.mood}</li>
                     <li>{student.postSessionRating === false ? '-' : student.postSessionRating}</li>
@@ -340,9 +352,19 @@ const TeacherCohorts = ({setSelectedCohortName}) => {
                   </ul>
                 ))}
               </div>
+              <div className='absolute text-blue-800 underline cursor-pointer right-12'
+                onClick={() =>
+                  navigate('/session/edit/editStudentFeedback', {
+                    state: {
+                      sessionId: selectedSessionId,
+                      cohortUid: selectedCohort,
+                    }
+                  })
+                }>
+                View Feedback Forms
+              </div>
             </div>
           )}
-
         </div>
       )}
     </>
