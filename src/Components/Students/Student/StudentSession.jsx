@@ -83,7 +83,8 @@ import { callAPI } from '../../../Helper';
 //   );
 // };
 
-
+// const cohortUid = location.state?.cohortUid;
+// console.log('cohortUid', cohortUid);
   
 const TableHeader = () => {
   return (
@@ -107,12 +108,24 @@ const TableData = ({
   mood,
   postSessionRating,
   gameRating,
-  correctAnswerCount,
+  correctAnswerCount
 }) => {
-
+  const navigate = useNavigate();
+  const location = useLocation();
+  const cohortUid = location.state?.cohortUid;
+  const params = useParams();
   return (
     <div className="TableData-cohort-comp">
-      <li className='session-link-edit'>{sessionId}</li>
+      <li className='session-link-edit' 
+        onClick={() =>
+          navigate('/session/edit/editStudentFeedback', {
+            state: {
+              sessionId: sessionId,
+              cohortUid: cohortUid,
+              studentUsername: params.student,
+            }
+          })
+        }>{sessionId}</li>
       <li>{date}</li>
       <li className={attendance ? 'text-green-500' : 'text-red-600'}>
         {attendance ? 'P' : 'A'}
@@ -306,6 +319,7 @@ const StudentSession = () => {
                   state: {
                     sessionId: sessionId,
                     cohortUid: cohortUid,
+                    studentUsername: '',
                   }
                 })
               }

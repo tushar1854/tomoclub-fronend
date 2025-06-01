@@ -349,3 +349,105 @@
   color: gray;
   font-style: italic;
 }
+
+.edit-students-container {
+  padding: 1rem;
+  background-color: #e8e7ea;
+  width: 70%;
+  border-radius: 8px;
+  margin: 5rem 1rem 0 1rem;
+  
+  .edit-students-main-box {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    background-color: #f8f8f8;
+    padding: 1rem;
+    border-radius: 8px;
+    
+    label{
+      margin-bottom: -1.5rem;
+      font-weight: 600;
+    }
+
+    select {
+      padding: 0.75rem;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 0.9rem;
+      width: 40%;
+      height: 3rem;
+      margin: 0.5rem 0;
+    }
+
+    .student-list {
+      list-style: none;
+      padding: 0;
+
+      max-height: 300px; // or any height you want
+      overflow-y: auto;
+
+      li {
+        display: flex;
+        justify-content: space-between;
+        margin-right: 20rem;
+        font-size: 0.9rem;
+        align-items: center;
+        padding: 0.4rem 0;
+
+        .delete-button {
+          background: #f8d7da;
+          padding: 0.3rem 1rem;
+          border: 1px solid #ccc;
+          font-size: 0.9rem;
+          border-radius: 4px;
+          color: red;
+          cursor: pointer;
+
+          &:hover {
+            background-color: transparent;
+            border: 2px solid red;
+          }
+        }
+
+        .undo-button {
+          background: #c8ccc9;
+          padding: 0.3rem 1rem;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+          color: black;
+          cursor: pointer;
+          font-size: 0.9rem;
+
+          &:hover {
+            background-color: transparent;
+            border: 2px solid black;
+          }
+        }
+      }
+    }
+  }
+
+  .save-button {
+    width: 12rem;
+    height: 3rem;
+    background-color: #eeeded;
+    border: 2px solid #000;
+    font-weight: 500;
+    border-radius: 10px;
+    color: #000;
+    display: list-item;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;  
+  }
+
+  .save-button:hover {
+    background-color: #d4d4d4; /* Slightly darker background */
+    color: #333;              /* Slightly darker text */
+    cursor: pointer;          /* Pointer cursor on hover */
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+}
+

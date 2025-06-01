@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import './teacherCohorts.scss';
 import { callAPI, getSessionStorage } from '../../Helper';
 import Loader from '../Common/Loader/Loader';
+import EditStudents from './EditStudent';
 
 const TeacherCohorts = ({setSelectedCohortName}) => {
   const navigate = useNavigate();
@@ -11,6 +12,8 @@ const TeacherCohorts = ({setSelectedCohortName}) => {
   const [selectedCohort, setSelectedCohort] = useState('');
   const [stats, setStats] = useState({});
   const [loading, setLoading] = useState(false);
+  const [editStudentMode, setEditStudentMode] = useState(false);
+
 
   // For session screen
   const [viewSessionScreen, setViewSessionScreen] = useState(false);
@@ -180,195 +183,197 @@ const TeacherCohorts = ({setSelectedCohortName}) => {
   }
 
   return (
-    <>
-      {!viewSessionScreen ? (
-        <div className="teacher-cohort-dashboard">
-          <div className="dropdown-container">
-            <label>Select a Cohort:</label>
-            {loadingCohorts ? (
-              <span>Loading...</span>
-            ) : (
-              <select
-                value={cohorts.find(c => c.cohortUid === selectedCohort)?.cohortName || ''}
-                onChange={handleCohortSelect}
-              >
-                <option value="">-- Select --</option>
-                {cohorts.map((cohort) => (
-                  <option key={cohort.cohortUid} value={cohort.cohortName}>
-                    {cohort.cohortName}
-                  </option>
-                ))}
-              </select>
-            )}
+  <>
+    {editStudentMode ? (
+      <EditStudents cohortUid={selectedCohort} onBack={() => setEditStudentMode(false)} />
+    ) : !viewSessionScreen ? (
+      <div className="teacher-cohort-dashboard">
+        <div className="dropdown-container">
+          <label>Select a Cohort:</label>
+          {loadingCohorts ? (
+            <span>Loading...</span>
+          ) : (
+            <select
+              value={cohorts.find(c => c.cohortUid === selectedCohort)?.cohortName || ''}
+              onChange={handleCohortSelect}
+            >
+              <option value="">-- Select --</option>
+              {cohorts.map((cohort) => (
+                <option key={cohort.cohortUid} value={cohort.cohortName}>
+                  {cohort.cohortName}
+                </option>
+              ))}
+            </select>
+          )}
+        </div>
+
+        <div className="dashboard-cards">
+          <div className="card card-a">
+            <p>Total Sessions</p>
+            <h1>{renderStatValue('totalSessions')}</h1>
+          </div>
+          <div className="card card-b">
+            <p>Total Students</p>
+            <h1>{renderStatValue('totalStudents')}</h1>
+          </div>
+          <div className="card card-c">
+            <p>Pre-session Rating (Students)</p>
+            <h1>{renderStatValue('preSessionRatingStudent')}</h1>
+          </div>
+          <div className="card card-a">
+            <p>Post-session Rating (Students)</p>
+            <h1>{renderStatValue('postSessionRatingStudent')}</h1>
+          </div>
+          <div className="card card-b">
+            <p>Avg. Attendance</p>
+            <h1>{renderStatValue('percentagePresent')}</h1>
+          </div>
+          <div className="card card-c">
+            <p>Session Rating (Teachers)</p>
+            <h1>{renderStatValue('teacherRating')}</h1>
+          </div>
+          <div className="card card-a">
+            <p>Student Enthusiasm (Teachers)</p>
+            <h1>{renderStatValue('student_enthusiasm')}</h1>
+          </div>
+          <div className="card card-b">
+            <p>Date of Creation</p>
+            <h1>{selectedCohort && !loading ? (renderDate() || '-') : ''}</h1>
+          </div>
+        </div>
+
+        {selectedCohort && !loading && (
+          <div className="action-buttons">
+            <button className="edit-btn" onClick={() => setEditStudentMode(true)}>Edit Students</button>
+            <button
+              className="edit-btn"
+              onClick={() => {
+                setViewSessionScreen(true);
+                handleViewSessionClick(); // fetch all sessions
+              }}
+            >
+              View Sessions
+            </button>
+          </div>
+        )}
+      </div>
+    ) : (
+      <div className="session-screen">
+        <div className="session-layout">
+          {/* Left Side: Session ID Dropdown + Confirm */}
+          <div className="session-left">
+            <div className="select-row-container">
+              <label>Select Session ID:</label>
+              {loadingSessions ? (
+                <span>Loading...</span>
+              ) : (
+                <select value={selectedSessionId} onChange={handleSessionChange}>
+                  <option value="">-- Select --</option>
+                  {allSessions.map(id => (
+                    <option key={id} value={id}>{id}</option>
+                  ))}
+                </select>
+              )}
+            </div>
           </div>
 
-
-          <div className="dashboard-cards">
-            <div className="card card-a">
-              <p>Total Sessions</p>
-              <h1>{renderStatValue('totalSessions')}</h1>
-            </div>
-            <div className="card card-b">
-              <p>Total Students</p>
-              <h1>{renderStatValue('totalStudents')}</h1>
-            </div>
-            <div className="card card-c">
-              <p>Pre-session Rating (Students)</p>
-              <h1>{renderStatValue('preSessionRatingStudent')}</h1>
-            </div>
-            <div className="card card-a">
-              <p>Post-session Rating (Students)</p>
-              <h1>{renderStatValue('postSessionRatingStudent')}</h1>
-            </div>
-            <div className="card card-b">
-              <p>Avg. Attendance</p>
-              <h1>{renderStatValue('percentagePresent')}</h1>
-            </div>
-            <div className="card card-c">
-              <p>Session Rating (Teachers)</p>
-              <h1>{renderStatValue('teacherRating')}</h1>
-            </div>
-            <div className="card card-a">
-              <p>Student Enthusiasm (Teachers)</p>
-              <h1>{renderStatValue('student_enthusiasm')}</h1>
-            </div>
-            <div className="card card-b">
-              <p>Date of Creation</p>
-              <h1>{selectedCohort && !loading ? (renderDate() || '-') : ''}</h1>
-            </div>
-          </div>
-
-          {selectedCohort && !loading && (
-            <div className="action-buttons">
-              <button className="edit-btn">Edit Students</button>
-              <button
-                className="edit-btn"
-                onClick={() => {
-                  setViewSessionScreen(true);
-                  handleViewSessionClick(); // fetch all sessions
-                }}
-              >
-                View Sessions
+          {/* Right Side: Data fields */}
+          {loading ? (
+            <div className="loader-container"><Loader /></div>
+          ) : (
+            <div className="session-right">
+              <div className="field">
+                <span className="label">Session Date:</span>
+                <span>{renderSessionDataDate() || '-'}</span>
+              </div>
+              <div className="field">
+                <span className="label">Session Topic:</span>
+                <span>{sessionData.session_topic || '-'}</span>
+              </div>
+              <div className="field">
+                <span className="label">Attendance:</span>
+                <span>{sessionData.attendance !== undefined && sessionData.attendance !== null ? `${sessionData.attendance}%` : '-'}</span>
+              </div>
+              <div className="field">
+                <span className="label">Session Rating:</span>
+                <span>{sessionData.session_rating || '-'}</span>
+              </div>
+              <button className="confirm-btn" onClick={handleConfirm} disabled={confirmDisabled}>
+                Confirm
               </button>
             </div>
           )}
         </div>
-      ) : (
-        <div className="session-screen">
-          <div className="session-layout">
-            {/* Left Side: Session ID Dropdown + Confirm */}
-            <div className="session-left">
-              <div className="select-row-container">
-                <label>Select Session ID:</label>
-                {loadingSessions ? (
-                  <span>Loading...</span>
-                ) : (
-                  <select value={selectedSessionId} onChange={handleSessionChange}>
-                    <option value="">-- Select --</option>
-                    {allSessions.map(id => (
-                      <option key={id} value={id}>{id}</option>
-                    ))}
-                  </select>
-                )}
-              </div>
-            </div>
 
-            {/* Right Side: Data fields */}
-            {loading ? (
-              <div className="loader-container"><Loader /></div>
-            ) : (
-              <div className="session-right">
-                <div className="field">
-                  <span className="label">Session Date:</span>
-                  <span>{renderSessionDataDate() || '-'}</span>
-                </div>
-                <div className="field">
-                  <span className="label">Session Topic:</span>
-                  <span>{sessionData.session_topic || '-'}</span>
-                </div>
-                <div className="field">
-                  <span className="label">Attendance:</span>
-                  <span>{sessionData.attendance !== undefined && sessionData.attendance !== null ? `${sessionData.attendance}%` : '-'}</span>
-                </div>
-                <div className="field">
-                  <span className="label">Session Rating:</span>
-                  <span>{sessionData.session_rating || '-'}</span>
-                </div>
-                <button className="confirm-btn" onClick={handleConfirm} disabled={confirmDisabled}>
-                  Confirm
-                </button>
-              </div>
-            )}
+        {confirmLoader ? (
+          <div className="loader-container">
+            <Loader />
           </div>
-
-          {confirmLoader ? (
-            <div className="loader-container">
-              <Loader /> {/* Ensure this imports your loader component */}
-            </div>
-          ) : sessionDataTable.length > 0 && (
-            <div className='teacher-cohorts'>
-              <div className="table-container">
-                <div className="table-header-list">
-                  <li>Student ID</li>
-                  <li>Student Name</li>
-                  <li>Present</li>
-                  <li>Pre-Session Rating</li>
-                  <li>Mood</li>
-                  <li>Post-Session Rating</li>
-                  <li>Game Rating</li>
-                  <li>Correct Answers</li>
-                </div>
-
-                {sessionDataTable.map((student, index) => (
-                  <ul className="table-data-list" key={index}>
-                    <li 
-                      className="cursor-pointer"
-                      onClick={() =>
-                        navigate(`/students/${student.studentUsername}`, {
-                          state: { cohortUid: selectedCohort }
-                        })
-                      }
-                    >
-                      {student.studentUsername}
-                    </li>
-                    <li
-                      className="cursor-pointer"
-                      onClick={() =>
-                        navigate(`/students/${student.studentUsername}`, {
-                          state: { cohortUid: selectedCohort }
-                        })
-                      }
-                    >
-                      {student.studentFirstName} {student.studentLastName}
-                    </li>
-                    <li className={student.present ? 'text-green-500' : 'text-red-600'}>
-                      {student.present ? 'P' : 'A'}
-                    </li>
-                    <li>{student.preSessionRating === false ? '-' : student.preSessionRating}</li>
-                    <li>{student.mood === false ? '-' : student.mood}</li>
-                    <li>{student.postSessionRating === false ? '-' : student.postSessionRating}</li>
-                    <li>{student.gameRating === false ? '-' : student.gameRating}</li>
-                    <li>{student.correctAnswerCount === 0 ? '-' : student.correctAnswerCount}</li>
-                  </ul>
-                ))}
+        ) : sessionDataTable.length > 0 && (
+          <div className='teacher-cohorts'>
+            <div className="table-container">
+              <div className="table-header-list">
+                <li>Student ID</li>
+                <li>Student Name</li>
+                <li>Present</li>
+                <li>Pre-Session Rating</li>
+                <li>Mood</li>
+                <li>Post-Session Rating</li>
+                <li>Game Rating</li>
+                <li>Correct Answers</li>
               </div>
-              <div className='absolute text-blue-800 underline cursor-pointer right-12'
-                onClick={() =>
-                  navigate('/session/edit/editStudentFeedback', {
-                    state: {
-                      sessionId: selectedSessionId,
-                      cohortUid: selectedCohort,
+
+              {sessionDataTable.map((student, index) => (
+                <ul className="table-data-list" key={index}>
+                  <li 
+                    className="cursor-pointer"
+                    onClick={() =>
+                      navigate(`/students/${student.studentUsername}`, {
+                        state: { cohortUid: selectedCohort }
+                      })
                     }
-                  })
-                }>
-                View Feedback Forms
-              </div>
+                  >
+                    {student.studentUsername}
+                  </li>
+                  <li
+                    className="cursor-pointer"
+                    onClick={() =>
+                      navigate(`/students/${student.studentUsername}`, {
+                        state: { cohortUid: selectedCohort }
+                      })
+                    }
+                  >
+                    {student.studentFirstName} {student.studentLastName}
+                  </li>
+                  <li className={student.present ? 'text-green-500' : 'text-red-600'}>
+                    {student.present ? 'P' : 'A'}
+                  </li>
+                  <li>{student.preSessionRating === false ? '-' : student.preSessionRating}</li>
+                  <li>{student.mood === false ? '-' : student.mood}</li>
+                  <li>{student.postSessionRating === false ? '-' : student.postSessionRating}</li>
+                  <li>{student.gameRating === false ? '-' : student.gameRating}</li>
+                  <li>{student.correctAnswerCount === 0 ? '-' : student.correctAnswerCount}</li>
+                </ul>
+              ))}
             </div>
-          )}
-        </div>
-      )}
+            <div className='absolute text-blue-800 underline cursor-pointer right-12'
+              onClick={() =>
+                navigate('/session/edit/editStudentFeedback', {
+                  state: {
+                    sessionId: selectedSessionId,
+                    cohortUid: selectedCohort,
+                  }
+                })
+              }>
+              View Feedback Forms
+            </div>
+          </div>
+        )}
+      </div>
+    )}
     </>
   );
+
 
 };
 

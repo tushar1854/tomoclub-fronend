@@ -8,9 +8,9 @@ import './StudentTeacherEval.scss';
 
 const StudentTeacherEval = () => {
   const location = useLocation();
-  const { sessionId: passedSessionId, cohortUid: passedCohortUid } = location.state || {};
+  const { sessionId: passedSessionId, cohortUid: passedCohortUid, studentUsername: passedStudent } = location.state || {};
   useEffect(() => {
-  console.log('🧭 Navigation state received:', { passedSessionId, passedCohortUid });
+  console.log('🧭 Navigation state received:', { passedSessionId, passedCohortUid, passedStudent});
 }, []);
 
   const [activeTab, setActiveTab] = useState('Students Feedback');
@@ -18,6 +18,7 @@ const StudentTeacherEval = () => {
   const [selectedSessionId, setSelectedSessionId] = useState('');
   const [selectedStudent, setSelectedStudent] = useState('');
   const [feedbackQuestions, setFeedbackQuestions] = useState([]);
+  const [studentFeedback, setStudentFeedback] = useState([]);
   const [feedbackStudentUid, setFeedbackStudentUid] = useState('');
   const [teacherSessions, setTeacherSessions] = useState([]);
   const [allCohorts, setAllCohorts] = useState([]);
@@ -25,7 +26,7 @@ const StudentTeacherEval = () => {
   const [sessionStatus, setSessionStatus] = useState('');
   const [loader, setLoader] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
-
+  const [studentList, setStudentList] = useState([]);
   const isCompleted = sessionStatus === 'completed';
 
   // Load teacher sessions
@@ -43,19 +44,39 @@ const StudentTeacherEval = () => {
       .catch((err) => console.error('Failed to load teacher sessions:', err));
   }, []);
 
-  // Load default data if state is passed
+  // Load default data if state is passed 
   useEffect(() => {
     if (!teacherSessions.length || !passedSessionId || !passedCohortUid) return;
 
     const session = teacherSessions.find(
       (s) => s.sessionId === passedSessionId && s.cohortUid === passedCohortUid
     );
+
     if (session) {
       setSelectedCohort(session.cohortName);
       setSelectedSessionId(session.sessionId);
       setSessionStatus(session.status);
+      setFilteredSessions(teacherSessions.filter(s => s.cohortName === session.cohortName));
+
+      if (passedStudent) {
+        setSelectedStudent(passedStudent);
+        
+        const cohortUid = session.cohortUid;
+        const url = `https://1bkm9umygi.execute-api.us-east-1.amazonaws.com/testing/get_feedback_form_based_on_cohort_session_student_username?student_username=${passedStudent}&session_id=${session.sessionId}&cohort_uid=${cohortUid}`;
+        
+        setLoader(true);
+        callAPI('get', url)
+          .then((res) => {
+            console.log('Student feedback response:', res);
+            setStudentFeedback(res.feedbackForm || []);
+          })
+          .catch((err) => {
+            console.error('Error fetching feedback for passed student:', err);
+          })
+          .finally(() => setLoader(false));
+      }
     }
-  }, [teacherSessions, passedSessionId, passedCohortUid]);
+  }, [teacherSessions, passedSessionId, passedCohortUid, passedStudent]);
 
   // Load feedback form based on session selection
   useEffect(() => {
@@ -69,6 +90,12 @@ const StudentTeacherEval = () => {
     const status = matchedSession?.status || '';
 
     setSessionStatus(status);
+    const cohortUid = matchedSession?.cohortUid;
+    if (cohortUid) {
+      callAPI('get', `https://1e92zwdhz8.execute-api.us-east-1.amazonaws.com/testing/get_student_list_for_cohort?cohortuid=${cohortUid}`)
+        .then(res => setStudentList(Array.isArray(res?.students) ? res.students : [])) // ✅ fix here
+        .catch(err => console.error("Error fetching students:", err));
+    }
 
     if (status !== 'completed') {
       callAPI('get', 'https://fy82ysdxe3.execute-api.us-east-1.amazonaws.com/testing/student_feedback_form_read')
@@ -106,6 +133,7 @@ const StudentTeacherEval = () => {
     setSelectedCohort(cohortName);
     setSelectedSessionId('');
     setFeedbackQuestions([]);
+    setSelectedStudent('');
     const sessions = teacherSessions.filter((s) => s.cohortName === cohortName);
     setFilteredSessions(sessions);
   };
@@ -113,6 +141,7 @@ const StudentTeacherEval = () => {
   const handleSessionChange = (e) => {
     const sessionId = e.target.value;
     setSelectedSessionId(sessionId);
+    setSelectedStudent('');
     const session = teacherSessions.find(
       s => s.sessionId === sessionId && s.cohortName === selectedCohort
     );
@@ -169,6 +198,48 @@ const StudentTeacherEval = () => {
     );
   };
 
+
+  const handleStudentChange = async (e) => {
+    const studentUsername = e.target.value;
+    setSelectedStudent(studentUsername);
+    if (!studentUsername || !selectedSessionId || !selectedCohort) return;
+
+    const matchedSession = teacherSessions.find(
+      (s) => s.sessionId === selectedSessionId && s.cohortName === selectedCohort
+    );
+    if (!matchedSession) return;
+
+    const cohortUid = matchedSession?.cohortUid;
+
+    const url = `https://1bkm9umygi.execute-api.us-east-1.amazonaws.com/testing/get_feedback_form_based_on_cohort_session_student_username?student_username=${studentUsername}&session_id=${selectedSessionId}&cohort_uid=${cohortUid}`;
+
+    setLoader(true);
+    try {
+      const res = await callAPI('get', url);
+      console.log('Single student feedback response:', res);
+
+      // ✅ Map the response properly
+      const updatedQuestions = (res.feedbackForm || []).map((q) => ({
+        question: q.question,
+        isEditable: q.isEditable || false,
+        options: (q.options || []).map((opt) => ({
+          text: opt.text,
+          isChosen: opt.isChosen || false,
+          isCorrect: opt.isCorrect || false,
+        })),
+      }));
+
+      setStudentFeedback(updatedQuestions);
+      console.log('Mapped Feedback Questions:', updatedQuestions);
+    } catch (err) {
+      console.error('Error fetching single student feedback:', err);
+    } finally {
+      setLoader(false);
+    }
+  };
+
+
+
   const renderTabs = () => (
     <div className="tabs">
       {['Session Details', 'Reports Status', 'Teacher Feedback', 'Students Feedback'].map((tab) => (
@@ -184,22 +255,130 @@ const StudentTeacherEval = () => {
     </div>
   );
 
+  const renderSingleStudentFeedback = () => {
+    return (
+      <div className="students-feedback">
+        <div className="feedback-content">
+          {/* Always render student dropdown */}
+          <div className="form-group full-width" style={{ marginBottom: '20px' }}>
+            <label className="form-label">Student Name: </label>
+            <select
+              className="form-control"
+              value={selectedStudent}
+              onChange={handleStudentChange}
+            >
+              <option value="">-- Select Student --</option>
+              {studentList.map((student, index) => (
+                <option key={index} value={student.studentUsername}>
+                  {student.studentUsername}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Loader */}
+          {loader && (
+            <div className="loader-container">
+              <Loader />
+            </div>
+          )}
+
+          {/* No feedback message */}
+          {!loader && !studentFeedback.length && (
+            <div className="no-feedback">
+              No feedback form available for this student.
+            </div>
+          )}
+
+          {/* Feedback content */}
+          {!loader && studentFeedback.length > 0 && (
+            <>
+              {studentFeedback.map((q, qIndex) => (
+                <div key={qIndex}>
+                  <div className="question-row">
+                    <div className="question-column">
+                      <label className="form-label-question">{q.question}</label>
+                    </div>
+                    <div className="option-column">
+                      {isRatingQuestion(q.options, q.question) ? (
+                        <div className="rating-box-group">
+                          {q.options.map((opt, oIndex) => {
+                            const isChosen = opt.isChosen;
+                            const boxStyle = {
+                              backgroundColor: isChosen ? '#d2cdcd' : 'transparent',
+                              color: 'black',
+                              fontWeight: 600,
+                              border: '1px solid #ccc',
+                              fontSize: '12px',
+                              padding: '6px 12px',
+                              borderRadius: '4px',
+                              marginRight: '8px',
+                              textAlign: 'center',
+                              minWidth: '30px',
+                            };
+                            return (
+                              <div key={oIndex} className="rating-box" style={boxStyle}>
+                                {opt.text}
+                              </div>
+                            );
+                          })}
+                        </div>
+                      ) : (
+                        <div className="vertical-options">
+                          {q.options.map((opt, oIndex) => {
+                            const isChosen = opt.isChosen;
+                            const isCorrect = opt.isCorrect;
+                            const style = {
+                              color: isChosen && !isCorrect ? 'red' : isCorrect ? 'green' : 'black',
+                              backgroundColor: isChosen ? '#f0f0f0' : 'transparent',
+                              fontWeight: (isChosen || isCorrect) ? 600 : 'normal',
+                              padding: '8px 12px',
+                              fontSize: '12px',
+                              borderRadius: '5px',
+                              border: '1px solid #ccc',
+                              marginBottom: '6px'
+                            };
+                            return (
+                              <div key={oIndex} className="option-input-completed" style={style}>
+                                {opt.text}
+                              </div>
+                            );
+                          })}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  <hr />
+                </div>
+              ))}
+            </>
+          )}
+        </div>
+      </div>
+    );
+  };
+
+
   const renderStudentsFeedback = () => {
     if (loader) return <div className="loader-container"><Loader /></div>;
-    if (!feedbackQuestions.length) return null;
+    if (!feedbackQuestions.length) return <div className="no-feedback">Loading Feedback Form...</div>;
 
     return (
       <div className="students-feedback">
         <div className="feedback-content">
           <div className="form-group full-width">
-            <label className="form-label">Student Name</label>
+            <label className="form-label">Student Name:  </label>
             <select
               className="form-control"
               value={selectedStudent}
-              onChange={(e) => setSelectedStudent(e.target.value)}
+              onChange={handleStudentChange}
             >
               <option value="">-- Select Student --</option>
-              {/* Future student options here */}
+              {studentList.map((student, index) => (
+                <option key={index} value={student.studentUsername}>
+                  {student.studentUsername}
+                </option>
+              ))}
             </select>
           </div>
 
@@ -327,7 +506,8 @@ const StudentTeacherEval = () => {
         </div>
 
         <div className="tab-content">
-          {activeTab === 'Students Feedback' && renderStudentsFeedback()}
+          {activeTab === 'Students Feedback' && 
+            selectedStudent ? renderSingleStudentFeedback() : renderStudentsFeedback()}
         </div>
       </div>
     //</div>
