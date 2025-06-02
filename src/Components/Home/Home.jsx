@@ -53,9 +53,9 @@ const Home = () => {
         <div className="homeContent-container">
           <HomeContent
             title={'Hello ' + displayName + ' !'}
-            addCard1={'Total Student'}
-            addCard2={'Total Teacher'}
-            addCard3={'Total School'}
+            addCard1={'Weekly Session'}
+            addCard2={'Total Students'}
+            addCard3={'Total Cohorts'}
             statsCard1={'123+'}
             statsCard2={'6.35'}
             statsCard3={'78%'}
