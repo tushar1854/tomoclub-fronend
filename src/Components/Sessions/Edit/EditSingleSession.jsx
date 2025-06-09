@@ -15,6 +15,7 @@ import Attendance from '../CommonSession/Attendance';
 import TextBox from '../../Common/TextBox/TextBox';
 import { removeBeforeTime } from '../../../Helper/common';
 import TeacherEditSingleSession from './teacher-edit-single-session';
+import StudentSingleSession from './student-single-session';
 import { getSessionStorage } from '../../../Helper';
 
 const EditSingleSession = () => {
@@ -75,6 +76,7 @@ const EditSingleSession = () => {
   // Get user from session storage
   const user = JSON.parse(getSessionStorage('user'));
   const isTeacher = user?.entity === 'teacher';
+  const isStudent = user?.entity === 'student';
 
   console.log('studentListForEval', studentListForEval);
   useEffect(() => {
@@ -318,6 +320,30 @@ const EditSingleSession = () => {
           
         </div>
         <TeacherEditSingleSession session={location.state.session} studentAll={studentAll}/>
+      </div>
+    );
+  }
+
+  if (isStudent) {
+    return (
+      <div className="addSession">
+        <div className="create-curr4-container">
+          <BreadcrumbsLink
+            breadcrumbValues={{
+              1: {
+                name: 'Home',
+                link: '/home'
+              },
+              2: {
+                name: 'Session',
+                link: '/session'
+              }
+            }}
+            lastValue={'Single session'}
+          />
+          
+        </div>
+        <StudentSingleSession session={location.state.session}/>
       </div>
     );
   }

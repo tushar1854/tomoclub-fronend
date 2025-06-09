@@ -12,7 +12,8 @@ const Home = () => {
   const [loader, setLoader] = useState(false);
   const [school, setSchool] = useState({});
 
-  const displayName = JSON.parse(getSessionStorage('user'))?.displayName;
+  const user = JSON.parse(getSessionStorage('user'));
+  const displayName = user?.entity === 'student' ? user?.studentusernameprimarykey : user?.displayName;
 
   useEffect(() => {
     setLoader(true);

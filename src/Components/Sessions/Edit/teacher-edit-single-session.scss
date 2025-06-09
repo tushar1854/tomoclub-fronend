@@ -280,6 +280,10 @@
             &:hover {
               background-color: #d1d5db;
             }
+            &:disabled {
+              background-color: #9ca3af;
+              cursor: not-allowed;
+            }
           }
     
           &.btn-secondary {
@@ -445,6 +449,11 @@
     
       .btn-primary:hover {
         background-color: #03e9c2;
+      }
+
+      .btn-primary.disabled {
+        background-color: grey !important;
+        cursor: not-allowed;
       }
     
       .submitted-note {
@@ -618,6 +627,26 @@
         text-align: center;
         min-width: 40px;
       }
+
+      .rating-box-student {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 0.5rem 1rem;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        background: #f5f5f5;
+        text-align: center;
+        min-width: 40px;
+        cursor: pointer;
+        margin-right: 10px;
+        transition: all 0.2s ease;
+      }
+
+      .rating-box-student.selected {
+        border: 2px solid #000;
+        background-color: #eee;
+      }
     
       .rating-value {
         font-weight: 800;
@@ -711,6 +740,8 @@
           color: #333;
         }
       }
+
+
     
       .option-input-completed {
         display: flex;
@@ -727,6 +758,23 @@
           color: #333;
         }
       }
+
+      .option-input-completed-student {
+        display: flex;
+        margin-bottom: 8px;
+        justify-content: space-between;
+        align-items: center;
+    
+        .option-text {
+          font-weight: 500;
+          font-size: 0.75rem;
+        }
+      }
+
+      .option-input-completed-student input[type="checkbox"] {
+        margin-right: 10px;
+        cursor: pointer;
+      }
     }    
   }
   
@@ -739,4 +787,12 @@
     height: 16rem;
   }
 }
+
+.disabled-option {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+
+
 

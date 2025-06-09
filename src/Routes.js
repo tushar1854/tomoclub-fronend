@@ -50,6 +50,7 @@ import ModSession from './Components/Moderator/ModSession/ModSession';
 import AddModerator from './Components/Moderator/AddModerator/AddModerator';
 import ProtectedRoute from './Components/ProtectedRoute/ProtectedRoute';
 import StudentTeacherEval from './Components/Students/Student/StudentTeacherEval';
+import StudentLogin from './Components/Login/studentLogin';
 import { getSessionStorage } from './Helper';
 
 const App = () => {
@@ -59,6 +60,7 @@ const App = () => {
       <Suspense fallback={<Loader />}>
         <Routes>
           <Route path="/" element={<Login />} />
+          <Route path="/studentlogin" element={<StudentLogin />} />
           <Route path="/registration/addschool" element={<AddSchool />} />
           <Route path="/sucesspage" element={<SucessPage />} />
           {/* <Route path="/accounts" element={<Notification />} /> */}
@@ -390,13 +392,13 @@ const App = () => {
           <Route
             path="/session"
             element={
-              <ProtectedRoute>
+              //<ProtectedRoute>
                 <>
                   <Navbar />
                   <Header />
                   <Session />
                 </>
-              </ProtectedRoute>
+              //</ProtectedRoute>
             }
           />
           <Route
@@ -438,13 +440,13 @@ const App = () => {
           <Route
             path="/session/edit"
             element={
-              <ProtectedRoute>
+              //<ProtectedRoute>
                 <>
                   <Navbar />
                   <Header />
                   <EditSingleSession />
                 </>
-              </ProtectedRoute>
+              //</ProtectedRoute>
             }
           />
           <Route 

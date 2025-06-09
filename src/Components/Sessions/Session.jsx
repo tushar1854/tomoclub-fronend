@@ -93,6 +93,49 @@ const TableData = ({
     </div>
   );
 };
+
+const StudentTableHeader = () => (
+  <div className="TableHeader-cohort-comp">
+    <li>Session ID</li>
+    <li>Date</li>
+    <li>Time</li>
+    <li>Status</li>
+    <li>Attendance</li>
+    <li>Report</li>
+  </div>
+);
+
+const StudentTableData = ({ session }) => {
+  const navigate = useNavigate();
+  const { sessionId, date, sessionTime, sessionEndTime, timeZone, status, attendance_status, evaluation_status } = session;
+  return (
+    <div className="TableData-cohort-comp">
+      <li
+        className="session-link-edit"
+        onClick={() =>
+          navigate('/session/edit', {
+            state: {
+              session: session
+            }
+          })
+        }
+      >{sessionId}</li>
+      <li>{date}</li>
+      <li>{sessionTime + ' - ' + sessionEndTime + ' ' + timeZone}</li>
+      <li className={status === 'completed' ? 'view' : status === 'pending' ? 'pending' : 'live'}>
+        {capitalizeFirstChar(status)}
+      </li>
+      <li className={attendance_status === '0' ? 'pending' : 'view'}>
+        {attendance_status === '0' ? 'Pending' : 'View'}
+      </li>
+      <li className={evaluation_status === '0' ? 'pending' : 'view'}>
+        {evaluation_status === '0' ? 'Pending' : 'View'}
+      </li>
+    </div>
+  );
+};
+
+
 const Session = () => {
   const navigate = useNavigate();
   const [loader, setLoader] = useState(false);
@@ -105,6 +148,23 @@ const Session = () => {
 
   useEffect(() => {
     setLoader(true);
+    if (user?.entity === 'student') {
+      callAPI(
+        'get',
+        `https://r9vo37kodl.execute-api.us-east-1.amazonaws.com/testing/student_session_data?student_username=${user?.studentusernameprimarykey}`
+      )
+        .then((sessionData) => {
+          console.log(sessionData);
+          setSessionAll(sessionData);
+          setLoader(false);
+        })
+        .catch((err) => {
+          console.error(err);
+          setLoader(false);
+        });
+      return;
+    }
+
     if (user?.entity === 'moderator') {
       callAPI(
         'get',
@@ -247,89 +307,85 @@ const Session = () => {
 
   return (
     <div className="cohorts-container">
-      <BreadcrumbsLink
-        breadcrumbValues={{
-          1: {
-            name: 'Home',
-            link: '/home'
-          }
-        }}
-        lastValue={'Sessions'}
-      />
+      <BreadcrumbsLink breadcrumbValues={{ 1: { name: 'Home', link: '/home' } }} lastValue={'Sessions'} />
       <div className="accounts-header">
         <h1>Sessions</h1>
-        <div className="cohort-top-btn btn-session">
-          {user?.entity === 'moderator' || user?.entity === 'teacher' ? null : (
-            <>
-              <button className="create-cohort-btn" onClick={() => navigate('/session/generate')}>
-                + Generate Sessions
-              </button>
-              <button
-                className="create-cohort-btn"
-                onClick={() => navigate('/session/singlesession')}
-              >
-                + Add a Sessions
-              </button>
-            </>
-          )}
-          {user?.entity !== 'teacher' && (
-            <>
-          <div className="ses-stu-dr-1">
-            <p>Filter School</p>
-            <SelectInputFieldMod
-              options={schoolList}
-              selectData={(dataValue) => setSelectValue({ ...selectValue, school: dataValue })}
-              select={selectValue.school}
-              providedList="school"
-            />
+        {user?.entity !== 'student' && (
+          <div className="cohort-top-btn btn-session">
+            {user?.entity !== 'moderator' && user?.entity !== 'teacher' && (
+              <>
+                <button className="create-cohort-btn" onClick={() => navigate('/session/generate')}>
+                  + Generate Sessions
+                </button>
+                <button className="create-cohort-btn" onClick={() => navigate('/session/singlesession')}>
+                  + Add a Sessions
+                </button>
+              </>
+            )}
+            {user?.entity !== 'teacher' && (
+              <>
+                <div className="ses-stu-dr-1">
+                  <p>Filter School</p>
+                  <SelectInputFieldMod
+                    options={schoolList}
+                    selectData={(dataValue) => setSelectValue({ ...selectValue, school: dataValue })}
+                    select={selectValue.school}
+                    providedList="school"
+                  />
+                </div>
+                <div className="ses-stu-dr-1">
+                  <p>Filter Cohort</p>
+                  <SelectInputFieldMod
+                    options={cohortList}
+                    selectData={(dataValue) => setSelectValue({ ...selectValue, cohort: dataValue })}
+                    select={selectValue.cohort}
+                    providedList={'cohort'}
+                  />
+                </div>
+              </>
+            )}
+            {user?.entity === 'teacher' && (
+              <div className="ses-stu-dr-2">
+                <span>Filter sessions by Cohort:</span>
+                <SelectInputFieldMod
+                  options={cohortList}
+                  selectData={(dataValue) => setSelectValue({ ...selectValue, cohort: dataValue })}
+                  select={selectValue.cohort}
+                  providedList={'cohort'}
+                />
+                <button onClick={() => window.location.reload()} className="pl-2 pr-2 mt-1 text-lg font-bold border-collapse border-none bg-slate-150 h-9">
+                  ↻
+                </button>
+              </div>
+            )}
           </div>
-          <div className="ses-stu-dr-1">
-            <p>Filter Cohort</p>
-            <SelectInputFieldMod
-              options={cohortList}
-              selectData={(dataValue) => setSelectValue({ ...selectValue, cohort: dataValue })}
-              select={selectValue.cohort}
-              providedList={'cohort'}
-            />
-          </div>
-          </>
-          )}
-          {user?.entity === 'teacher' && (
-            <div className="ses-stu-dr-2">
-              <span>Filter sessions by Cohort:</span>
-              <SelectInputFieldMod
-                options={cohortList}
-                selectData={(dataValue) => setSelectValue({ ...selectValue, cohort: dataValue })}
-                select={selectValue.cohort}
-                providedList={'cohort'}
-              />
-              <button onClick={() => window.location.reload()} className='pl-2 pr-2 mt-1 text-lg font-bold border-collapse border-none bg-slate-150 h-9'>↻</button>
-            </div>
-          )}
-        </div>
+        )}
       </div>
       {loader ? (
         <Loader />
       ) : (
         <div className="cohort-table-container-1">
           <div className="cohort-table-header">
-            <TableHeader />
+            {user?.entity === 'student' ? <StudentTableHeader /> : <TableHeader />}
           </div>
           <div className="student-table-body">
-            {sessionAll &&
-              sessionAll?.map((session) => (
+            {sessionAll?.map((session) =>
+              user?.entity === 'student' ? (
+                <StudentTableData key={session.sessionId} session={session} />
+              ) : (
                 <TableData
                   key={session.sessionId}
                   sessionUid={session.sessionId}
                   teachers={session.sessionModerator}
                   sessionDate={session.date}
-                  time={session.sessionTime + ' - ' + session.sessionEndTime + ' ' + session.timeZone}
+                  time={`${session.sessionTime} - ${session.sessionEndTime} ${session.timeZone}`}
                   status={session.status}
                   attendance={session.attendance_status}
                   report={session.evaluation_status}
                   session={session}
                 />
-              ))}
+              )
+            )}
           </div>
         </div>
       )}

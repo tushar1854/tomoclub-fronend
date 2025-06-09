@@ -35,6 +35,7 @@ const Navbar = () => {
   });
 
   const user = JSON.parse(getSessionStorage('user'));
+  console.log('user', user);
 
   useEffect(() => {
     setActiveTag({
@@ -184,7 +185,39 @@ const Navbar = () => {
                 </span>
               </div>
             </div>
-          ) : (
+          ) : user?.entity === 'student' ? (
+            // Teacher view
+            <div className="nav_list">
+              <div
+                id="home"
+                className={
+                  activeTag.classActive && activeTag.name === 'home'
+                    ? 'nav_link back active'
+                    : 'nav_link back'
+                }
+                onClick={navigateToActive}
+              >
+                <img id="home" src={homeIcon} className="nav_icon" />
+                <span id="home" className="nav_name">
+                  Home
+                </span>
+              </div>
+              <div
+                id="session"
+                className={
+                  activeTag.classActive && activeTag.name === 'session'
+                    ? 'nav_link back active'
+                    : 'nav_link back'
+                }
+                onClick={navigateToActive}
+              >
+                <img id="session" src={session} className="nav_icon" />
+                <span id="session" className="nav_name">
+                  Session
+                </span>
+              </div>
+              </div>
+              ):(
             <div className="nav_list">
               <div
                 id="home"
