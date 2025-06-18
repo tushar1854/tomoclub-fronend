@@ -52,6 +52,9 @@
   max-width: 120px;
   overflow: hidden;
   text-overflow: ellipsis;
+  direction: rtl;
+  text-align: left;
+  white-space: nowrap;
 }
 
 .TableData-cohort-comp li a {

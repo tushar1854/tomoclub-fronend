@@ -105,9 +105,71 @@ const StudentTableHeader = () => (
   </div>
 );
 
+// const StudentTableData = ({ session }) => {
+//   const navigate = useNavigate();
+//   const { sessionId, date, sessionTime, sessionEndTime, timeZone, status, attendance_status, evaluation_status } = session;
+//   return (
+//     <div className="TableData-cohort-comp">
+//       <li
+//         className="session-link-edit"
+//         onClick={() =>
+//           navigate('/session/edit', {
+//             state: {
+//               session: session
+//             }
+//           })
+//         }
+//       >{sessionId}</li>
+//       <li>{date}</li>
+//       <li>{sessionTime + ' - ' + sessionEndTime + ' ' + timeZone}</li>
+//       <li className={status === 'completed' ? 'view' : status === 'pending' ? 'pending' : 'live'}>
+//         {capitalizeFirstChar(status)}
+//       </li>
+//       <li className={attendance_status === '0' ? 'pending' : 'view'}>
+//         {attendance_status === '0' ? 'Pending' : 'View'}
+//       </li>
+//       <li className={evaluation_status === '0' ? 'pending' : 'view'}>
+//         {evaluation_status === '0' ? 'Pending' : 'View'}
+//       </li>
+//     </div>
+//   );
+// };
+
 const StudentTableData = ({ session }) => {
   const navigate = useNavigate();
-  const { sessionId, date, sessionTime, sessionEndTime, timeZone, status, attendance_status, evaluation_status } = session;
+  const {
+    sessionId,
+    date,
+    sessionTime,
+    sessionEndTime,
+    timeZone,
+    status,
+    attendance_status,
+    evaluation_status,
+    isStarted,
+    cohortUid
+  } = session;
+
+  const [hasJoined, setHasJoined] = useState(false);
+  const user = JSON.parse(getSessionStorage('user'));
+  const studentUsername = user?.studentusernameprimarykey;
+
+  const handleJoin = async () => {
+    try {
+      await callAPI('post', 'https://2dirkqld1f.execute-api.us-east-1.amazonaws.com/testing/student-attendance', {
+        studentusername: studentUsername,
+        present: true,
+        sessionid: sessionId,
+        cohortuid: cohortUid,
+      });
+      setHasJoined(true);
+    } catch (error) {
+      console.error('Failed to mark attendance:', error);
+    }
+  };
+
+  const capitalizeFirstChar = (str) => str?.charAt(0).toUpperCase() + str?.slice(1);
+
   return (
     <div className="TableData-cohort-comp">
       <li
@@ -119,11 +181,21 @@ const StudentTableData = ({ session }) => {
             }
           })
         }
-      >{sessionId}</li>
+      >
+        {sessionId}
+      </li>
       <li>{date}</li>
       <li>{sessionTime + ' - ' + sessionEndTime + ' ' + timeZone}</li>
       <li className={status === 'completed' ? 'view' : status === 'pending' ? 'pending' : 'live'}>
-        {capitalizeFirstChar(status)}
+        {isStarted && !hasJoined ? (
+          <button className="start-btn" onClick={handleJoin}>
+            Join
+          </button>
+        ) : hasJoined ? (
+          'Joined'
+        ) : (
+          capitalizeFirstChar(status)
+        )}
       </li>
       <li className={attendance_status === '0' ? 'pending' : 'view'}>
         {attendance_status === '0' ? 'Pending' : 'View'}
@@ -135,6 +207,104 @@ const StudentTableData = ({ session }) => {
   );
 };
 
+const TeacherTableHeader = () => (
+  <div className="TableHeader-cohort-comp">
+    <li>Session ID</li>
+    <li>Date</li>
+    <li>Time</li>
+    <li>Status</li>
+    <li>Action</li>
+    <li>Attendance</li>
+    <li>Session Rating</li>
+  </div>
+);
+
+const TeacherTableData = ({ session }) => {
+  const navigate = useNavigate();
+  const {
+    sessionId,
+    date,
+    sessionTime,
+    sessionEndTime,
+    timeZone,
+    status,
+    isStarted,
+    showButton,
+    attendancePercentage,
+    avgSessionRating,
+  } = session;
+
+  const [tempStartedSessions, setTempStartedSessions] = useState({});
+
+  const handleStart = async (sessionId) => {
+    try {
+      // API call to start the session
+      await callAPI('post', 'https://9x3cu0xdr0.execute-api.us-east-1.amazonaws.com/testing/session-start-stop-button', {
+        sessionid: sessionId,
+      });
+
+      // Update temp state
+      setTempStartedSessions((prev) => ({ ...prev, [sessionId]: true }));
+
+      console.log(`Starting session: ${sessionId}`);
+    } catch (error) {
+      console.error('Error starting session:', error);
+    }
+  };
+
+  const handleStop = async (sessionId) => {
+    try {
+      // API call to start the session
+      await callAPI('post', 'https://9x3cu0xdr0.execute-api.us-east-1.amazonaws.com/testing/session-start-stop-button', {
+        sessionid: sessionId,
+      });      
+
+      console.log(`Stopping session: ${sessionId}`);
+      window.location.reload();
+    } catch (error) {
+      console.error('Error stopping session:', error);
+    }
+  };
+  return (
+    <div className="TableData-cohort-comp">
+      <li
+        className="session-link-edit"
+        onClick={() =>
+          navigate('/session/edit', {
+            state: { session }
+          })
+        }
+      >
+        {sessionId}
+      </li>
+      <li>{date}</li>
+      <li>{sessionTime + ' - ' + sessionEndTime + ' ' + timeZone}</li>
+      <li className={status === 'completed' ? 'view' : status === 'pending' ? 'pending' : 'live'}>
+        {capitalizeFirstChar(status)}
+      </li>
+      <li>
+        {showButton ? (
+          tempStartedSessions[sessionId] || isStarted ? (
+            <button className="stop-btn" onClick={() => handleStop(sessionId)}>
+              Stop
+            </button>
+          ) : (
+            <button className="start-btn" onClick={() => handleStart(sessionId)}>
+              Start
+            </button>
+          )
+        ) : null}
+      </li>
+
+      <li className={(tempStartedSessions[sessionId]||isStarted) ? 'pending' : 'view'}>
+        {isStarted ? 'Pending' : `${attendancePercentage}`}
+      </li>
+      <li className={(tempStartedSessions[sessionId]||isStarted) ? 'pending' : 'view'}>
+        {isStarted ? 'Pending' : avgSessionRating || '-'}
+      </li>
+    </div>
+  );
+};
 
 const Session = () => {
   const navigate = useNavigate();
@@ -212,8 +382,11 @@ const Session = () => {
       )
         .then((cohortAll) => {
           console.log(cohortAll);
-          setCohortList(cohortAll);
-          // setLoader(false);
+          const uniqueCohorts = cohortAll.filter(
+            (cohort, index, self) =>
+              index === self.findIndex((c) => c.cohortUid === cohort.cohortUid)
+          );
+          setCohortList(uniqueCohorts);
         })
         .catch((error) => {
           console.log(error);
@@ -366,28 +539,44 @@ const Session = () => {
       ) : (
         <div className="cohort-table-container-1">
           <div className="cohort-table-header">
-            {user?.entity === 'student' ? <StudentTableHeader /> : <TableHeader />}
-          </div>
-          <div className="student-table-body">
-            {sessionAll?.map((session) =>
-              user?.entity === 'student' ? (
-                <StudentTableData key={session.sessionId} session={session} />
-              ) : (
-                <TableData
-                  key={session.sessionId}
-                  sessionUid={session.sessionId}
-                  teachers={session.sessionModerator}
-                  sessionDate={session.date}
-                  time={`${session.sessionTime} - ${session.sessionEndTime} ${session.timeZone}`}
-                  status={session.status}
-                  attendance={session.attendance_status}
-                  report={session.evaluation_status}
-                  session={session}
-                />
-              )
+            {user?.entity === 'student' ? (
+              <StudentTableHeader />
+            ) : user?.entity === 'teacher' ? (
+              <TeacherTableHeader />
+            ) : (
+              <TableHeader />
             )}
           </div>
+          <div className="student-table-body">
+            {sessionAll?.map((session) => {
+              if (user?.entity === 'student') {
+                return <StudentTableData key={session.sessionId} session={session} />;
+              } else if (user?.entity === 'teacher') {
+                return (
+                  <TeacherTableData
+                    key={session.sessionId}
+                    session={session}
+                  />
+                );
+              } else {
+                return (
+                  <TableData
+                    key={session.sessionId}
+                    sessionUid={session.sessionId}
+                    teachers={session.sessionModerator}
+                    sessionDate={session.date}
+                    time={`${session.sessionTime} - ${session.sessionEndTime} ${session.timeZone}`}
+                    status={session.status}
+                    attendance={session.attendance_status}
+                    report={session.evaluation_status}
+                    session={session}
+                  />
+                );
+              }
+            })}
+          </div>
         </div>
+
       )}
     </div>
   );

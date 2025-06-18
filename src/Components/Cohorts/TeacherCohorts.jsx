@@ -207,7 +207,7 @@ const TeacherCohorts = ({setSelectedCohortName}) => {
           )}
         </div>
 
-        <div className="dashboard-cards">
+        {/* <div className="dashboard-cards">
           <div className="card card-a">
             <p>Total Sessions</p>
             <h1>{renderStatValue('totalSessions')}</h1>
@@ -240,7 +240,48 @@ const TeacherCohorts = ({setSelectedCohortName}) => {
             <p>Date of Creation</p>
             <h1>{selectedCohort && !loading ? (renderDate() || '-') : ''}</h1>
           </div>
-        </div>
+        </div> */}
+
+        {loading ? (
+          <div className="loader-container">
+            <Loader />
+          </div>
+        ) : (
+          <div className="dashboard-cards">
+            <div className="card card-a">
+              <p>Total Sessions</p>
+              <h1>{renderStatValue('totalSessions')}</h1>
+            </div>
+            <div className="card card-b">
+              <p>Total Students</p>
+              <h1>{renderStatValue('totalStudents')}</h1>
+            </div>
+            <div className="card card-c">
+              <p>Pre-session Rating (Students)</p>
+              <h1>{renderStatValue('preSessionRatingStudent')}</h1>
+            </div>
+            <div className="card card-a">
+              <p>Post-session Rating (Students)</p>
+              <h1>{renderStatValue('postSessionRatingStudent')}</h1>
+            </div>
+            <div className="card card-b">
+              <p>Avg. Attendance</p>
+              <h1>{renderStatValue('percentagePresent')}</h1>
+            </div>
+            <div className="card card-c">
+              <p>Session Rating (Teachers)</p>
+              <h1>{renderStatValue('teacherRating')}</h1>
+            </div>
+            <div className="card card-a">
+              <p>Student Enthusiasm (Teachers)</p>
+              <h1>{renderStatValue('student_enthusiasm')}</h1>
+            </div>
+            <div className="card card-b">
+              <p>Date of Creation</p>
+              <h1>{selectedCohort && !loading ? (renderDate() || '-') : ''}</h1>
+            </div>
+          </div>
+        )}
 
         {selectedCohort && !loading && (
           <div className="action-buttons">
