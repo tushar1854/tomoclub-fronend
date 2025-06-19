@@ -52,9 +52,18 @@
   max-width: 120px;
   overflow: hidden;
   text-overflow: ellipsis;
-  direction: rtl;
-  text-align: left;
   white-space: nowrap;
+  direction: ltr; /* Keep it normal since you want 'username_test...' */
+  text-align: left;
+  position: relative;
+}
+.TableData-cohort-comp .session-link-edit:hover {
+  overflow: visible;
+  white-space: normal;
+  background: white; /* optional: to avoid overlapping issues */
+  z-index: 10;
+  max-width: none;
+  box-shadow: 0 0 5px rgba(0,0,0,0.1); /* optional */
 }
 
 .TableData-cohort-comp li a {

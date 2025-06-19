@@ -344,7 +344,10 @@ const TeacherEditSingleSession = ({ session, studentAll }) => {
         alert('❌ Failed to submit feedback. Please try again.');
       });
   };
-  const today = new Date().toISOString().split('T')[0];
+  const yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+  const minDate = yesterday.toISOString().split('T')[0];
+
 
   const tabs = ['Session Details', 'Reports Status', 'Teacher Feedback', 'Students Feedback'];
 
@@ -472,13 +475,39 @@ const TeacherEditSingleSession = ({ session, studentAll }) => {
                   className="date-picker"
                   {...register('sessionDate', { required: 'This input is required.' })}
                   defaultValue={session.date}
-                  min={today}
+                  min={minDate}
                 />
               </div>
 
               <div className="form-group">
                 <label className="form-label">Session Time</label>
                 <div className="time-inputs">
+                  {/* <select
+                    className="form-control time-input"
+                    value={selectValue.startTime}
+                    onChange={(e) => setSelectValue({ ...selectValue, startTime: e.target.value })}
+                  >
+                    {Constants.TIME.map((time, index) => (
+                      <option key={index} value={time}>
+                        {time}
+                      </option>
+                    ))}
+                  </select>
+
+                  <span className="separator">to</span>
+
+                  <select
+                    className="form-control time-input"
+                    value={selectValue.endTime}
+                    onChange={(e) => setSelectValue({ ...selectValue, endTime: e.target.value })}
+                  >
+                    {removeBeforeTime(Constants.TIME, selectValue.startTime).map((time, index) => (
+                      <option key={index} value={time}>
+                        {time}
+                      </option>
+                    ))}
+                  </select> */}
+
                   <select
                     className="form-control time-input"
                     value={selectValue.startTime}
@@ -505,17 +534,8 @@ const TeacherEditSingleSession = ({ session, studentAll }) => {
                     ))}
                   </select>
 
-                  {/* <select
-                    className="form-control timezone-input"
-                    value={selectValue.timezone}
-                    onChange={(e) => setSelectValue({ ...selectValue, timezone: e.target.value })}
-                  >
-                    {Constants.TIMEZONE.map((timezone, index) => (
-                      <option key={index} value={timezone}>
-                        {timezone}
-                      </option>
-                    ))}
-                  </select> */}
+
+                  
                 </div>
               </div>
             </div>
