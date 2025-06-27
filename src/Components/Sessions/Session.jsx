@@ -105,36 +105,6 @@ const StudentTableHeader = () => (
   </div>
 );
 
-// const StudentTableData = ({ session }) => {
-//   const navigate = useNavigate();
-//   const { sessionId, date, sessionTime, sessionEndTime, timeZone, status, attendance_status, evaluation_status } = session;
-//   return (
-//     <div className="TableData-cohort-comp">
-//       <li
-//         className="session-link-edit"
-//         onClick={() =>
-//           navigate('/session/edit', {
-//             state: {
-//               session: session
-//             }
-//           })
-//         }
-//       >{sessionId}</li>
-//       <li>{date}</li>
-//       <li>{sessionTime + ' - ' + sessionEndTime + ' ' + timeZone}</li>
-//       <li className={status === 'completed' ? 'view' : status === 'pending' ? 'pending' : 'live'}>
-//         {capitalizeFirstChar(status)}
-//       </li>
-//       <li className={attendance_status === '0' ? 'pending' : 'view'}>
-//         {attendance_status === '0' ? 'Pending' : 'View'}
-//       </li>
-//       <li className={evaluation_status === '0' ? 'pending' : 'view'}>
-//         {evaluation_status === '0' ? 'Pending' : 'View'}
-//       </li>
-//     </div>
-//   );
-// };
-
 const StudentTableData = ({ session }) => {
   const navigate = useNavigate();
   const {
@@ -163,6 +133,9 @@ const StudentTableData = ({ session }) => {
         cohortuid: cohortUid,
       });
       setHasJoined(true);
+      if (session.url) {
+        window.open(session.url, '_blank');
+      }
     } catch (error) {
       console.error('Failed to mark attendance:', error);
     }
@@ -206,6 +179,93 @@ const StudentTableData = ({ session }) => {
     </div>
   );
 };
+// const TeacherTableData = ({ session }) => {
+//   const navigate = useNavigate();
+//   const {
+//     sessionId,
+//     date,
+//     sessionTime,
+//     sessionEndTime,
+//     timeZone,
+//     status,
+//     isStarted,
+//     showButton,
+//     attendancePercentage,
+//     avgSessionRating,
+//   } = session;
+
+//   const [tempStartedSessions, setTempStartedSessions] = useState({});
+
+//   const handleStart = async (sessionId) => {
+//     try {
+//       // API call to start the session
+//       await callAPI('post', 'https://9x3cu0xdr0.execute-api.us-east-1.amazonaws.com/testing/session-start-stop-button', {
+//         sessionid: sessionId,
+//       });
+
+//       // Update temp state
+//       setTempStartedSessions((prev) => ({ ...prev, [sessionId]: true }));
+
+//       console.log(`Starting session: ${sessionId}`);
+//     } catch (error) {
+//       console.error('Error starting session:', error);
+//     }
+//   };
+
+//   const handleStop = async (sessionId) => {
+//     try {
+//       // API call to start the session
+//       await callAPI('post', 'https://9x3cu0xdr0.execute-api.us-east-1.amazonaws.com/testing/session-start-stop-button', {
+//         sessionid: sessionId,
+//       });      
+
+//       console.log(`Stopping session: ${sessionId}`);
+//       window.location.reload();
+//     } catch (error) {
+//       console.error('Error stopping session:', error);
+//     }
+//   };
+//   return (
+//     <div className="TableData-cohort-comp">
+//       <li
+//         className="session-link-edit"
+//         onClick={() =>
+//           navigate('/session/edit', {
+//             state: { session }
+//           })
+//         }
+//       >
+//         {sessionId}
+//       </li>
+//       <li>{date}</li>
+//       <li>{sessionTime + ' - ' + sessionEndTime + ' ' + timeZone}</li>
+//       <li className={status === 'completed' ? 'view' : status === 'pending' ? 'pending' : 'live'}>
+//         {capitalizeFirstChar(status)}
+//       </li>
+//       <li>
+//         {showButton ? (
+//           tempStartedSessions[sessionId] || isStarted ? (
+//             <button className="stop-btn" onClick={() => handleStop(sessionId)}>
+//               Stop
+//             </button>
+//           ) : (
+//             <button className="start-btn" onClick={() => handleStart(sessionId)}>
+//               Start
+//             </button>
+//           )
+//         ) : null}
+//       </li>
+
+//       <li className={(tempStartedSessions[sessionId]||isStarted) ? 'pending' : 'view'}>
+//         {isStarted ? 'Pending' : `${attendancePercentage}`}
+//       </li>
+//       <li className={(tempStartedSessions[sessionId]||isStarted) ? 'pending' : 'view'}>
+//         {isStarted ? 'Pending' : avgSessionRating || '-'}
+//       </li>
+//     </div>
+//   );
+// };
+
 
 const TeacherTableHeader = () => (
   <div className="TableHeader-cohort-comp">
@@ -232,77 +292,105 @@ const TeacherTableData = ({ session }) => {
     showButton,
     attendancePercentage,
     avgSessionRating,
+    url
   } = session;
 
   const [tempStartedSessions, setTempStartedSessions] = useState({});
+  const [showPopup, setShowPopup] = useState(false);
+  const [sessionUrl, setSessionUrl] = useState('');
 
-  const handleStart = async (sessionId) => {
+  const handleSubmit = async () => {
     try {
-      // API call to start the session
       await callAPI('post', 'https://9x3cu0xdr0.execute-api.us-east-1.amazonaws.com/testing/session-start-stop-button', {
         sessionid: sessionId,
+        url: sessionUrl
       });
-
-      // Update temp state
       setTempStartedSessions((prev) => ({ ...prev, [sessionId]: true }));
-
-      console.log(`Starting session: ${sessionId}`);
+      setShowPopup(false);
+      setSessionUrl('');
+      window.location.reload();
     } catch (error) {
       console.error('Error starting session:', error);
     }
   };
 
-  const handleStop = async (sessionId) => {
+  const handleStop = async () => {
     try {
-      // API call to start the session
       await callAPI('post', 'https://9x3cu0xdr0.execute-api.us-east-1.amazonaws.com/testing/session-start-stop-button', {
         sessionid: sessionId,
-      });      
-
+        url: sessionUrl
+      });
       console.log(`Stopping session: ${sessionId}`);
       window.location.reload();
     } catch (error) {
       console.error('Error stopping session:', error);
     }
   };
-  return (
-    <div className="TableData-cohort-comp">
-      <li
-        className="session-link-edit"
-        onClick={() =>
-          navigate('/session/edit', {
-            state: { session }
-          })
-        }
-      >
-        {sessionId}
-      </li>
-      <li>{date}</li>
-      <li>{sessionTime + ' - ' + sessionEndTime + ' ' + timeZone}</li>
-      <li className={status === 'completed' ? 'view' : status === 'pending' ? 'pending' : 'live'}>
-        {capitalizeFirstChar(status)}
-      </li>
-      <li>
-        {showButton ? (
-          tempStartedSessions[sessionId] || isStarted ? (
-            <button className="stop-btn" onClick={() => handleStop(sessionId)}>
-              Stop
-            </button>
-          ) : (
-            <button className="start-btn" onClick={() => handleStart(sessionId)}>
-              Start
-            </button>
-          )
-        ) : null}
-      </li>
 
-      <li className={(tempStartedSessions[sessionId]||isStarted) ? 'pending' : 'view'}>
-        {isStarted ? 'Pending' : `${attendancePercentage}`}
-      </li>
-      <li className={(tempStartedSessions[sessionId]||isStarted) ? 'pending' : 'view'}>
-        {isStarted ? 'Pending' : avgSessionRating || '-'}
-      </li>
-    </div>
+  const handleJoin = () => {
+    if (url) window.open(url, '_blank');
+  };
+
+  return (
+    <>
+      <div className="TableData-cohort-comp">
+        <li
+          className="session-link-edit"
+          onClick={() =>
+            navigate('/session/edit', {
+              state: { session }
+            })
+          }
+        >
+          {sessionId}
+        </li>
+        <li>{date}</li>
+        <li>{`${sessionTime} - ${sessionEndTime} ${timeZone}`}</li>
+        <li className={status === 'completed' ? 'view' : status === 'pending' ? 'pending' : 'live'}>
+          {capitalizeFirstChar(status)}
+        </li>
+        <li>
+          {showButton ? (
+            tempStartedSessions[sessionId] || isStarted ? (
+              <div style={{ display: 'flex', gap: '5px' }}>
+                <button className="start-btn" onClick={handleJoin}>Join</button>
+                <button className="stop-btn" onClick={handleStop}>Stop</button>
+              </div>
+            ) : (
+              <button className="start-btn" onClick={() => setShowPopup(true)}>
+                Start
+              </button>
+            )
+          ) : null}
+        </li>
+        <li className={(tempStartedSessions[sessionId] || isStarted) ? 'pending' : 'view'}>
+          {isStarted ? 'Pending' : `${attendancePercentage}`}
+        </li>
+        <li className={(tempStartedSessions[sessionId] || isStarted) ? 'pending' : 'view'}>
+          {isStarted ? 'Pending' : avgSessionRating || '-'}
+        </li>
+      </div>
+
+      {showPopup && (
+        <div className="popup-overlay">
+          <div className="popup-box">
+            <label htmlFor="sessionUrl"><strong>Enter the session URL:</strong></label>
+            <input
+              id="sessionUrl"
+              type="text"
+              value={sessionUrl}
+              onChange={(e) => setSessionUrl(e.target.value)}
+              placeholder="https://..."
+              className="popup-input"
+            />
+            <div className="popup-actions">
+              <button className="popup-submit" onClick={handleSubmit}>Submit</button>
+              <button className="popup-cancel" onClick={() => setShowPopup(false)}>Cancel</button>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 
